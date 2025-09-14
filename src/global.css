@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-secondary: var(--secondary);
+    --color-linear: var(--linear);
+    /* Add other mappings you need */
+}
+
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --neutral-900: 243 96% 9%;
+    --neutral-800: 243 27% 20%;
+    --neutral-700: 243 23% 24%;
+    --neutral-600: 243 23% 30%;
+    --neutral-300: 240 6% 70%;
+    --neutral-200: 250 6% 84%;
+    --neutral-0: 0 0% 100%;
+    --orange-500: 28 100% 52%;
+    --blue-500: 233 67% 56%;
+    --blue-700: 248 70% 36%;
+
+    --spacing-0: 0;
+    --spacing-025: 2px;
+    --spacing-050: 4px;
+    --spacing-075: 6px;
+    --spacing-100: 8px;
+    --spacing-125: 10px;
+    --spacing-150: 12px;
+    --spacing-200: 16px;
+    --spacing-250: 20px;
+    --spacing-300: 24px;
+    --spacing-400: 32px;
+    --spacing-500: 40px;
+    --spacing-600: 48px;
+    --spacing-800: 64px;
+    --spacing-1000: 80px;
+    --spacing-1200: 96px;
+    --spacing-1400: 112px;
+    --spacing-1600: 128px;
+    --spacing-1800: 140px;
+
+    --radius-0: 0;
+    --radius-4: 4px;
+    --radius-6: 6px;
+    --radius-8: 8px;
+    --radius-10: 10px;
+    --radius-12: 12px;
+    --radius-16: 16px;
+    --radius-20: 20px;
+    --radius-24: 24px;
+    --radius-full: 999px;
+
+    --background: hsl(var(--neutral-900));
+    --secondary: hsl(var(--neutral-800));
+    --foreground: hsl(var(--neutral-0));
+    --primary: hsl(var(--neutral-300));
+    --linear: linear-gradient(
+        135deg,
+        hsl(var(--blue-500)) 0%,
+        hsl(var(--blue-700)) 100%
+    );
+
+    @layer components {
+        .bg-custom-gradient {
+            background: var(--linear);
+        }
+    }
+
+    .text-preset-1 {
+        font-family: "DM sans";
+        font-weight: 700;
+        font-style: italic;
+        font-size: 96px;
+        line-height: 100%;
+        letter-spacing: -2px;
+    }
+    .text-preset-2 {
+        font-family: "Bricolage Grotesque";
+        font-weight: 900;
+        font-style: normal;
+        font-size: 52px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+    .text-preset-3 {
+        font-family: "DM sans";
+        font-weight: 400;
+        font-style: normal;
+        font-size: 32px;
+        line-height: 100%;
+        letter-spacing: 0px;
+    }
+    .text-preset-4 {
+        font-family: "DM sans";
+        font-weight: 700;
+        font-style: bold;
+        font-size: 32px;
+        line-height: 100%;
+        letter-spacing: 0;
+    }
+    .text-preset-4 {
+        font-family: "DM sans";
+        font-weight: 900;
+        font-style: bold;
+        font-size: 96px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+    .text-preset-5 {
+        font-family: "DM sans";
+        font-weight: 700;
+        font-style: normal;
+        font-size: 20px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+    .text-preset-5-m {
+        font-family: "DM sans";
+        font-weight: 500;
+        font-style: normal;
+        font-size: 20px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+    .text-preset-6 {
+        font-family: "DM sans";
+        font-weight: 500;
+        font-style: normal;
+        font-size: 18px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+    .text-preset-7 {
+        font-family: "DM sans";
+        font-weight: 500;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+    .text-preset-8 {
+        font-family: "DM sans";
+        font-weight: 700;
+        font-style: normal;
+        font-size: 14px;
+        line-height: 120%;
+        letter-spacing: 0;
+    }
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --secondary: oklch(0.269 0 0);
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+a:hover {
+    color: #535bf2;
+}
+
+body {
+    background: var(--background);
+    margin: 0;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+#root {
+    display: block;
+    min-width: 320px;
+    width: 100%;
+    max-width: 1280px;
+}
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+}
