@@ -37,14 +37,14 @@ function Header() {
     return (
         <header className="flex justify-between items-center ">
             <a href="/" aria-label="home page">
-                <img src="/assets/images/logo.svg" alt="" />
+                <img src="/assets/images/logo.svg" alt="" className="h-8 w-auto" />
             </a>
 
             <div className="text-right">
                 <Menu>
                     <MenuButton
                         className="inline-flex items-center gap-2 rounded-md bg-secondary text-primary
-                     px-3 py-1.5 text-sm/6 font-semibold shadow-inner shadow-white/10 
+                     px-3 py-1.5 text-preset-8 shadow-inner shadow-white/10 
                      focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
                       data-hover:bg-gray-700 data-open:bg-gray-700"
                     >

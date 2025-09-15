@@ -7,7 +7,102 @@
     --color-primary: var(--primary);
     --color-secondary: var(--secondary);
     --color-linear: var(--linear);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary-foreground: var(--secondary-foreground);
     /* Add other mappings you need */
+}
+
+@font-face {
+    font-family: "Bricolage Grotesque";
+    src: url("/assets/fonts/Bricolage_Grotesque/Bricolage_Grotesque-VariableFont_opsz,wdth,wght.ttf")
+        format("truetype");
+    font-weight: 100 800;
+    font-stretch: 75% 100%;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("/assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf")
+        format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DM Sans";
+    src: url("/assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
+        format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Optional: Static font fallbacks for better browser compatibility */
+
+/* Bricolage Grotesque static fallbacks */
+@font-face {
+    font-family: "Bricolage Grotesque Static";
+    src: url("/assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Regular.ttf")
+        format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Bricolage Grotesque Static";
+    src: url("/assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Bold.ttf")
+        format("truetype");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* DM Sans static fallbacks */
+@font-face {
+    font-family: "DM Sans Static";
+    src: url("/assets/fonts/DM_Sans/static/DMSans-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DM Sans Static";
+    src: url("/assets/fonts/DM_Sans/static/DMSans-Medium.ttf")
+        format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DM Sans Static";
+    src: url("/assets/fonts/DM_Sans/static/DMSans-SemiBold.ttf")
+        format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DM Sans Static";
+    src: url("/assets/fonts/DM_Sans/static/DMSans-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "DM Sans Static";
+    src: url("/assets/fonts/DM_Sans/static/DMSans-SemiBoldItalic.ttf")
+        format("truetype");
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
 }
 
 :root {
@@ -69,6 +164,8 @@
     --secondary: hsl(var(--neutral-800));
     --foreground: hsl(var(--neutral-0));
     --primary: hsl(var(--neutral-300));
+    --primary-foreground: hsl(var(--blue-500));
+    --secondary-foreground: hsl(var(--neutral-600));
     --linear: linear-gradient(
         135deg,
         hsl(var(--blue-500)) 0%,
@@ -81,84 +178,85 @@
         }
     }
 
+    .bricolage-grotesque {
+        font-family: "Bricolage Grotesque Static", sans-serif;
+    }
+
+    .dm-sans {
+        font-family: "DM Sans Static", sans-serif;
+    }
+
     .text-preset-1 {
-        font-family: "DM sans";
+        font-family: "DM sans", sans-serif;
         font-weight: 700;
         font-style: italic;
-        font-size: 96px;
-        line-height: 100%;
+        font-size: 6rem;
+        line-height: 1;
         letter-spacing: -2px;
     }
     .text-preset-2 {
-        font-family: "Bricolage Grotesque";
+        font-family: "Bricolage Grotesque", sans-serif;
         font-weight: 900;
         font-style: normal;
-        font-size: 52px;
+        font-size: 3.25rem;
         line-height: 120%;
         letter-spacing: 0;
     }
     .text-preset-3 {
-        font-family: "DM sans";
+        font-family: "DM sans", sans-serif;
         font-weight: 400;
         font-style: normal;
-        font-size: 32px;
-        line-height: 100%;
+        font-size: 2rem;
+        line-height: 1;
         letter-spacing: 0px;
     }
+
     .text-preset-4 {
-        font-family: "DM sans";
-        font-weight: 700;
-        font-style: bold;
-        font-size: 32px;
-        line-height: 100%;
-        letter-spacing: 0;
-    }
-    .text-preset-4 {
-        font-family: "DM sans";
+        font-family: "DM sans", sans-serif;
         font-weight: 900;
         font-style: bold;
-        font-size: 96px;
-        line-height: 120%;
+        font-size: 1.75rem;
+        line-height: 1.2;
         letter-spacing: 0;
     }
     .text-preset-5 {
-        font-family: "DM sans";
-        font-weight: 700;
+        font-family: "DM sans", sans-serif;
+        font-weight: 600;
         font-style: normal;
-        font-size: 20px;
-        line-height: 120%;
+        font-size: 1.25rem;
+        line-height: 1.2;
         letter-spacing: 0;
     }
     .text-preset-5-m {
-        font-family: "DM sans";
+        font-family: "DM sans", sans-serif;
         font-weight: 500;
         font-style: normal;
-        font-size: 20px;
-        line-height: 120%;
+        font-size: 1.25rem;
+        line-height: 1.2;
         letter-spacing: 0;
     }
     .text-preset-6 {
-        font-family: "DM sans";
+        font-family: "DM sans", sans-serif;
         font-weight: 500;
         font-style: normal;
-        font-size: 18px;
-        line-height: 120%;
+        font-size: 1.125rem;
+        line-height: 1.2;
         letter-spacing: 0;
     }
     .text-preset-7 {
-        font-family: "DM sans";
+        font-family: "DM sans", sans-serif;
         font-weight: 500;
         font-style: normal;
-        font-size: 16px;
-        line-height: 120%;
+        font-size: 1rem;
+        line-height: 1.2;
         letter-spacing: 0;
     }
     .text-preset-8 {
-        font-family: "DM sans";
-        font-weight: 700;
+        font-family: "DM sans", sans-serif;
+        font-weight: 400;
         font-style: normal;
-        font-size: 14px;
-        line-height: 120%;
+        font-size: 0.875rem;
+        line-height: 1.2rem;
         letter-spacing: 0;
     }
 }
@@ -197,6 +295,11 @@ body {
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
+}
+
+img {
+    display: block;
+    max-width: 100%;
 }
 
 @media (prefers-color-scheme: light) {

@@ -7,10 +7,16 @@ export default {
     extend: {
       colors: {
         background: 'var(--background)',
-        foreground: 'var(--foreground)',
-        primary: 'var(--primary)',
-        secondary: 'var(--secondary)',
-        linear: 'var(--linear-blue)',
+        foreground: 'var(--foreground)',   
+            linear: 'var(--linear-blue)',
+        primary: {
+            DEFAULT: 'var(--primary)',
+            foreground: 'var(--primary-foreground)'     
+           },
+        secondary: {
+            DEFAULT: 'var(--secondary)',
+            foreground: 'var(--secondary-foreground)',
+        }
       },
     },
   },
