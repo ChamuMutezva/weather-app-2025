@@ -1,12 +1,13 @@
-import Header from "./components/Header";
-import Main from "./components/Main";
-
+import Weather from "./Weather";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 function App() {
+    const queryClient = new QueryClient();
     return (
-        <div className="w-full">
-            <Header />
-            <Main />
-        </div>
+        <QueryClientProvider client={queryClient}>
+            <Weather />
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     );
 }
 
