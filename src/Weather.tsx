@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import LocationCombobox, {
     type LocationData,
-} from "./components/LocationComboBox";
+} from "./components/LocationCombobox";
 import DisplayLocation from "./components/DisplayLocation";
+import Header from "./components/Header";
 
 function Weather() {
     const [selectedLocation, setSelectedLocation] =
@@ -44,23 +45,36 @@ function Weather() {
     const filteredLocations = data?.results || [];
 
     return (
-        <div className="w-full max-w-md mx-auto p-6 bg-gradient-to-br from-blue-50 to-cyan-100 rounded-xl shadow-lg">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-                Weather Location Search
-            </h1>
+        <div className="w-full">
+            <Header />
+            <main className="pt-10">
+                <h1 className="text-preset-2 text-foreground text-center">
+                    How is the sky looking today
+                </h1>
+                <div className="main-content flex flex-col pt-20 gap-8">
+                    <LocationCombobox
+                        onLocationSelect={handleLocationSelect}
+                        onQueryChange={handleQueryChange}
+                        selectedLocation={selectedLocation}
+                        locations={filteredLocations}
+                        isLoading={isPending}
+                        error={error}
+                    />
 
-            <LocationCombobox
-                onLocationSelect={handleLocationSelect}
-                onQueryChange={handleQueryChange}
-                selectedLocation={selectedLocation}
-                locations={filteredLocations}
-                isLoading={isPending}
-                error={error}
-            />
-
-            {selectedLocation && (
-               <DisplayLocation selectedLocation={selectedLocation} />
-            )}
+                    {selectedLocation && (
+                        <DisplayLocation selectedLocation={selectedLocation} />
+                    )}
+                    <div className="content-container flex flex-col gap-8">
+                        <div className="left-content">
+                            <div className="weather-info-container flex flex-col gap-8">
+                                
+                            </div>
+                            <div className="daily-forecast-container"></div>
+                        </div>
+                          <div className="hourly-forecast-container"></div>
+                    </div>
+                </div>
+            </main>
         </div>
     );
 }

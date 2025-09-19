@@ -3,10 +3,13 @@ import {
     ComboboxInput,
     ComboboxOption,
     ComboboxOptions,
+    Field,
+    Label,
     Transition,
 } from "@headlessui/react";
 import { Fragment } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import clsx from "clsx";
 
 export interface LocationData {
     id: number;
@@ -35,13 +38,17 @@ function LocationCombobox({
     isLoading,
     error,
 }: Readonly<LocationComboboxProps>) {
-   
     return (
         <div className="relative">
+            <Field>
+                                    <Label className="sr-only">Search for country</Label>
             <Combobox value={selectedLocation} onChange={onLocationSelect}>
                 <div className="relative">
                     <ComboboxInput
-                        className="w-full py-3 pl-4 pr-10 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
+                        className={clsx(
+                            "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-white/5 py-3.75 pr-3 pl-8 text-sm/6 text-white",
+                            "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
+                        )}
                         displayValue={(location: LocationData | null) =>
                             location?.name || ""
                         }
@@ -61,14 +68,14 @@ function LocationCombobox({
                     as={Fragment}
                     leave="transition ease-in duration-100"
                     leaveFrom="opacity-100"
-                    leaveTo="opacity-0"                   
+                    leaveTo="opacity-0"
                 >
                     <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {isLoading  ? (
+                        {isLoading ? (
                             <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                 Searching...
                             </div>
-                        ) : locations.length === 0  ? (
+                        ) : locations.length === 0 ? (
                             <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                 No locations found. Try a different search.
                             </div>
@@ -120,6 +127,7 @@ function LocationCombobox({
                     </ComboboxOptions>
                 </Transition>
             </Combobox>
+            </Field>
         </div>
     );
 }
