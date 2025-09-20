@@ -14,7 +14,7 @@
 
 @font-face {
     font-family: "Bricolage Grotesque";
-    src: url("/assets/fonts/Bricolage_Grotesque/Bricolage_Grotesque-VariableFont_opsz,wdth,wght.ttf")
+    src: url("/assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
         format("truetype");
     font-weight: 100 800;
     font-stretch: 75% 100%;
@@ -213,8 +213,8 @@
 
     .text-preset-4 {
         font-family: "DM sans", sans-serif;
-        font-weight: 900;
-        font-style: bold;
+        font-weight: 600;
+        font-style: normal;
         font-size: 1.75rem;
         line-height: 1.2;
         letter-spacing: 0;

@@ -5,6 +5,8 @@ import LocationCombobox, {
 } from "./components/LocationCombobox";
 import DisplayLocation from "./components/DisplayLocation";
 import Header from "./components/Header";
+import WeatherToday from "./components/WeatherToday";
+import DailyForecast from "./components/DailyForecast";
 
 interface WeatherData {
     latitude: number;
@@ -14,6 +16,20 @@ interface WeatherData {
     timezone: string;
     timezone_abbreviation: string;
     elevation: number;
+    daily_units: {
+        time: string;
+        temperature_2m_max: string;
+        temperature_2m_min: string;
+        weather_code: string;
+        rain_sum: string;
+    };
+    daily: {
+        time: string[];
+        temperature_2m_max: number[];
+        temperature_2m_min: number[];
+        weather_code: number[];
+        rain_sum: number[];
+    };
     hourly_units: {
         time: string;
         temperature_2m: string;
@@ -77,13 +93,19 @@ function Weather() {
             const params = {
                 latitude: selectedLocation.latitude,
                 longitude: selectedLocation.longitude,
+                daily: [
+                    "temperature_2m_max",
+                    "temperature_2m_min",
+                    "weather_code",
+                    "rain_sum",
+                ],
                 hourly: [
                     "temperature_2m",
                     "relative_humidity_2m",
                     "wind_speed_10m",
                     "precipitation",
                 ],
-                forecast_days: 14,
+                forecast_days: 7,
             };
 
             // convert params to query string
@@ -91,6 +113,7 @@ function Weather() {
             queryParams.append("latitude", params.latitude.toString());
             queryParams.append("longitude", params.longitude.toString());
             queryParams.append("hourly", params.hourly.join(","));
+            queryParams.append("daily", params.daily.join(","));
             queryParams.append(
                 "forecast_days",
                 params.forecast_days.toString()
@@ -141,10 +164,6 @@ function Weather() {
                         error={errorLocation}
                     />
 
-                    {selectedLocation && (
-                        <DisplayLocation selectedLocation={selectedLocation} />
-                    )}
-
                     {/* Weather data loading and error states */}
                     {isPendingWeather && selectedLocation && (
                         <div className="text-center text-preset-6 text-foreground/80">
@@ -160,8 +179,41 @@ function Weather() {
 
                     <div className="content-container flex flex-col gap-8">
                         <div className="left-content">
-                            <div className="weather-info-container flex flex-col gap-8"></div>
-                            <div className="daily-forecast-container"></div>
+                            <div className="weather-info-container flex flex-col gap-8">
+                                {selectedLocation && (
+                                    <DisplayLocation
+                                        selectedLocation={selectedLocation}
+                                        temp={
+                                            weatherData?.hourly
+                                                .temperature_2m ?? []
+                                        }
+                                    />
+                                )}
+
+                                {selectedLocation && (
+                                    <WeatherToday
+                                        hourlyTemperature={
+                                            weatherData?.hourly
+                                                .temperature_2m ?? []
+                                        }
+                                        hourlyHumidity={
+                                            weatherData?.hourly
+                                                .relative_humidity_2m ?? []
+                                        }
+                                        hourlyWindSpeed={
+                                            weatherData?.hourly
+                                                .wind_speed_10m ?? []
+                                        }
+                                        hourlyPrecipitation={
+                                            weatherData?.hourly.precipitation ??
+                                            []
+                                        }
+                                    />
+                                )}
+                            </div>
+                            {selectedLocation && weatherData && (
+                                <DailyForecast weatherData={weatherData} />
+                            )}
                         </div>
                         <div className="hourly-forecast-container"></div>
                     </div>
