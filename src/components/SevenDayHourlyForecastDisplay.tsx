@@ -42,7 +42,7 @@ function SevenDayHourlyForecastDisplay({
                                 </p>
                             </div>
 
-                            <p className="text-foreground text-preset-5-m p-4">
+                            <p className="text-foreground text-preset-7 p-4">
                                 {`${Math.round(dayData.temperature_2m[index])}`}
                                 &#176;
                             </p>

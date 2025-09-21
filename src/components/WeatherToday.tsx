@@ -12,7 +12,7 @@ function WeatherToday({
     hourlyPrecipitation,
 }: Readonly<WeatherTodayProps>) {
     return (
-        <div className="weather-details-container grid grid-cols-2 gap-4">
+        <div className="weather-details-container grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-secondary-foreground rounded-[var(--radius-12)] p-4">
                 <h2 className="text-foreground">Feels like</h2>
                 <p className="text-foreground">

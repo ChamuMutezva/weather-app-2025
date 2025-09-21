@@ -164,7 +164,7 @@ function Weather() {
                 <h1 className="text-preset-2 text-foreground text-center">
                     How is the sky looking today
                 </h1>
-                <div className="main-content flex flex-col pt-20 gap-8">
+                <div className="main-content grid grid-cols-1 pt-20 gap-8">
                     <LocationCombobox
                         onLocationSelect={handleLocationSelect}
                         onQueryChange={handleQueryChange}
@@ -187,8 +187,8 @@ function Weather() {
                         </div>
                     )}
 
-                    <div className="content-container flex flex-col gap-8">
-                        <div className="left-content">
+                    <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="left-content col-span-2">
                             <div className="weather-info-container flex flex-col gap-8">
                                 {selectedLocation && (
                                     <DisplayLocation
@@ -226,7 +226,7 @@ function Weather() {
                             )}
                         </div>
                         {selectedLocation && weatherData && (
-                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4">
+                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4 max-h-[48rem] overflow-y-scroll">
                                 <SevenDayHourlyForecast
                                     weatherData={weatherData}
                                     onDaySelect={handleDaySelect}
