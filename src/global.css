@@ -6,6 +6,7 @@
     --color-foreground: var(--foreground);
     --color-primary: var(--primary);
     --color-secondary: var(--secondary);
+    --color-card: var(--card);
     --color-linear: var(--linear);
     --color-primary-foreground: var(--primary-foreground);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -166,6 +167,7 @@
     --primary: hsl(var(--neutral-300));
     --primary-foreground: hsl(var(--blue-500));
     --secondary-foreground: hsl(var(--neutral-600));
+    --card: hsl(var(--neutral-700));
     --linear: linear-gradient(
         135deg,
         hsl(var(--blue-500)) 0%,

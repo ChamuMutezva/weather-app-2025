@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 interface DailyForecastProps {
     weatherData: {
@@ -53,17 +54,20 @@ function SevenDayHourlyForecast({
     return (
         <div className="hourly-forecast flex justify-between items-center">
             <div className="hourly-forecast-header">
-                <h2>Hourly Forecast</h2>
+                <h2 className="text-preset-5 text-foreground">
+                    Hourly Forecast
+                </h2>
             </div>
 
             <Menu>
                 <MenuButton
-                    className="inline-flex items-center gap-2 rounded-md bg-secondary text-primary
-                     px-3 py-1.5 text-preset-8 shadow-inner shadow-white/10 
+                    className="inline-flex items-center gap-2 rounded-md bg-secondary-foreground 
+                     px-3 py-1.5 text-preset-7 text-foreground shadow-inner shadow-white/10 
                      focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
                       data-hover:bg-gray-700 data-open:bg-gray-700"
                 >
                     Select Day
+                     <ChevronDownIcon className="size-4 fill-white" />
                 </MenuButton>
                 <MenuItems
                     transition

@@ -9,44 +9,7 @@ import WeatherToday from "./components/WeatherToday";
 import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
-
-interface WeatherData {
-    latitude: number;
-    longitude: number;
-    generationtime_ms: number;
-    utc_offset_seconds: number;
-    timezone: string;
-    timezone_abbreviation: string;
-    elevation: number;
-    daily_units: {
-        time: string;
-        temperature_2m_max: string;
-        temperature_2m_min: string;
-        weather_code: string;
-        rain_sum: string;
-    };
-    daily: {
-        time: string[];
-        temperature_2m_max: number[];
-        temperature_2m_min: number[];
-        weather_code: number[];
-        rain_sum: number[];
-    };
-    hourly_units: {
-        time: string;
-        temperature_2m: string;
-        relative_humidity_2m: string;
-        wind_speed_10m: string;
-        precipitation: string;
-    };
-    hourly: {
-        time: string[];
-        temperature_2m: number[];
-        relative_humidity_2m: number[];
-        wind_speed_10m: number[];
-        precipitation: number[];
-    };
-}
+import { type WeatherData } from "./types/types";
 
 function Weather() {
     const [selectedLocation, setSelectedLocation] =
@@ -61,6 +24,7 @@ function Weather() {
         relative_humidity_2m: number[];
         wind_speed_10m: number[];
         precipitation: number[];
+        weather_code: number[];
     } | null>(null);
 
     // Debounce the search query to avoid too many API calls
@@ -72,6 +36,7 @@ function Weather() {
         return () => clearTimeout(timer);
     }, [query]);
 
+    // Get location data based on the debounced query
     const {
         isPending: isPendingLocation,
         error: errorLocation,
@@ -88,6 +53,7 @@ function Weather() {
         enabled: debouncedQuery.length > 0,
     });
 
+    // Get weather data based on the selected location
     const {
         isPending: isPendingWeather,
         error: errorWeather,
@@ -115,6 +81,7 @@ function Weather() {
                     "relative_humidity_2m",
                     "wind_speed_10m",
                     "precipitation",
+                    "weather_code",
                 ],
                 forecast_days: 7,
             };
@@ -151,16 +118,16 @@ function Weather() {
 
     const filteredLocations = dataLocation?.results || [];
 
-    // Log weather data for debugging
+    /* Log weather data for debugging
     useEffect(() => {
         if (weatherData) {
             console.log("Weather data:", weatherData);
         }
     }, [weatherData]);
-
+*/
     const handleDaySelect = (day: string) => {
         setSelectedDay(day);
-       // console.log(`Selected day in parent: ${selectedDay}`);
+        // console.log(`Selected day in parent: ${selectedDay}`);
         if (weatherData) {
             const indices = weatherData.hourly.time
                 .map((time, index) => (time.includes(day) ? index : -1))
@@ -180,10 +147,13 @@ function Weather() {
                 precipitation: indices.map(
                     (i) => weatherData.hourly.precipitation[i]
                 ),
+                weather_code: indices.map(
+                    (i) => weatherData.hourly.weather_code[i]
+                ),
             };
 
             setFilteredHourlyData(filteredData);
-           // console.log("Filtered hourly data:", filteredData);
+            // console.log("Filtered hourly data:", filteredData);
         }
     };
 
@@ -255,20 +225,23 @@ function Weather() {
                                 <DailyForecast weatherData={weatherData} />
                             )}
                         </div>
-                        <div className="hourly-forecast-container">
-                            {selectedLocation && weatherData && (
+                        {selectedLocation && weatherData && (
+                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4">
                                 <SevenDayHourlyForecast
                                     weatherData={weatherData}
                                     onDaySelect={handleDaySelect}
                                 />
-                            )}
 
-                            {filteredHourlyData && (
-                                <div className="bg-amber-600">                                    
-                                    <SevenDayHourlyForecastDisplay selectedDay={selectedDay} dayData={filteredHourlyData} />
-                                </div>
-                            )}
-                        </div>
+                                {filteredHourlyData && (
+                                    <div className="">
+                                        <SevenDayHourlyForecastDisplay
+                                            selectedDay={selectedDay}
+                                            dayData={filteredHourlyData}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>

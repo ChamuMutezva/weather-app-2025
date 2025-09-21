@@ -1,5 +1,13 @@
 export function getWeatherIcon(code: number) {
-    if (code === 0) return <img src="/assets/images/icon-sunny.webp" alt="" />; // Clear sky
+    if (code === 0)
+        return (
+            <img
+                src="/assets/images/icon-sunny.webp"
+                alt=""
+                width={60}
+                height={60}
+            />
+        ); // Clear sky
     if (code >= 1 && code <= 3)
         return (
             <img
