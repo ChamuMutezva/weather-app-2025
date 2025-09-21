@@ -7,6 +7,8 @@ import DisplayLocation from "./components/DisplayLocation";
 import Header from "./components/Header";
 import WeatherToday from "./components/WeatherToday";
 import DailyForecast from "./components/DailyForecast";
+import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
+import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
 
 interface WeatherData {
     latitude: number;
@@ -49,8 +51,17 @@ interface WeatherData {
 function Weather() {
     const [selectedLocation, setSelectedLocation] =
         useState<LocationData | null>(null);
+    const [selectedDay, setSelectedDay] = useState<string>("");
     const [debouncedQuery, setDebouncedQuery] = useState("");
     const [query, setQuery] = useState("");
+
+    const [filteredHourlyData, setFilteredHourlyData] = useState<{
+        time: string[];
+        temperature_2m: number[];
+        relative_humidity_2m: number[];
+        wind_speed_10m: number[];
+        precipitation: number[];
+    } | null>(null);
 
     // Debounce the search query to avoid too many API calls
     useEffect(() => {
@@ -147,6 +158,35 @@ function Weather() {
         }
     }, [weatherData]);
 
+    const handleDaySelect = (day: string) => {
+        setSelectedDay(day);
+       // console.log(`Selected day in parent: ${selectedDay}`);
+        if (weatherData) {
+            const indices = weatherData.hourly.time
+                .map((time, index) => (time.includes(day) ? index : -1))
+                .filter((index) => index !== -1);
+
+            const filteredData = {
+                time: indices.map((i) => weatherData.hourly.time[i]),
+                temperature_2m: indices.map(
+                    (i) => weatherData.hourly.temperature_2m[i]
+                ),
+                relative_humidity_2m: indices.map(
+                    (i) => weatherData.hourly.relative_humidity_2m[i]
+                ),
+                wind_speed_10m: indices.map(
+                    (i) => weatherData.hourly.wind_speed_10m[i]
+                ),
+                precipitation: indices.map(
+                    (i) => weatherData.hourly.precipitation[i]
+                ),
+            };
+
+            setFilteredHourlyData(filteredData);
+           // console.log("Filtered hourly data:", filteredData);
+        }
+    };
+
     return (
         <div className="w-full">
             <Header />
@@ -215,7 +255,20 @@ function Weather() {
                                 <DailyForecast weatherData={weatherData} />
                             )}
                         </div>
-                        <div className="hourly-forecast-container"></div>
+                        <div className="hourly-forecast-container">
+                            {selectedLocation && weatherData && (
+                                <SevenDayHourlyForecast
+                                    weatherData={weatherData}
+                                    onDaySelect={handleDaySelect}
+                                />
+                            )}
+
+                            {filteredHourlyData && (
+                                <div className="bg-amber-600">                                    
+                                    <SevenDayHourlyForecastDisplay selectedDay={selectedDay} dayData={filteredHourlyData} />
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
