@@ -37,3 +37,12 @@ export interface WeatherData {
         weather_code: number[];
     };
 }
+export interface LocationData {
+    id: number;
+    name: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+    country_code: string;
+    admin1?: string;
+}

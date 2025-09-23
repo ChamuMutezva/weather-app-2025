@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import LocationCombobox, {
-    type LocationData,
-} from "./components/LocationCombobox";
+import LocationCombobox from "./components/LocationCombobox";
+import { type LocationData, type WeatherData } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
 import Header from "./components/Header";
 import WeatherToday from "./components/WeatherToday";
 import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
-import { type WeatherData } from "./types/types";
 
 function Weather() {
     const [selectedLocation, setSelectedLocation] =
@@ -162,7 +160,7 @@ function Weather() {
             <Header />
             <main className="pt-10">
                 <h1 className="text-preset-2 text-foreground text-center">
-                    How is the sky looking today
+                    How&apos;s the sky looking today
                 </h1>
                 <div className="main-content grid grid-cols-1 pt-20 gap-8">
                     <LocationCombobox
