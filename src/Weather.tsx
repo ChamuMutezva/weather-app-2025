@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect, useCallback } from "react";
 import LocationCombobox from "./components/LocationCombobox";
-import { type LocationData, type WeatherData } from "./types/types";
+import { type LocationData } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
 import Header from "./components/Header";
 import WeatherToday from "./components/WeatherToday";
 import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
+import { useLocationData, useWeatherData } from "./hooks/react-query";
 
 function Weather() {
     const [selectedLocation, setSelectedLocation] =
@@ -34,80 +34,26 @@ function Weather() {
         return () => clearTimeout(timer);
     }, [query]);
 
-    // Get location data based on the debounced query
+    // use custom hook to get location data
     const {
         isPending: isPendingLocation,
         error: errorLocation,
         data: dataLocation,
-    } = useQuery({
-        queryKey: ["locationData", debouncedQuery],
-        queryFn: () => {
-            if (!debouncedQuery.trim()) return { results: [] };
+    } = useLocationData(debouncedQuery);
 
-            return fetch(
-                `https://geocoding-api.open-meteo.com/v1/search?name=${debouncedQuery}&count=10&language=en&format=json`
-            ).then((res) => res.json());
-        },
-        enabled: debouncedQuery.length > 0,
-    });
-
-    // Get weather data based on the selected location
+    // use custom hook to get weather data
     const {
         isPending: isPendingWeather,
         error: errorWeather,
         data: weatherData,
-    } = useQuery<WeatherData>({
-        queryKey: [
-            "weatherData",
-            selectedLocation?.latitude,
-            selectedLocation?.longitude,
-        ],
-        queryFn: async () => {
-            if (!selectedLocation) throw new Error("No location selected");
-
-            const params = {
-                latitude: selectedLocation.latitude,
-                longitude: selectedLocation.longitude,
-                daily: [
-                    "temperature_2m_max",
-                    "temperature_2m_min",
-                    "weather_code",
-                    "rain_sum",
-                ],
-                hourly: [
-                    "temperature_2m",
-                    "relative_humidity_2m",
-                    "wind_speed_10m",
-                    "precipitation",
-                    "weather_code",
-                ],
-                forecast_days: 7,
-            };
-
-            // convert params to query string
-            const queryParams = new URLSearchParams();
-            queryParams.append("latitude", params.latitude.toString());
-            queryParams.append("longitude", params.longitude.toString());
-            queryParams.append("hourly", params.hourly.join(","));
-            queryParams.append("daily", params.daily.join(","));
-            queryParams.append(
-                "forecast_days",
-                params.forecast_days.toString()
-            );
-
-            const url = `https://api.open-meteo.com/v1/forecast?${queryParams.toString()}`;
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Weather API  error: ${response.status}`);
-            }
-            return response.json() as Promise<WeatherData>;
-        },
-        enabled: !!selectedLocation, // only run if a location is selected
-    });
+    } = useWeatherData(selectedLocation);
 
     const handleLocationSelect = (location: LocationData | null) => {
         setSelectedLocation(location);
+        // Reset selected day and filtered data when location changes
+        setSelectedDay("");
         console.log("Selected location:", location);
+        console.log("Weather data:", weatherData);
     };
 
     const handleQueryChange = (newQuery: string) => {
@@ -116,14 +62,7 @@ function Weather() {
 
     const filteredLocations = dataLocation?.results || [];
 
-    /* Log weather data for debugging
-    useEffect(() => {
-        if (weatherData) {
-            console.log("Weather data:", weatherData);
-        }
-    }, [weatherData]);
-*/
-    const handleDaySelect = (day: string) => {
+    const handleDaySelect = useCallback( (day: string) => {
         setSelectedDay(day);
         // console.log(`Selected day in parent: ${selectedDay}`);
         if (weatherData) {
@@ -153,7 +92,16 @@ function Weather() {
             setFilteredHourlyData(filteredData);
             // console.log("Filtered hourly data:", filteredData);
         }
-    };
+    }, [weatherData]);
+
+    // New useEffect to automatically select the current day when weather data loads.
+    useEffect(() => {
+        if (weatherData && !selectedDay) {
+            // Get today's date in 'YYYY-MM-DD' format
+            const today = new Date().toISOString().split('T')[0];
+            handleDaySelect(today);
+        }
+    }, [weatherData, selectedDay, handleDaySelect]);
 
     return (
         <div className="w-full">
