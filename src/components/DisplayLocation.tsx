@@ -1,4 +1,4 @@
-import { type LocationData } from "./LocationCombobox";
+import { type LocationData } from "../types/types";
 
 interface DisplayLocationProps {
     selectedLocation: LocationData | null;
