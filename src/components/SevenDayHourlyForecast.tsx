@@ -18,13 +18,16 @@ interface DailyForecastProps {
         };
     };
     onDaySelect: (day: string) => void;
+    selectedDay: string;
 }
 
 function SevenDayHourlyForecast({
     weatherData,
     onDaySelect,
+    selectedDay,
 }: Readonly<DailyForecastProps>) {
     console.log(weatherData.hourly);
+    console.log("Selected day:", selectedDay)
     const getUniqueDays = () => {
         const days: string[] = [];
         const seenDays = new Set();

@@ -1,43 +1,25 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
 
-function Header() {
-    const [enabled, setEnabled] = useState(false);
-    const [selectedUnits, setSelectedUnits] = useState({
-        temperature: "celsius",
-        wind: "kmh",
-        precipitation: "mm",
-    });
-
-    const handleSelect = (category: string, unit: string) => {
-        console.log("Category", category);
-        console.log("unit", unit);
-        setSelectedUnits((prev) => ({
-            ...prev,
-            [category]: unit,
-        }));
-    };
-    const handleUnitToggle = (isImperialEnabled: boolean) => {
-        setEnabled(isImperialEnabled);
-        if (isImperialEnabled) {
-            setSelectedUnits({
-                temperature: "fahrenheit",
-                wind: "mph",
-                precipitation: "inches",
-            });
-        } else {
-            setSelectedUnits({
-                temperature: "celsius",
-                wind: "kmh",
-                precipitation: "mm",
-            });
-        }
-    };
+function Header({
+    enabled,
+    handleUnitToggle,
+    selectedUnits,
+    handleSelectUnitCategory,
+}: Readonly<{
+    enabled: boolean;
+    handleUnitToggle: (isImperialEnabled: boolean) => void;
+    selectedUnits: { temperature: string; wind: string; precipitation: string };
+    handleSelectUnitCategory: (category: string, unit: string) => void;
+}>) {
     return (
         <header className="flex justify-between items-center ">
             <a href="/" aria-label="home page">
-                <img src="/assets/images/logo.svg" alt="" className="h-8 w-auto" />
+                <img
+                    src="/assets/images/logo.svg"
+                    alt=""
+                    className="h-8 w-auto"
+                />
             </a>
 
             <div className="text-right">
@@ -80,7 +62,10 @@ function Header() {
                             <button
                                 className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
                                 onClick={() =>
-                                    handleSelect("temperature", "celsius")
+                                    handleSelectUnitCategory(
+                                        "temperature",
+                                        "celsius"
+                                    )
                                 }
                             >
                                 <span>Celsius (°C)</span>
@@ -93,7 +78,10 @@ function Header() {
                             <button
                                 className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
                                 onClick={() =>
-                                    handleSelect("temperature", "fahrenheit")
+                                    handleSelectUnitCategory(
+                                        "temperature",
+                                        "fahrenheit"
+                                    )
                                 }
                             >
                                 <span>Fahrenheit (°F)</span>
@@ -113,7 +101,9 @@ function Header() {
                         <MenuItem>
                             <button
                                 className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
-                                onClick={() => handleSelect("wind", "kmh")}
+                                onClick={() =>
+                                    handleSelectUnitCategory("wind", "kmh")
+                                }
                             >
                                 <span>km/h</span>
                                 {selectedUnits.wind === "kmh" && (
@@ -124,7 +114,9 @@ function Header() {
                         <MenuItem>
                             <button
                                 className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
-                                onClick={() => handleSelect("wind", "mph")}
+                                onClick={() =>
+                                    handleSelectUnitCategory("wind", "mph")
+                                }
                             >
                                 <span>mph</span>
                                 {selectedUnits.wind === "mph" && (
@@ -144,7 +136,10 @@ function Header() {
                             <button
                                 className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
                                 onClick={() =>
-                                    handleSelect("precipitation", "mm")
+                                    handleSelectUnitCategory(
+                                        "precipitation",
+                                        "mm"
+                                    )
                                 }
                             >
                                 <span>Millimeters (mm)</span>
@@ -157,7 +152,10 @@ function Header() {
                             <button
                                 className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
                                 onClick={() =>
-                                    handleSelect("precipitation", "inches")
+                                    handleSelectUnitCategory(
+                                        "precipitation",
+                                        "inches"
+                                    )
                                 }
                             >
                                 <span>Inches (in)</span>

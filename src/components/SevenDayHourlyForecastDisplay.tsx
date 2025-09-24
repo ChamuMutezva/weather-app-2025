@@ -1,4 +1,7 @@
 import { getWeatherIcon } from "../utility/getWeatherIcon";
+import {type SelectedUnits } from "../types/types";
+
+
 type SevenDayHourlyForecastDisplayProps = {
     dayData: {
         time: string[];
@@ -9,13 +12,19 @@ type SevenDayHourlyForecastDisplayProps = {
         weather_code: number[];
     } | null;
     selectedDay: string;
+    selectedUnits: SelectedUnits;
 };
 
 function SevenDayHourlyForecastDisplay({
     selectedDay,
     dayData,
+    selectedUnits
 }: Readonly<SevenDayHourlyForecastDisplayProps>) {
     console.log(dayData);
+
+    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
+    //const windUnit = selectedUnits.wind === "kmh" ? "km/h" : "mph";
+   // const precipitationUnit = selectedUnits.precipitation === "mm" ? "mm" : "inches";
 
     return (
         <div>
@@ -43,8 +52,8 @@ function SevenDayHourlyForecastDisplay({
                             </div>
 
                             <p className="text-foreground text-preset-7 p-4">
-                                {`${Math.round(dayData.temperature_2m[index])}`}
-                                &#176;
+                                {`${Math.round(dayData.temperature_2m[index])} ${tempUnit}`}
+                                
                             </p>
                             {/*
                             <p>{`${Math.round(

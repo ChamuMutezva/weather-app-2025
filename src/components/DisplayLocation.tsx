@@ -1,13 +1,14 @@
-import { type LocationData } from "../types/types";
-
+import { type LocationData, type SelectedUnits } from "../types/types";
 interface DisplayLocationProps {
     selectedLocation: LocationData | null;
     temp: number[];
+    selectedUnits: SelectedUnits;
 }
 
 function DisplayLocation({
     selectedLocation,
     temp,
+    selectedUnits
 }: Readonly<DisplayLocationProps>) {
     const formatDate = (date: Date) => {
         return date.toLocaleDateString("en-US", {
@@ -20,6 +21,9 @@ function DisplayLocation({
     if (!selectedLocation) {
         return null;
     }
+
+     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
+
     return (
         <div
             className={`weather-info bg-[url(/assets/images/bg-today-small.svg)] 
@@ -38,7 +42,7 @@ function DisplayLocation({
                 <img src="/assets/images/icon-sunny.webp" alt="" />
                 <p className="text-preset-1 text-foreground">
                     {`${Math.round(temp[0])}`}
-                    <span>&#176;</span>
+                    <span>{tempUnit}</span>
                 </p>
             </div>
         </div>

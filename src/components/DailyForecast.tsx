@@ -1,5 +1,5 @@
 import { getWeatherIcon } from "../utility/getWeatherIcon";
-
+import { type SelectedUnits } from "../types/types";
 interface DailyForecastProps {
     weatherData: {
         daily: {
@@ -9,9 +9,12 @@ interface DailyForecastProps {
             temperature_2m_min: number[];
         };
     };
+     selectedUnits: SelectedUnits;
 }
 
-function DailyForecast({ weatherData }: Readonly<DailyForecastProps>) {
+function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastProps>) {
+    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
+
     return (
         <div className="daily-forecast-container">
             <h2>Daily forecast</h2>
@@ -27,7 +30,7 @@ function DailyForecast({ weatherData }: Readonly<DailyForecastProps>) {
                                     weekday: "short",
                                 })}
                             </p>
-                            {/*<img src="/assets/images/icon-sunny.webp" alt="" /> */}
+                          
                             {getWeatherIcon(
                                 weatherData.daily.weather_code[index]
                             )}
@@ -38,7 +41,7 @@ function DailyForecast({ weatherData }: Readonly<DailyForecastProps>) {
                                             index
                                         ]
                                     )}`}
-                                    <span>&#176;</span>
+                                    <span>{tempUnit}</span>
                                 </p>
                                 <p className="text-foreground opacity-80">
                                     {`${Math.round(
@@ -46,7 +49,7 @@ function DailyForecast({ weatherData }: Readonly<DailyForecastProps>) {
                                             index
                                         ]
                                     )}`}
-                                    <span>&#176;</span>
+                                    <span>{tempUnit}</span>
                                 </p>
                             </div>
                         </div>
