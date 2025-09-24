@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import LocationCombobox from "./components/LocationCombobox";
-import { type LocationData } from "./types/types";
+import { type LocationData, type SelectedUnits } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
 import Header from "./components/Header";
 import WeatherToday from "./components/WeatherToday";
@@ -8,17 +8,11 @@ import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
 import { useLocationData, useWeatherData } from "./hooks/react-query";
-
-// Unit conversion helper functions
-const convertCelsiusToFehrenheit = (celsius: number) => (celsius * 9) / 5 + 32;
-const convertKmhToMph = (kmh: number) => kmh / 1.609;
-const convertMmToInches = (mm: number) => mm / 25.4;
-
-interface SelectedUnits {
-    temperature: "celsius" | "fahrenheit";
-    wind: "kmh" | "mph";
-    precipitation: "mm" | "inches";
-}
+import {
+    convertKmhToMph,
+    convertCelsiusToFehrenheit,
+    convertMmToInches,
+} from "./utility/convertToImperial";
 
 function Weather() {
     const [selectedLocation, setSelectedLocation] =
