@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import { type SelectedUnits } from "../types/types";
 
 function Header({
     enabled,
@@ -10,7 +11,7 @@ function Header({
     enabled: boolean;
     handleUnitToggle: (isImperialEnabled: boolean) => void;
     selectedUnits: { temperature: string; wind: string; precipitation: string };
-    handleSelectUnitCategory: (category: string, unit: string) => void;
+    handleSelectUnitCategory: (category: keyof SelectedUnits, unit: SelectedUnits[keyof SelectedUnits]) => void;
 }>) {
     return (
         <header className="flex justify-between items-center ">

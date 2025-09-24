@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useReducer, useEffect, useCallback, useMemo } from "react";
 import LocationCombobox from "./components/LocationCombobox";
 import { type LocationData, type SelectedUnits } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
@@ -8,6 +8,7 @@ import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
 import { useLocationData, useWeatherData } from "./hooks/react-query";
+import { weatherReducer } from "./utility/reducers";
 import {
     convertKmhToMph,
     convertCelsiusToFehrenheit,
@@ -15,54 +16,32 @@ import {
 } from "./utility/convertToImperial";
 
 function Weather() {
-    const [selectedLocation, setSelectedLocation] =
-        useState<LocationData | null>(null);
-    const [selectedDay, setSelectedDay] = useState<string>("");
-    const [debouncedQuery, setDebouncedQuery] = useState("");
-    const [query, setQuery] = useState("");
-
-    /* Header component state for unit selection */
-    const [enabled, setEnabled] = useState(false);
-    const [selectedUnits, setSelectedUnits] = useState<SelectedUnits>({
-        temperature: "celsius",
-        wind: "kmh",
-        precipitation: "mm",
+    const [state, dispatch] = useReducer(weatherReducer, {
+        selectedLocation: null,
+        selectedDay: "",
+        query: "",
+        debouncedQuery: "",
+        enabled: false,
+        selectedUnits: {
+            temperature: "celsius",
+            wind: "kmh",
+            precipitation: "mm",
+        },
     });
 
-    const handleSelectUnitCategory = useCallback(
-        (category: string, unit: string) => {
-            console.log("Category", category);
-            console.log("unit", unit);
-            setSelectedUnits((prev) => ({
-                ...prev,
-                [category]: unit,
-            }));
-        },
-        []
-    );
+    const {
+        selectedLocation,
+        selectedDay,
+        query,
+        debouncedQuery,
+        enabled,
+        selectedUnits,
+    } = state;
 
-    const handleUnitToggle = useCallback((isImperialEnabled: boolean) => {
-        setEnabled(isImperialEnabled);
-        if (isImperialEnabled) {
-            setSelectedUnits({
-                temperature: "fahrenheit",
-                wind: "mph",
-                precipitation: "inches",
-            });
-        } else {
-            setSelectedUnits({
-                temperature: "celsius",
-                wind: "kmh",
-                precipitation: "mm",
-            });
-        }
-    }, []);
-    /* End Header component state for unit selection */
-
-    // Debounce the search query to avoid too many API calls
+    // Debounce the search query
     useEffect(() => {
         const timer = setTimeout(() => {
-            setDebouncedQuery(query);
+            dispatch({ type: "SET_DEBOUNCED_QUERY", payload: query });
         }, 300);
 
         return () => clearTimeout(timer);
@@ -84,22 +63,38 @@ function Weather() {
 
     const handleLocationSelect = useCallback(
         (location: LocationData | null) => {
-            setSelectedLocation(location);
-            setSelectedDay("");
+            dispatch({ type: "SET_LOCATION", payload: location });
             console.log("Selected location:", location);
         },
         []
     );
 
     const handleQueryChange = (newQuery: string) => {
-        setQuery(newQuery); // This will trigger the debounced API call
+        dispatch({ type: "SET_QUERY", payload: newQuery }); // This will trigger the debounced API call
     };
 
-    const filteredLocations = dataLocation?.results || [];
-
     const handleDaySelect = useCallback((day: string) => {
-        setSelectedDay(day);
+        dispatch({ type: "SET_DAY", payload: day });
     }, []);
+
+    const handleSelectUnitCategory = useCallback(
+        (
+            category: keyof SelectedUnits,
+            unit: SelectedUnits[keyof SelectedUnits]
+        ) => {
+            dispatch({
+                type: "SET_UNIT_CATEGORY",
+                payload: { category, unit },
+            });
+        },
+        []
+    );
+
+    const handleUnitToggle = useCallback((isImperialEnabled: boolean) => {
+        dispatch({ type: "SET_UNITS_TOGGLE", payload: isImperialEnabled });
+    }, []);
+
+    const filteredLocations = dataLocation?.results || [];
 
     // Use useMemo to convert the weather data based on the selected units
     const convertedWeatherData = useMemo(() => {

@@ -51,3 +51,27 @@ export interface SelectedUnits {
     wind: "kmh" | "mph";
     precipitation: "mm" | "inches";
 }
+
+// State and Action Types
+export interface WeatherState {
+    selectedLocation: LocationData | null;
+    selectedDay: string;
+    query: string;
+    debouncedQuery: string;
+    enabled: boolean;
+    selectedUnits: SelectedUnits;
+}
+
+export type WeatherAction =
+    | { type: "SET_LOCATION"; payload: LocationData | null }
+    | { type: "SET_DAY"; payload: string }
+    | { type: "SET_QUERY"; payload: string }
+    | { type: "SET_DEBOUNCED_QUERY"; payload: string }
+    | { type: "SET_UNITS_TOGGLE"; payload: boolean }
+    | {
+          type: "SET_UNIT_CATEGORY";
+          payload: {
+              category: keyof SelectedUnits;
+              unit: SelectedUnits[keyof SelectedUnits];
+          };
+      };
