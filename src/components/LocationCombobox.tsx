@@ -8,7 +8,7 @@ import {
     Transition,
 } from "@headlessui/react";
 import { Fragment } from "react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import {type LocationData } from "../types/types";
 
@@ -26,8 +26,8 @@ const renderLocationOption = (location: LocationData) => (
         key={location.id}
         value={location}
         className={({ active }) =>
-            `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                active ? "bg-blue-100 text-blue-900" : "text-gray-900"
+            `relative cursor-default select-none py-2 pl-10 pr-4 m-2 rounded-[var(--radius-8)] ${
+                active ? "bg-card text-white" : "text-white"
             }`
         }
     >
@@ -53,7 +53,7 @@ const renderLocationOption = (location: LocationData) => (
 );
 
 const LoadingMessage = () => (
-    <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
+    <div className="relative cursor-default select-none px-4 py-2 text-white">
         Searching...
     </div>
 );
@@ -65,7 +65,7 @@ const ErrorMessage = ({ error }: { error: Error }) => (
 );
 
 const EmptyMessage = () => (
-    <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
+    <div className="relative cursor-default select-none px-4 py-2 text-white">
         No locations found. Try a different search.
     </div>
 );
@@ -90,14 +90,14 @@ function LocationCombobox({
     error,
 }: Readonly<LocationComboboxProps>) {
     return (
-        <div className="relative">
+        <div className="relative w-full max-w-xl place-self-center">
             <Field>
                 <Label className="sr-only">Search for country</Label>
                 <Combobox value={selectedLocation} onChange={onLocationSelect}>
                     <div className="relative">
                         <ComboboxInput
                             className={clsx(
-                                "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-white/5 py-3.75 pr-3 pl-8 text-sm/6 text-white",
+                                "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-secondary py-3.75 pr-3 pl-8 text-sm/6 text-white",
                                 "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
                             )}
                             displayValue={(location: LocationData | null) =>
@@ -112,7 +112,7 @@ function LocationCombobox({
                             {isLoading ? (
                                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
                             ) : (
-                                <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
+                                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
                             )}
                         </div>
                     </div>
@@ -123,7 +123,7 @@ function LocationCombobox({
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-secondary py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             {renderOptions(isLoading, error, locations)}
                         </ComboboxOptions>
                     </Transition>

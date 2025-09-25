@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useCallback, useMemo } from "react";
+import { useReducer, useEffect, useCallback, useMemo, useState } from "react";
 import LocationCombobox from "./components/LocationCombobox";
 import { type LocationData, type SelectedUnits } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
@@ -7,7 +7,11 @@ import WeatherToday from "./components/WeatherToday";
 import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
-import { useLocationData, useWeatherData } from "./hooks/react-query";
+import {
+    useLocationData,
+    useWeatherData,
+    useLocationByCoords,
+} from "./hooks/react-query";
 import { weatherReducer } from "./utility/reducers";
 import {
     convertKmhToMph,
@@ -37,6 +41,43 @@ function Weather() {
         enabled,
         selectedUnits,
     } = state;
+
+    // State for the user's current coordinates
+    const [coords, setCoords] = useState<{
+        latitude: number;
+        longitude: number;
+    } | null>(null);
+
+    // Get location based on coords
+    const {
+        isPending: isPendingCoords,
+        error: errorCoords,
+        data: dataCoords,
+    } = useLocationByCoords(coords);
+
+    // Get user's current location on page load
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setCoords({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    });
+                },
+                (error) => {
+                    console.error("Geolocation error:", error);
+                }
+            );
+        }
+    }, []);
+
+    // Set the selected location from the coordinates
+    useEffect(() => {
+        if (dataCoords && !selectedLocation) {
+            dispatch({ type: "SET_LOCATION", payload: dataCoords });
+        }
+    }, [dataCoords, selectedLocation]);
 
     // Debounce the search query
     useEffect(() => {
@@ -191,6 +232,19 @@ function Weather() {
                     How&apos;s the sky looking today
                 </h1>
                 <div className="main-content grid grid-cols-1 pt-20 gap-8">
+                    {/* Add loading and error states for geolocation */}
+                    {!query && isPendingCoords && (
+                        <div className="text-center text-preset-6 text-foreground/80">
+                            Finding your current location...
+                        </div>
+                    )}
+                    {!query && errorCoords && (
+                        <div className="text-center text-preset-6 text-red-500">
+                            Error finding your location. Please use the search
+                            bar.
+                        </div>
+                    )}
+
                     <LocationCombobox
                         onLocationSelect={handleLocationSelect}
                         onQueryChange={handleQueryChange}
