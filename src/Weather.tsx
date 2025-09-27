@@ -18,6 +18,10 @@ import {
     convertCelsiusToFehrenheit,
     convertMmToInches,
 } from "./utility/convertToImperial";
+import { areCoordsSimilar } from "./utility/checkSimilarCoords";
+
+const LOCATION_STORAGE_KEY = "cachedLocationData";
+
 
 function Weather() {
     const [state, dispatch] = useReducer(weatherReducer, {
@@ -48,29 +52,97 @@ function Weather() {
         longitude: number;
     } | null>(null);
 
+    // State to control when to call reverse geocoding
+    const [shouldCallReverseGeocoding, setShouldCallReverseGeocoding] =
+        useState(false);
+
     // Get location based on coords
     const {
         isPending: isPendingCoords,
         error: errorCoords,
         data: dataCoords,
-    } = useLocationByCoords(coords);
+    } = useLocationByCoords(shouldCallReverseGeocoding ? coords : null);
 
     // Get user's current location on page load
     useEffect(() => {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    setCoords({
+                    const newCoords = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
-                    });
+                    };
+
+                    setCoords(newCoords);
+
+                    // Check localStorage for existing location data
+                    const cachedLocation =
+                        localStorage.getItem(LOCATION_STORAGE_KEY);
+
+                    if (cachedLocation) {
+                        try {
+                            const parsedCachedLocation =
+                                JSON.parse(cachedLocation);
+
+                            // Check if we have cached coordinates and if they're similar
+                            if (
+                                parsedCachedLocation.cachedCoords &&
+                                areCoordsSimilar(
+                                    newCoords,
+                                    parsedCachedLocation.cachedCoords
+                                )
+                            ) {
+                                // Use cached location data and SKIP reverse geocoding
+                                console.log(
+                                    "Using cached location data - skipping reverse geocoding"
+                                );
+                                dispatch({
+                                    type: "SET_LOCATION",
+                                    payload: parsedCachedLocation.location,
+                                });
+                                setShouldCallReverseGeocoding(false);
+                                return;
+                            }
+                        } catch (error) {
+                            console.error(
+                                "Error parsing cached location:",
+                                error
+                            );
+                        }
+                    }
+
+                    // If no cached data or coordinates changed significantly, call reverse geocoding
+                    console.log(
+                        "Calling reverse geocoding - coordinates changed or no cache"
+                    );
+                    setShouldCallReverseGeocoding(true);
                 },
                 (error) => {
                     console.error("Geolocation error:", error);
+                    setShouldCallReverseGeocoding(false);
                 }
             );
+        } else {
+            console.log("Geolocation not supported");
+            setShouldCallReverseGeocoding(false);
         }
     }, []);
+
+    // Save location data to localStorage when we get new data from reverse geocoding
+    useEffect(() => {
+        if (dataCoords && coords) {
+            const locationDataToCache = {
+                location: dataCoords,
+                cachedCoords: coords,
+                timestamp: new Date().toISOString(),
+            };
+            localStorage.setItem(
+                LOCATION_STORAGE_KEY,
+                JSON.stringify(locationDataToCache)
+            );
+            console.log("Location data cached to localStorage");
+        }
+    }, [dataCoords, coords]);
 
     // Set the selected location from the coordinates
     useEffect(() => {
@@ -233,11 +305,13 @@ function Weather() {
                 </h1>
                 <div className="main-content grid grid-cols-1 pt-20 gap-y-8">
                     {/* Add loading and error states for geolocation */}
-                    {!query && isPendingCoords && (
-                        <div className="text-center text-preset-6 text-foreground/80">
-                            Finding your current location...
-                        </div>
-                    )}
+                    {!query &&
+                        isPendingCoords &&
+                        shouldCallReverseGeocoding && (
+                            <div className="text-center text-preset-6 text-foreground/80">
+                                Finding your current location...
+                            </div>
+                        )}
                     {!query && errorCoords && (
                         <div className="text-center text-preset-6 text-red-500">
                             Error finding your location. Please use the search
@@ -251,6 +325,9 @@ function Weather() {
                         selectedLocation={selectedLocation}
                         locations={filteredLocations}
                         isLoading={isPendingLocation}
+                        isPendingCoords={
+                            isPendingCoords && shouldCallReverseGeocoding
+                        }
                         error={errorLocation}
                     />
 

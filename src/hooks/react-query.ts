@@ -83,31 +83,42 @@ export const useLocationByCoords = (
             if (!coords) {
                 throw new Error("Coordinates are not provided");
             }
-          // Use the Vite proxy
+            // Direct call to Nominatim with proper headers
             const response = await fetch(
-                `/api/geocoding/reverse?latitude=${coords.latitude}&longitude=${coords.longitude}&count=1&language=en&format=json`
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}&zoom=18&addressdetails=1`,
+                {
+                    headers: {
+                        "User-Agent": "WeatherApp/1.0 (chamu@preprince.co.za)",
+                        "Accept-Language": "en",
+                    },
+                }
             );
+
+            console.log("Nominatim response status:", response.status);
 
             if (!response.ok) {
                 throw new Error("Network response was not ok Nominatim API");
             }
             const data = await response.json();
+            console.log("Nominatim full response:", data);
 
-            if (!data.results || data.results.length === 0) {
+            if (!data.address) {
                 throw new Error("No location found for these coordinates");
             }
-
             // The data structure is different from Nominatim, so we'll grab the first result
-            const result = data.results[0];
             const locationData: LocationData = {
-                id: result.id,
-                name: result.name,
-                latitude: result.latitude,
-                longitude: result.longitude,
-                country: result.country,
-                country_code: result.country_code,
-                admin1: result.admin1,
+                id: data.place_id.toString(),
+                name: data.address.town || 'Unknown Location',
+                latitude: parseFloat(data.lat),
+                longitude: parseFloat(data.lon),
+                country: data.address.country || '',
+                country_code: data.address.country_code || '',
+                admin1: data.address.state || data.address.county || '',
+                // You can add more fields if needed:
+              //  city: data.address.city || data.address.town || data.address.village,
+                // postcode: data.address.postcode,
             };
+
             return locationData;
         },
         enabled: !!coords,

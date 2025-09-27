@@ -18,6 +18,7 @@ interface LocationComboboxProps {
     selectedLocation: LocationData | null;
     locations: LocationData[];
     isLoading: boolean;
+    isPendingCoords: boolean;
     error: Error | null;
 }
 
@@ -88,7 +89,9 @@ function LocationCombobox({
     locations,
     isLoading,
     error,
+    isPendingCoords,
 }: Readonly<LocationComboboxProps>) {
+    console.log({ isPendingCoords });
     return (
         <div className="relative w-full max-w-xl place-self-center">
             <Field>
@@ -109,7 +112,7 @@ function LocationCombobox({
                             placeholder="Search for a location..."
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2">
-                            {isLoading ? (
+                            {isLoading && isPendingCoords ? (
                                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
                             ) : (
                                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
