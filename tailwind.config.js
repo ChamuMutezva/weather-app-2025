@@ -7,6 +7,7 @@ export default {
                 foreground: "var(--foreground)",
                 linear: "var(--linear-blue)",
                 card: "var(--card)",
+                accent: "var(--accent)",
                 primary: {
                     DEFAULT: "var(--primary)",
                     foreground: "var(--primary-foreground)",

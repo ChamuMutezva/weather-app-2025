@@ -8,7 +8,7 @@ interface DisplayLocationProps {
 function DisplayLocation({
     selectedLocation,
     temp,
-    selectedUnits
+    selectedUnits,
 }: Readonly<DisplayLocationProps>) {
     const formatDate = (date: Date) => {
         return date.toLocaleDateString("en-US", {
@@ -22,24 +22,29 @@ function DisplayLocation({
         return null;
     }
 
-     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
+    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
 
     return (
         <div
             className={`weather-info bg-[url(/assets/images/bg-today-small.svg)] 
-        md:bg-[url(/assets/images/bg-today-large.svg)] bg-no-repeat bg-cover rounded-[var(--radius-20)]
-         p-6 min-h-72 w-full flex flex-col justify-center items-center gap-4`}
+        md:bg-[url(/assets/images/bg-today-large.svg)] bg-no-repeat bg-cover rounded-[var(--radius-24)]
+         p-4 min-h-71.5 w-full flex flex-col justify-center items-center md:flex-row md:justify-between gap-4`}
         >
-            <h2 className="text-preset-4 text-foreground text-center">{`${selectedLocation.name}, ${selectedLocation.country}`}</h2>
-
-            <time
-                dateTime={new Date().toISOString()}
-                className="text-preset-6 text-foreground opacity-80"
-            >
-                {formatDate(new Date())}
-            </time>
+            <div className="flex flex-col items-center md:items-start gap-2">
+                <h2 className="text-preset-4 text-foreground text-center md:text-left">{`${selectedLocation.name}, ${selectedLocation.country}`}</h2>
+                <time
+                    dateTime={new Date().toISOString()}
+                    className="text-preset-6 text-foreground opacity-80"
+                >
+                    {formatDate(new Date())}
+                </time>
+            </div>
             <div className="grid grid-cols-2 place-items-center">
-                <img src="/assets/images/icon-sunny.webp" alt="" />
+                <img
+                    src="/assets/images/icon-sunny.webp"
+                    alt=""
+                    className="w-30 h-30"
+                />
                 <p className="text-preset-1 text-foreground">
                     {`${Math.round(temp[0])}`}
                     <span>{tempUnit}</span>

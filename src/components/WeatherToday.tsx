@@ -22,28 +22,28 @@ function WeatherToday({
 
     return (
         <div className="weather-details-container grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-secondary-foreground rounded-[var(--radius-12)] p-4">
-                <h2 className="text-foreground">Feels like</h2>
-                <p className="text-foreground">
+            <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
+                <h2 className="text-foreground text-preset-6">Feels like</h2>
+                <p className="text-foreground text-preset-3">
                     {`${Math.round(hourlyTemperature[0])}`}
                     <span>{tempUnit}</span>
                 </p>
             </div>
-            <div className="bg-secondary-foreground rounded-[var(--radius-12)] p-4">
-                <h2 className="text-foreground">Humidity</h2>
-                <p className="text-foreground">
+            <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
+                <h2 className="text-foreground text-preset-6">Humidity</h2>
+                <p className="text-foreground text-preset-3">
                     {`${Math.round(hourlyHumidity[0])}%`}
                 </p>
             </div>
-            <div className="bg-secondary-foreground rounded-[var(--radius-12)] p-4">
-                <h2 className="text-foreground">Wind</h2>
-                <p className="text-foreground">
+            <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
+                <h2 className="text-foreground text-preset-6">Wind</h2>
+                <p className="text-foreground text-preset-3">
                     {`${Math.round(hourlyWindSpeed[0])} ${windUnit}`}
                 </p>
             </div>
-            <div className="bg-secondary-foreground rounded-[var(--radius-12)] p-4">
-                <h2 className="text-foreground">Precipitation</h2>
-                <p className="text-foreground">
+            <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
+                <h2 className="text-foreground text-preset-6">Precipitation</h2>
+                <p className="text-foreground text-preset-3">
                     {`${Math.round(
                         hourlyPrecipitation[0]
                     )} ${precipitationUnit}`}

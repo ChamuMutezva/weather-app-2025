@@ -27,7 +27,7 @@ function SevenDayHourlyForecast({
     selectedDay,
 }: Readonly<DailyForecastProps>) {
     console.log(weatherData.hourly);
-    console.log("Selected day:", selectedDay)
+    console.log("Selected day:", new Date(selectedDay).toDateString());
     const getUniqueDays = () => {
         const days: string[] = [];
         const seenDays = new Set();
@@ -40,6 +40,7 @@ function SevenDayHourlyForecast({
                 weekday: "long",
                 month: "short",
                 day: "numeric",
+                year: "numeric",
             });
 
             if (!seenDays.has(dayStr)) {
@@ -51,8 +52,6 @@ function SevenDayHourlyForecast({
     };
 
     const days = getUniqueDays();
-
-    //  console.log("Selected day:", weatherData.daily.time[index])
 
     return (
         <div className="hourly-forecast flex justify-between items-center">
@@ -69,8 +68,10 @@ function SevenDayHourlyForecast({
                      focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
                       data-hover:bg-gray-700 data-open:bg-gray-700"
                 >
-                    Select Day
-                     <ChevronDownIcon className="size-4 fill-white" />
+                    {new Date(selectedDay).toLocaleDateString("en-US", {
+                        weekday: "long",
+                    }) || "Select Day"}
+                    <ChevronDownIcon className="size-4 fill-white" />
                 </MenuButton>
                 <MenuItems
                     transition

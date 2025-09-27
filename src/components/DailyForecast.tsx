@@ -17,15 +17,15 @@ function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastPro
 
     return (
         <div className="daily-forecast-container">
-            <h2>Daily forecast</h2>
-            <div className="grid grid-cols-3 sm:grid-cols-7 gap-4">
+            <h2 className="text-preset-5 text-foreground">Daily forecast</h2>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-4 mt-4">
                 {weatherData?.daily.time.map((date, index) => {
                     return (
                         <div
                             key={date}
-                            className="bg-secondary-foreground rounded-[var(--radius-12)] p-4 flex flex-col items-center"
+                            className="bg-secondary-foreground rounded-[var(--radius-12)] p-2 flex flex-col items-center gap-4"
                         >
-                            <p className="text-foreground">
+                            <p className="text-foreground text-preset-6">
                                 {new Date(date).toLocaleDateString("en-US", {
                                     weekday: "short",
                                 })}
@@ -34,8 +34,8 @@ function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastPro
                             {getWeatherIcon(
                                 weatherData.daily.weather_code[index]
                             )}
-                            <div className="flex items-center justify-between w-full">
-                                <p className="text-foreground">
+                            <div className="flex items-center justify-between w-full gap-2">
+                                <p className="text-foreground text-preset-7">
                                     {`${Math.round(
                                         weatherData.daily.temperature_2m_max[
                                             index
@@ -43,7 +43,7 @@ function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastPro
                                     )}`}
                                     <span>{tempUnit}</span>
                                 </p>
-                                <p className="text-foreground opacity-80">
+                                <p className="text-accent opacity-80 text-preset-7">
                                     {`${Math.round(
                                         weatherData.daily.temperature_2m_min[
                                             index
