@@ -22,7 +22,6 @@ import { areCoordsSimilar } from "./utility/checkSimilarCoords";
 
 const LOCATION_STORAGE_KEY = "cachedLocationData";
 
-
 function Weather() {
     const [state, dispatch] = useReducer(weatherReducer, {
         selectedLocation: null,
@@ -92,10 +91,6 @@ function Weather() {
                                     parsedCachedLocation.cachedCoords
                                 )
                             ) {
-                                // Use cached location data and SKIP reverse geocoding
-                                console.log(
-                                    "Using cached location data - skipping reverse geocoding"
-                                );
                                 dispatch({
                                     type: "SET_LOCATION",
                                     payload: parsedCachedLocation.location,
@@ -112,9 +107,6 @@ function Weather() {
                     }
 
                     // If no cached data or coordinates changed significantly, call reverse geocoding
-                    console.log(
-                        "Calling reverse geocoding - coordinates changed or no cache"
-                    );
                     setShouldCallReverseGeocoding(true);
                 },
                 (error) => {
@@ -140,7 +132,6 @@ function Weather() {
                 LOCATION_STORAGE_KEY,
                 JSON.stringify(locationDataToCache)
             );
-            console.log("Location data cached to localStorage");
         }
     }, [dataCoords, coords]);
 
@@ -176,8 +167,7 @@ function Weather() {
 
     const handleLocationSelect = useCallback(
         (location: LocationData | null) => {
-            dispatch({ type: "SET_LOCATION", payload: location });
-            console.log("Selected location:", location);
+            dispatch({ type: "SET_LOCATION", payload: location });           
         },
         []
     );
@@ -291,7 +281,7 @@ function Weather() {
         }
     }, [convertedWeatherData, selectedDay, handleDaySelect]);
 
-    console.log(`Rendering location data:`, dataLocation)
+    console.log(`Rendering location data:`, dataLocation);
 
     return (
         <div className="w-full">
@@ -345,11 +335,10 @@ function Weather() {
                             Error loading weather data: {errorWeather.message}
                         </div>
                     )}
-
-                    <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-x-8">
-                        <div className="left-content col-span-2">
-                            <div className="weather-info-container flex flex-col gap-6 mb-6 lg:mb-10 lg:gap-10">
-                                {selectedLocation && convertedWeatherData && (
+                    {selectedLocation && convertedWeatherData && (
+                        <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-x-8">
+                            <div className="left-content col-span-2">
+                                <div className="weather-info-container flex flex-col gap-6 mb-6 lg:mb-10 lg:gap-10">
                                     <DisplayLocation
                                         selectedLocation={selectedLocation}
                                         temp={
@@ -358,9 +347,7 @@ function Weather() {
                                         }
                                         selectedUnits={selectedUnits}
                                     />
-                                )}
 
-                                {selectedLocation && convertedWeatherData && (
                                     <WeatherToday
                                         hourlyTemperature={
                                             convertedWeatherData?.hourly
@@ -380,16 +367,14 @@ function Weather() {
                                         }
                                         selectedUnits={selectedUnits}
                                     />
-                                )}
-                            </div>
-                            {selectedLocation && convertedWeatherData && (
+                                </div>
+
                                 <DailyForecast
                                     weatherData={convertedWeatherData}
                                     selectedUnits={selectedUnits}
                                 />
-                            )}
-                        </div>
-                        {selectedLocation && convertedWeatherData && (
+                            </div>
+
                             <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4 max-h-[42rem] overflow-y-scroll">
                                 <SevenDayHourlyForecast
                                     weatherData={convertedWeatherData}
@@ -407,8 +392,8 @@ function Weather() {
                                     </div>
                                 )}
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             </main>
         </div>

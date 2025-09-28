@@ -10,7 +10,7 @@ import {
 import { Fragment } from "react";
 import { CheckIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import {type LocationData } from "../types/types";
+import { type LocationData } from "../types/types";
 
 interface LocationComboboxProps {
     onLocationSelect: (location: LocationData | null) => void;
@@ -91,7 +91,6 @@ function LocationCombobox({
     error,
     isPendingCoords,
 }: Readonly<LocationComboboxProps>) {
-    console.log({ isPendingCoords });
     return (
         <div className="relative w-full max-w-xl place-self-center">
             <Field>
