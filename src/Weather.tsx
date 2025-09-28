@@ -19,6 +19,7 @@ import {
     convertMmToInches,
 } from "./utility/convertToImperial";
 import { areCoordsSimilar } from "./utility/checkSimilarCoords";
+import AIWeatherAdvisor from "./components/AIWeatherAdvisor";
 
 const LOCATION_STORAGE_KEY = "cachedLocationData";
 
@@ -167,7 +168,7 @@ function Weather() {
 
     const handleLocationSelect = useCallback(
         (location: LocationData | null) => {
-            dispatch({ type: "SET_LOCATION", payload: location });           
+            dispatch({ type: "SET_LOCATION", payload: location });
         },
         []
     );
@@ -295,7 +296,7 @@ function Weather() {
                 <h1 className="text-preset-2 text-foreground text-center">
                     How&apos;s the sky looking today?
                 </h1>
-                <div className="main-content grid grid-cols-1 pt-16 gap-y-12">
+                <div className="main-content grid grid-cols-1 pt-16 gap-y-12 mb-10">
                     {/* Add loading and error states for geolocation */}
                     {!query &&
                         isPendingCoords &&
@@ -395,6 +396,13 @@ function Weather() {
                         </div>
                     )}
                 </div>
+                {convertedWeatherData && selectedLocation && (
+                    <AIWeatherAdvisor
+                        weatherData={convertedWeatherData}
+                        selectedUnits={selectedUnits}
+                        selectedLocation={selectedLocation}
+                    />
+                )}
             </main>
         </div>
     );
