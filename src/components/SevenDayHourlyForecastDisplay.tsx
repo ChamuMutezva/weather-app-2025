@@ -28,14 +28,14 @@ function SevenDayHourlyForecastDisplay({
     return (
         <div>
             <div className="p-2">
-                <h2 className="text-foreground">
+                <h3 className="text-foreground">
                     {new Date(selectedDay).toLocaleDateString("en-US", {
                         weekday: "long",
                         month: "long",
                         day: "numeric",
                         year: "numeric",
                     })}
-                </h2>
+                </h3>
                 <div className="flex flex-col gap-2 mt-4">
                     {dayData?.time.map((time, index) => (
                         <div

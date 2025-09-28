@@ -291,6 +291,8 @@ function Weather() {
         }
     }, [convertedWeatherData, selectedDay, handleDaySelect]);
 
+    console.log(`Rendering location data:`, dataLocation)
+
     return (
         <div className="w-full">
             <Header
@@ -299,11 +301,11 @@ function Weather() {
                 handleUnitToggle={handleUnitToggle}
                 handleSelectUnitCategory={handleSelectUnitCategory}
             />
-            <main className="pt-10">
+            <main className="pt-10 lg:pt-16">
                 <h1 className="text-preset-2 text-foreground text-center">
-                    How&apos;s the sky looking today
+                    How&apos;s the sky looking today?
                 </h1>
-                <div className="main-content grid grid-cols-1 pt-20 gap-y-8">
+                <div className="main-content grid grid-cols-1 pt-16 gap-y-12">
                     {/* Add loading and error states for geolocation */}
                     {!query &&
                         isPendingCoords &&
@@ -346,7 +348,7 @@ function Weather() {
 
                     <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-x-8">
                         <div className="left-content col-span-2">
-                            <div className="weather-info-container flex flex-col gap-5 mb-6">
+                            <div className="weather-info-container flex flex-col gap-6 mb-6 lg:mb-10 lg:gap-10">
                                 {selectedLocation && convertedWeatherData && (
                                     <DisplayLocation
                                         selectedLocation={selectedLocation}
@@ -388,7 +390,7 @@ function Weather() {
                             )}
                         </div>
                         {selectedLocation && convertedWeatherData && (
-                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4 max-h-[41rem] overflow-y-scroll">
+                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4 max-h-[42rem] overflow-y-scroll">
                                 <SevenDayHourlyForecast
                                     weatherData={convertedWeatherData}
                                     onDaySelect={handleDaySelect}

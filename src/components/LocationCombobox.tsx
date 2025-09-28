@@ -100,7 +100,7 @@ function LocationCombobox({
                     <div className="relative">
                         <ComboboxInput
                             className={clsx(
-                                "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-secondary py-3.75 pr-3 pl-8 text-sm/6 text-white",
+                                "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-secondary py-3.75 pr-3 pl-10 text-sm/6 text-white",
                                 "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
                             )}
                             displayValue={(location: LocationData | null) =>
@@ -111,7 +111,7 @@ function LocationCombobox({
                             }
                             placeholder="Search for a location..."
                         />
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-2">
                             {isLoading && isPendingCoords ? (
                                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
                             ) : (
