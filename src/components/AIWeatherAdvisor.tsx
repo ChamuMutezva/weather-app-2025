@@ -13,7 +13,7 @@ interface AIWeatherAdvisorProps {
  * Component to handle user input and display AI-generated weather advice.
  * It connects to the secure backend proxy.
  */
-function AIWeatherAdvisor({ weatherData, selectedUnits, selectedLocation }: AIWeatherAdvisorProps) {
+function AIWeatherAdvisor({ weatherData, selectedUnits, selectedLocation }: Readonly<AIWeatherAdvisorProps>) {
     const [adviceQuery, setAdviceQuery] = useState("Suggest an indoor activity and a comfortable outfit.");
     const [adviceResponse, setAdviceResponse] = useState("");
     const [isLoading, setIsLoading] = useState(false);
