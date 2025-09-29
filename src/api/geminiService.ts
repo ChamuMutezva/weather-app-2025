@@ -4,7 +4,8 @@
  */
 
 // WARNING: This URL must match the port and endpoint of your running Node.js server
-const PROXY_API_URL = "http://localhost:3000/api/advice"; 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+const PROXY_API_URL = `${API_BASE_URL}/api/advice`
 
 interface AdvicePayload {
     userPrompt: string;
