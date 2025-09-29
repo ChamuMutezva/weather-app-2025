@@ -9,10 +9,13 @@ interface DailyForecastProps {
             temperature_2m_min: number[];
         };
     };
-     selectedUnits: SelectedUnits;
+    selectedUnits: SelectedUnits;
 }
 
-function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastProps>) {
+function DailyForecast({
+    weatherData,
+    selectedUnits,
+}: Readonly<DailyForecastProps>) {
     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
 
     return (
@@ -30,12 +33,19 @@ function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastPro
                                     weekday: "short",
                                 })}
                             </p>
-                          
+
                             {getWeatherIcon(
                                 weatherData.daily.weather_code[index]
                             )}
-                            <div className="flex items-center justify-between w-full gap-2">
+                            <div
+                                aria-live="polite"
+                                aria-atomic="true"
+                                className="flex items-center justify-between w-full gap-2"
+                            >
                                 <p className="text-foreground text-preset-7">
+                                    <span className="sr-only">
+                                        Maximum temperature
+                                    </span>
                                     {`${Math.round(
                                         weatherData.daily.temperature_2m_max[
                                             index
@@ -44,6 +54,9 @@ function DailyForecast({ weatherData, selectedUnits }: Readonly<DailyForecastPro
                                     <span>{tempUnit}</span>
                                 </p>
                                 <p className="text-accent opacity-80 text-preset-7">
+                                    <span className="sr-only">
+                                        Minimum temperature
+                                    </span>
                                     {`${Math.round(
                                         weatherData.daily.temperature_2m_min[
                                             index

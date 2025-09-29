@@ -1,4 +1,17 @@
-import { type WeatherState, type WeatherAction} from "../types/types";
+import { type WeatherState, type WeatherAction } from "../types/types";
+
+export const initialWeatherState = {
+    selectedLocation: null,
+    selectedDay: "",
+    query: "",
+    debouncedQuery: "",
+    enabled: false,
+    selectedUnits: {
+        temperature: "celsius" as "celsius" | "fahrenheit",
+        wind: "kmh" as "kmh" | "mph",
+        precipitation: "mm" as "mm" | "inches",
+    },
+};
 
 export const weatherReducer = (
     state: WeatherState,

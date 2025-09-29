@@ -36,7 +36,11 @@ function SevenDayHourlyForecastDisplay({
                         year: "numeric",
                     })}
                 </h3>
-                <div className="flex flex-col gap-2 mt-4">
+                <div
+                    aria-live="polite"
+                    aria-atomic="true"
+                    className="flex flex-col gap-2 mt-4"
+                >
                     {dayData?.time.map((time, index) => (
                         <div
                             key={time}

@@ -21,7 +21,11 @@ function WeatherToday({
         selectedUnits.precipitation === "mm" ? "mm" : "inches";
 
     return (
-        <div className="weather-details-container grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div
+            aria-live="polite"
+            aria-atomic="true"
+            className="weather-details-container grid grid-cols-2 sm:grid-cols-4 gap-4"
+        >
             <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Feels like</h2>
                 <p className="text-foreground text-preset-3">
@@ -38,15 +42,33 @@ function WeatherToday({
             <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Wind</h2>
                 <p className="text-foreground text-preset-3">
-                    {`${Math.round(hourlyWindSpeed[0])} ${windUnit}`}
+                    {Math.round(hourlyWindSpeed[0])}
+                    <abbr
+                        className="no-underline"
+                        title={
+                            windUnit === "km/h"
+                                ? "kilometers per hour"
+                                : "miles per hour"
+                        }
+                    >
+                        {windUnit}
+                    </abbr>
                 </p>
             </div>
             <div className="bg-secondary-foreground rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Precipitation</h2>
                 <p className="text-foreground text-preset-3">
-                    {`${Math.round(
-                        hourlyPrecipitation[0]
-                    )} ${precipitationUnit}`}
+                    {Math.round(hourlyPrecipitation[0])}
+                    <abbr
+                        className="no-underline"
+                        title={
+                            precipitationUnit === "mm"
+                                ? "millimetres"
+                                : "inches"
+                        }
+                    >
+                        {precipitationUnit}
+                    </abbr>
                 </p>
             </div>
         </div>

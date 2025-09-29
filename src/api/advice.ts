@@ -1,20 +1,16 @@
- /**
- * api/advice.ts
- * This is the Vercel Serverless Function handler, now fully typed.
+ /** 
+ * Vercel Serverless Function handler, now fully typed.
  * It secures the Gemini API Key using environment variables.
  */
 import { GoogleGenAI } from '@google/genai';
 import type { VercelRequest, VercelResponse } from '@vercel/node'; 
 
-// --- Custom Types for Request/Response ---
 
 // Define the structure of the data expected from the React frontend
 interface RequestBody {
     userPrompt: string;
     systemInstruction: string;
 }
-
-// --- Serverless Handler Logic ---
 
 // The environment variable name (must be set in Vercel project settings)
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 

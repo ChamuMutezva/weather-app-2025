@@ -12,7 +12,7 @@ import {
     useWeatherData,
     useLocationByCoords,
 } from "./hooks/react-query";
-import { weatherReducer } from "./utility/reducers";
+import { weatherReducer, initialWeatherState } from "./utility/reducers";
 import {
     convertKmhToMph,
     convertCelsiusToFehrenheit,
@@ -24,18 +24,7 @@ import AIWeatherAdvisor from "./components/AIWeatherAdvisor";
 const LOCATION_STORAGE_KEY = "cachedLocationData";
 
 function Weather() {
-    const [state, dispatch] = useReducer(weatherReducer, {
-        selectedLocation: null,
-        selectedDay: "",
-        query: "",
-        debouncedQuery: "",
-        enabled: false,
-        selectedUnits: {
-            temperature: "celsius",
-            wind: "kmh",
-            precipitation: "mm",
-        },
-    });
+    const [state, dispatch] = useReducer(weatherReducer, initialWeatherState);
 
     const {
         selectedLocation,
@@ -282,8 +271,6 @@ function Weather() {
         }
     }, [convertedWeatherData, selectedDay, handleDaySelect]);
 
-    console.log(`Rendering location data:`, dataLocation);
-
     return (
         <div className="w-full">
             <Header
@@ -301,12 +288,18 @@ function Weather() {
                     {!query &&
                         isPendingCoords &&
                         shouldCallReverseGeocoding && (
-                            <div className="text-center text-preset-6 text-foreground/80">
+                            <div
+                                className="text-center text-preset-6 text-foreground/80"
+                                aria-live="polite"
+                            >
                                 Finding your current location...
                             </div>
                         )}
                     {!query && errorCoords && (
-                        <div className="text-center text-preset-6 text-red-500">
+                        <div
+                            className="text-center text-preset-6 text-red-500"
+                            aria-live="assertive"
+                        >
                             Error finding your location. Please use the search
                             bar.
                         </div>
@@ -326,13 +319,13 @@ function Weather() {
 
                     {/* Weather data loading and error states */}
                     {isPendingWeather && selectedLocation && (
-                        <div className="text-center text-preset-6 text-foreground/80">
+                        <div className="text-center text-preset-6 text-foreground/80" aria-live="polite">
                             Loading weather data...
                         </div>
                     )}
 
                     {errorWeather && (
-                        <div className="text-center text-preset-6 text-red-500">
+                        <div className="text-center text-preset-6 text-red-500" aria-live="assertive">
                             Error loading weather data: {errorWeather.message}
                         </div>
                     )}

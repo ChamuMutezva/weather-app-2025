@@ -26,6 +26,8 @@ function DisplayLocation({
 
     return (
         <div
+            aria-live="polite"
+            aria-atomic="true"
             className={`weather-info bg-[url(/assets/images/bg-today-small.svg)] 
         md:bg-[url(/assets/images/bg-today-large.svg)] bg-no-repeat bg-cover rounded-[var(--radius-24)]
          p-4 min-h-71.5 w-full flex flex-col justify-center items-center md:flex-row md:justify-between gap-4`}
