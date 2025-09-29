@@ -369,7 +369,7 @@ function Weather() {
                                 />
                             </div>
 
-                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] py-5 px-4 max-h-[42rem] overflow-y-scroll">
+                            <div className="hourly-forecast-container  bg-secondary rounded-[var(--radius-20)] pb-5 px-4  ">
                                 <SevenDayHourlyForecast
                                     weatherData={convertedWeatherData}
                                     onDaySelect={handleDaySelect}

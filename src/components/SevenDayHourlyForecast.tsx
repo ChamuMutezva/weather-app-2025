@@ -54,7 +54,7 @@ function SevenDayHourlyForecast({
     const days = getUniqueDays();
 
     return (
-        <div className="hourly-forecast flex justify-between items-center">
+        <div className="hourly-forecast flex justify-between items-center bg-inherit sticky top-0 w-full py-3">
             <div className="hourly-forecast-header">
                 <h2 className="text-preset-5 text-foreground">
                     Hourly Forecast
