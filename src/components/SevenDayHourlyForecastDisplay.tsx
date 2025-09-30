@@ -39,7 +39,7 @@ function SevenDayHourlyForecastDisplay({
                 <div
                     aria-live="polite"
                     aria-atomic="true"
-                    className="flex flex-col gap-2 mt-4"
+                    className="flex flex-col gap-2 mt-4 scroll-auto"
                 >
                     {dayData?.time.map((time, index) => (
                         <div

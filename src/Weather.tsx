@@ -292,7 +292,7 @@ function Weather() {
                                 className="text-center text-preset-6 text-foreground/80"
                                 aria-live="polite"
                             >
-                                Finding your current location...
+                                <p>Finding your current location...</p>
                             </div>
                         )}
                     {!query && errorCoords && (
@@ -300,8 +300,10 @@ function Weather() {
                             className="text-center text-preset-6 text-red-500"
                             aria-live="assertive"
                         >
-                            Error finding your location. Please use the search
-                            bar.
+                            <p>
+                                Error finding your location. Please use the
+                                search bar.
+                            </p>
                         </div>
                     )}
 
@@ -319,14 +321,23 @@ function Weather() {
 
                     {/* Weather data loading and error states */}
                     {isPendingWeather && selectedLocation && (
-                        <div className="text-center text-preset-6 text-foreground/80" aria-live="polite">
-                            Loading weather data...
+                        <div
+                            className="text-center text-preset-6 text-foreground/80"
+                            aria-live="polite"
+                        >
+                            <p>Loading weather data...</p>
                         </div>
                     )}
 
                     {errorWeather && (
-                        <div className="text-center text-preset-6 text-red-500" aria-live="assertive">
-                            Error loading weather data: {errorWeather.message}
+                        <div
+                            className="text-center text-preset-6 text-red-500"
+                            aria-live="assertive"
+                        >
+                            <p>
+                                Error loading weather data:{" "}
+                                {errorWeather.message}
+                            </p>
                         </div>
                     )}
                     {selectedLocation && convertedWeatherData && (

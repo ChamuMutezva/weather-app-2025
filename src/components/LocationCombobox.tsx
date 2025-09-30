@@ -55,19 +55,19 @@ const renderLocationOption = (location: LocationData) => (
 
 const LoadingMessage = () => (
     <div className="relative cursor-default select-none px-4 py-2 text-white">
-        Searching...
+        <p>Searching...</p>
     </div>
 );
 
 const ErrorMessage = ({ error }: { error: Error }) => (
     <div className="relative cursor-default select-none px-4 py-2 text-red-600">
-        Error: {error.message}
+        <p>Error: {error.message}</p>
     </div>
 );
 
 const EmptyMessage = () => (
     <div className="relative cursor-default select-none px-4 py-2 text-white">
-        No locations found. Try a different search.
+        <p>No locations found. Try a different search.</p>
     </div>
 );
 
