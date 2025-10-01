@@ -26,7 +26,7 @@ function SevenDayHourlyForecastDisplay({
     // const precipitationUnit = selectedUnits.precipitation === "mm" ? "mm" : "inches";
 
     return (
-        <div className="max-h-[38rem] overflow-y-scroll">
+        <div className="">
             <div className="p-2">
                 <h3 className="text-foreground">
                     {new Date(selectedDay).toLocaleDateString("en-US", {
@@ -39,7 +39,7 @@ function SevenDayHourlyForecastDisplay({
                 <div
                     aria-live="polite"
                     aria-atomic="true"
-                    className="flex flex-col gap-2 mt-4 scroll-auto"
+                    className="flex flex-col gap-2 mt-4"
                 >
                     {dayData?.time.map((time, index) => (
                         <div
