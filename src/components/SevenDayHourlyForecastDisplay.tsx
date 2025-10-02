@@ -36,13 +36,13 @@ function SevenDayHourlyForecastDisplay({
                         year: "numeric",
                     })}
                 </h3>
-                <div
+                <ul
                     aria-live="polite"
                     aria-atomic="true"
                     className="flex flex-col gap-2 mt-4"
                 >
                     {dayData?.time.map((time, index) => (
-                        <div
+                        <li
                             key={time}
                             className="flex justify-between items-center bg-card rounded-[var(--radius-8)] "
                         >
@@ -75,9 +75,9 @@ function SevenDayHourlyForecastDisplay({
                                 dayData.precipitation[index]
                             )} mm`}</p>
                              */}
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
         </div>
     );

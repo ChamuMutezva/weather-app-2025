@@ -21,10 +21,10 @@ function DailyForecast({
     return (
         <div className="daily-forecast-container">
             <h2 className="text-preset-5 text-foreground">Daily forecast</h2>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-4 mt-4">
+            <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-4 mt-4">
                 {weatherData?.daily.time.map((date, index) => {
                     return (
-                        <div
+                        <li
                             key={date}
                             className="bg-secondary-foreground rounded-[var(--radius-12)] p-2 flex flex-col items-center gap-4"
                         >
@@ -65,10 +65,10 @@ function DailyForecast({
                                     <span>{tempUnit}</span>
                                 </p>
                             </div>
-                        </div>
+                        </li>
                     );
                 })}
-            </div>
+            </ul>
         </div>
     );
 }

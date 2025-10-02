@@ -1,110 +1,154 @@
-# Frontend Mentor - Weather app solution
+# Weather App
 
-This is a solution to the [Weather app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+A modern weather application built using React, inspired by the Frontend Mentor Weather App challenge. This app allows users to search for weather data, view current conditions, forecasts, and switch between units for a tailored experience.
 
-## Table of contents
+## Table of Contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Live Demo](#live-demo)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Learnings](#learnings)
+- [Future Improvements](#future-improvements)
+- [Useful Resources](#useful-resources)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
 
-### The challenge
+This web application lets users quickly access weather information for any location. It displays current conditions, hourly and daily forecasts, and allows users to toggle between metric and imperial units.
 
-Users should be able to:
+## Features
 
-- Search for weather information by entering a location in the search bar
-- View current weather conditions including temperature, weather icon, and location details
-- See additional weather metrics like "feels like" temperature, humidity percentage, wind speed, and precipitation amounts
-- Browse a 7-day weather forecast with daily high/low temperatures and weather icons
-- View an hourly forecast showing temperature changes throughout the day
-- Switch between different days of the week using the day selector in the hourly forecast section
-- Toggle between Imperial and Metric measurement units via the units dropdown
-- Switch between specific temperature units (Celsius and Fahrenheit) and measurement units for wind speed (km/h and mph) and precipitation (millimeters) via the units dropdown
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+- geo-location: get weather details for your current location
+- save current location to local storage to minimize location API search
+- Search for weather information by location
+- View current weather conditions: temperature, weather icon, and location details
+- See additional metrics: feels-like temperature, humidity, wind speed, and precipitation
+- Browse a 7-day weather forecast with daily high/low temperatures
+- Hourly forecast with temperature trends and day selector
+- Switch between Celsius/Fahrenheit, km/h/mph, and mm/in for precipitation
+- Responsive design for mobile and desktop
+- Accessible UI with hover/focus states
 
-### Screenshot
+## Screenshots
 
-![](./screenshot.jpg)
+Add screenshots of your app here, e.g.:
 
-### Links
+![Main weather dashboard](./screenshot.jpg)
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
-
-## My process
-
-### Built with
-
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://react.dev/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Headless-ui](https://headlessui.com/) - Completely unstyled, fully accessible UI components, designed to integrate beautifully with Tailwind CSS.
-- [Open-meteo weather api](https://open-meteo.com/en/docs) - free weather forecast api
-
-### What I learned
-
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
-
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
+[Project structure](https://gitingest.com/ChamuMutezva/weather-app-2025)
 
 ```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+Directory structure:
+└── chamumutezva-weather-app-2025/
+    ├── README.md
+    ├── eslint.config.js
+    ├── index.html
+    ├── package.json
+    ├── README-template.md
+    ├── style-guide.md
+    ├── tailwind.config.js
+    ├── tsconfig.app.json
+    ├── tsconfig.json
+    ├── tsconfig.node.json
+    ├── vite.config.ts
+    ├── api/
+    │   └── advice.ts
+    ├── public/
+    │   └── assets/
+    │       ├── fonts/
+    │       │   ├── Bricolage_Grotesque/
+    │       │   │   ├── README.txt
+    │       │   │   └── OFL.txt
+    │       │   └── DM_Sans/
+    │       │       ├── README.txt
+    │       │       └── OFL.txt
+    │       └── images/
+    │           ├── icon-drizzle.webp
+    │           ├── icon-fog.webp
+    │           ├── icon-overcast.webp
+    │           ├── icon-partly-cloudy.webp
+    │           ├── icon-rain.webp
+    │           ├── icon-snow.webp
+    │           ├── icon-storm.webp
+    │           └── icon-sunny.webp
+    └── src/
+        ├── App.tsx
+        ├── ErrorBoundary.tsx
+        ├── global.css
+        ├── main.tsx
+        ├── vite-env.d.ts
+        ├── Weather.tsx
+        ├── api/
+        │   └── geminiService.ts
+        ├── components/
+        │   ├── AIWeatherAdvisor.tsx
+        │   ├── DailyForecast.tsx
+        │   ├── DisplayLocation.tsx
+        │   ├── Header.tsx
+        │   ├── LocationCombobox.tsx
+        │   ├── SevenDayHourlyForecast.tsx
+        │   ├── SevenDayHourlyForecastDisplay.tsx
+        │   └── WeatherToday.tsx
+        ├── hooks/
+        │   └── react-query.ts
+        ├── types/
+        │   └── types.ts
+        └── utility/
+            ├── checkSimilarCoords.ts
+            ├── convertToImperial.ts
+            ├── getWeatherIcon.tsx
+            └── reducers.ts
 ```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+## Live Demo
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+- [Live Site URL](https://your-live-site-url.com)
+- [Frontend Mentor Challenge](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49)
 
-### Continued development
+## Tech Stack
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+- React
+- TanStack Query - for data searching
+- Tailwind CSS & Headless UI
+- Open-meteo API for weather data
 
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+## Getting Started
 
-### Useful resources
+1. Clone the repository
+2. Install dependencies: `pnpm install`
+3. Run locally: `pnpm run dev`
+4. Open `http://localhost:5173` in your browser
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+## Learnings
 
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+Share key learnings, such as API integration, responsive design, accessibility with Headless UI, and state management in React. Include code snippets or explanations of major challenges solved.
+
+## Future Improvements
+
+- Add user location detection
+- Enable weather alerts/notifications
+- Improve loading and error states
+- Add more detailed hourly forecast graphs
+- Optimize for performance and SEO
+
+## Useful Resources
+
+- [React documentation](https://react.dev/)
+- [Next.js documentation](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Open-meteo API](https://open-meteo.com/en/docs)
+- [TanStack query](https://tanstack.com/)
+- [Headless-ui](https://headlessui.com/react/menu)
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
+- Name: Chamu Mutezva
+- Frontend Mentor: [@ChamuMutezva](https://www.frontendmentor.io/profile/ChamuMutezva)
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+Thanks to Frontend Mentor and the open-source community for resources and inspiration.
