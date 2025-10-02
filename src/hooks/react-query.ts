@@ -35,10 +35,21 @@ export const useWeatherData = (selectedLocation: LocationData | null) => {
             const params = {
                 latitude: selectedLocation.latitude,
                 longitude: selectedLocation.longitude,
+                current: [
+                    "temperature_2m",
+                    "wind_speed_10m",
+                    "relative_humidity_2m",
+                    "rain",
+                    "apparent_temperature",
+                    "is_day",
+                    "weather_code",
+                    "wind_direction_10m",
+                ],
                 daily: [
                     "temperature_2m_max",
                     "temperature_2m_min",
                     "weather_code",
+                    "daylight_duration",
                     "rain_sum",
                 ],
                 hourly: [
@@ -54,6 +65,7 @@ export const useWeatherData = (selectedLocation: LocationData | null) => {
             const queryParams = new URLSearchParams();
             queryParams.append("latitude", params.latitude.toString());
             queryParams.append("longitude", params.longitude.toString());
+            queryParams.append("current", params.current.join(","));
             queryParams.append("hourly", params.hourly.join(","));
             queryParams.append("daily", params.daily.join(","));
             queryParams.append(
@@ -108,14 +120,14 @@ export const useLocationByCoords = (
             // The data structure is different from Nominatim, so we'll grab the first result
             const locationData: LocationData = {
                 id: data.place_id.toString(),
-                name: data.address.town || 'Unknown Location',
+                name: data.address.town || "Unknown Location",
                 latitude: parseFloat(data.lat),
                 longitude: parseFloat(data.lon),
-                country: data.address.country || '',
-                country_code: data.address.country_code || '',
-                admin1: data.address.state || data.address.county || '',
+                country: data.address.country || "",
+                country_code: data.address.country_code || "",
+                admin1: data.address.state || data.address.county || "",
                 // You can add more fields if needed:
-              //  city: data.address.city || data.address.town || data.address.village,
+                //  city: data.address.city || data.address.town || data.address.village,
                 // postcode: data.address.postcode,
             };
 

@@ -192,7 +192,7 @@ function Weather() {
     // Use useMemo to convert the weather data based on the selected units
     const convertedWeatherData = useMemo(() => {
         if (!weatherData) return null;
-
+        console.log("weatherData:", weatherData);
         const convertedHourly = {
             ...weatherData.hourly,
             temperature_2m: weatherData.hourly.temperature_2m.map((temp) =>
@@ -226,10 +226,41 @@ function Weather() {
             ),
         };
 
+        const convertedCurrent = {
+            ...weatherData.current,
+            apparent_temperature:
+                selectedUnits.temperature === "fahrenheit"
+                    ? convertCelsiusToFehrenheit(
+                          weatherData.current.apparent_temperature
+                      )
+                    : weatherData.current.apparent_temperature,
+            relative_humidity_2m: weatherData.current.relative_humidity_2m,
+            rain:
+                selectedUnits.precipitation === "inches"
+                    ? convertMmToInches(weatherData.current.rain)
+                    : weatherData.current.rain,
+            wind_speed_10m:
+                selectedUnits.wind === "mph"
+                    ? convertKmhToMph(weatherData.current.wind_speed_10m)
+                    : weatherData.current.wind_speed_10m,
+            time: weatherData.current.time,
+            cloud_cover: weatherData.current.cloud_cover,
+
+            /* interval: number;
+        is_day: boolean;
+        rain: number;      
+        
+        time: string;
+        weather_code: number;
+        wind_direction_10m: number;
+        wind_speed_10m: number;*/
+        };
+
         return {
             ...weatherData,
             hourly: convertedHourly,
             daily: convertedDaily,
+            current: convertedCurrent,
         };
     }, [weatherData, selectedUnits]);
 
@@ -355,21 +386,22 @@ function Weather() {
 
                                     <WeatherToday
                                         hourlyTemperature={
-                                            convertedWeatherData?.hourly
-                                                .temperature_2m ?? []
+                                            convertedWeatherData?.current
+                                                .apparent_temperature ?? ""
                                         }
                                         hourlyHumidity={
-                                            convertedWeatherData?.hourly
-                                                .relative_humidity_2m ?? []
+                                            convertedWeatherData?.current
+                                                .relative_humidity_2m ?? ""
                                         }
                                         hourlyWindSpeed={
-                                            convertedWeatherData?.hourly
-                                                .wind_speed_10m ?? []
+                                            convertedWeatherData?.current
+                                                .wind_speed_10m ?? ""
                                         }
                                         hourlyPrecipitation={
-                                            convertedWeatherData?.hourly
-                                                .precipitation ?? []
+                                            convertedWeatherData?.current
+                                                .rain ?? ""
                                         }
+                                        time={convertedWeatherData.current.time}                                       
                                         selectedUnits={selectedUnits}
                                     />
                                 </div>

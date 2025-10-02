@@ -6,18 +6,46 @@ export interface WeatherData {
     timezone: string;
     timezone_abbreviation: string;
     elevation: number;
+    current_units: {
+        apparent_temperature: string;
+        interval: string;
+        is_day: string;
+        rain: string;
+        relative_humidity_2m: string;
+        temperature_2m: string;
+        time: string;
+        weather_code: string;
+        wind_direction_10m: string;
+        wind_speed_10m: string;
+        cloud_cover: string;
+    };
+    current: {
+        apparent_temperature: number;
+        interval: number;
+        is_day: boolean;
+        rain: number;
+        relative_humidity_2m: number;
+        temperature_2m: number;
+        time: string;
+        weather_code: number;
+        wind_direction_10m: number;
+        wind_speed_10m: number;
+        cloud_cover: number;
+    };
     daily_units: {
         time: string;
         temperature_2m_max: string;
         temperature_2m_min: string;
         weather_code: string;
         rain_sum: string;
+        daylight_duration: string;
     };
     daily: {
         time: string[];
         temperature_2m_max: number[];
         temperature_2m_min: number[];
         weather_code: number[];
+        daylight_duration: number[];
         rain_sum: number[];
     };
     hourly_units: {
