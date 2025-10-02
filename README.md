@@ -1,102 +1,239 @@
-# Frontend Mentor - Weather app
+# Weather App
 
-![Design preview for the Weather app coding challenge](./preview.jpg)
+A modern, responsive weather application built with React and enhanced with AI-powered weather advice. This app allows users to search for weather data, view current conditions, detailed forecasts, and switch between units for a tailored experience.
 
-## Welcome! 👋
+## Table of Contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Live Demo](#live-demo)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Project Architecture](#project-architecture)
+- [Learnings](#learnings)
+- [Future Improvements](#future-improvements)
+- [Useful Resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+## Overview
 
-**To do this challenge, you need a good understanding of HTML, CSS and JavaScript.**
+This web application lets users quickly access weather information for any location. It displays current conditions, hourly and daily forecasts, and allows users to toggle between metric and imperial units. The application features an integrated AI Weather Advisor powered by Google Gemini, offering intelligent, context-aware advice based on the current forecast.
 
-## The challenge
+## Features
 
-Your challenge is to build out this weather app using the [Open-Meteo API](https://open-meteo.com/) and get it looking as close to the design as possible.
+- Geo-location: get weather details for your current location
+- Location Persistence: save current location to local storage to minimize location API search calls.
+- Location Search: Search for weather information by location
+- Current Conditions: View current weather conditions: temperature, weather icon, and location details
+- See additional metrics: feels-like temperature, humidity, wind speed, and precipitation
+- Forecasts:  Browse a 7-day weather forecast with daily high/low temperatures
+- Hourly forecast with temperature trends and day selector
+- Switch between Celsius/Fahrenheit, km/h/mph, and mm/in for precipitation
+- AI Weather Advisor: Get tailored, generated advice for the current weather using the Gemini API.
+- Responsive design for mobile and desktop
+- Accessible UI with hover/focus states
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+## Screenshots
 
-Your users should be able to:
+![Main weather dashboard desktop](public/screenshots/weather-app-desktop.png)
 
-- Search for weather information by entering a location in the search bar
-- View current weather conditions including temperature, weather icon, and location details
-- See additional weather metrics like "feels like" temperature, humidity percentage, wind speed, and precipitation amounts
-- Browse a 7-day weather forecast with daily high/low temperatures and weather icons
-- View an hourly forecast showing temperature changes throughout the day
-- Switch between different days of the week using the day selector in the hourly forecast section
-- Toggle between Imperial and Metric measurement units via the units dropdown 
-- Switch between specific temperature units (Celsius and Fahrenheit) and measurement units for wind speed (km/h and mph) and precipitation (millimeters) via the units dropdown
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+## Live Demo
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+- [Live Site URL](https://weather-app-2025-nine.vercel.app/)
+- [Frontend Mentor Challenge](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49)
 
-## Where to find everything
+## Tech Stack
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| Frontend | React with TypeScript | Main application framework |
+| Data & State | TanStack Query | Data fetching and state management |
+| Styling & UI | Tailwind CSS & Headless UI | Responsive design and accessible components |
+| Weather API | Open-meteo API | Weather data source |
+| AI Service | Google Gemini API | AI-powered weather advice |
+| Deployment | Vercel serverless functions | Secure API key handling and hosting |
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+## Getting Started
 
-If you would like the Figma design file to gain experience using professional tools and build more accurate projects faster, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+1. Clone the repository
+2. Install dependencies: `pnpm install`
+3. Run locally: `pnpm run dev`
+4. Open `http://localhost:5173` in your browser
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized.
+## Project Architecture
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+A high-level view of the repository structure:
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+[Project structure link](https://gitingest.com/ChamuMutezva/weather-app-2025)
 
-## Building your project
+```js
+Directory structure:
+└── chamumutezva-weather-app-2025/
+    ├── README.md
+    ├── eslint.config.js
+    ├── index.html
+    ├── package.json
+    ├── README-template.md
+    ├── style-guide.md
+    ├── tailwind.config.js
+    ├── tsconfig.app.json
+    ├── tsconfig.json
+    ├── tsconfig.node.json
+    ├── vite.config.ts
+    ├── api/
+    │   └── advice.ts
+    ├── public/
+    │   └── assets/
+    │       ├── fonts/
+    │       │   ├── Bricolage_Grotesque/
+    │       │   │   ├── README.txt
+    │       │   │   └── OFL.txt
+    │       │   └── DM_Sans/
+    │       │       ├── README.txt
+    │       │       └── OFL.txt
+    │       └── images/
+    │           ├── icon-drizzle.webp
+    │           ├── icon-fog.webp
+    │           ├── icon-overcast.webp
+    │           ├── icon-partly-cloudy.webp
+    │           ├── icon-rain.webp
+    │           ├── icon-snow.webp
+    │           ├── icon-storm.webp
+    │           └── icon-sunny.webp
+    └── src/
+        ├── App.tsx
+        ├── ErrorBoundary.tsx
+        ├── global.css
+        ├── main.tsx
+        ├── vite-env.d.ts
+        ├── Weather.tsx
+        ├── api/
+        │   └── geminiService.ts
+        ├── components/
+        │   ├── AIWeatherAdvisor.tsx
+        │   ├── DailyForecast.tsx
+        │   ├── DisplayLocation.tsx
+        │   ├── Header.tsx
+        │   ├── LocationCombobox.tsx
+        │   ├── SevenDayHourlyForecast.tsx
+        │   ├── SevenDayHourlyForecastDisplay.tsx
+        │   └── WeatherToday.tsx
+        ├── hooks/
+        │   └── react-query.ts
+        ├── types/
+        │   └── types.ts
+        └── utility/
+            ├── checkSimilarCoords.ts
+            ├── convertToImperial.ts
+            ├── getWeatherIcon.tsx
+            └── reducers.ts
+```
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+## Learnings
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+- First time to experiment with Vercel Functions. My project is deployed on Vercel and is created using Vite.
+- Along the road in production, I needed to implement a feature to get AI advisory using Gemini AI which invloved the use of an API Key. For development I created a backend to consume the API and for production I used Vercel Serverless functions as a means to prevent exposing the API KEY. FoR the Vercel function to work here are the points to follow:
 
-## Deploying your project
+1. In the root folder create a folder called api and then create the Vercel Serverless function inside the api folder.
+2. The docs explain Vercel Serverless functions as `Vercel Functions lets you run server-side code without managing servers. They adapt automatically to user demand, handle connections to APIs and databases, and offer enhanced concurrency through fluid compute, which is useful for AI workloads or any I/O-bound
+ tasks that require efficient scaling`. [Vercel Serverless functions](https://vercel.com/docs/functions)
+3. See the advice.ts file for the implementation.
+4. Add the API KEY in the Vercel dashboard of your project under the `Environment variables` section
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
+```js
+import { GoogleGenAI } from '@google/genai';
+import type { VercelRequest, VercelResponse } from '@vercel/node'; 
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+// Define the structure of the data expected from the React frontend
+interface RequestBody {
+    userPrompt: string;
+    systemInstruction: string;
+}
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+// The environment variable name (must be set in Vercel project settings)
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
 
-## Create a custom `README.md`
+// Initialize the AI client
+if (!GEMINI_API_KEY) {
+    // In a production environment, throwing an error here is safer than continuing
+    throw new Error("GEMINI_API_KEY environment variable is not set.");
+}
+// Initialize the AI client outside the handler for better performance (hot reloading)
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+const model = 'gemini-2.5-flash-preview-05-20';
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+// Use Vercel's types for the handler function
+export default async function handler(
+    req: VercelRequest, 
+    res: VercelResponse // Use the typed response interface
+) {
+    // 1. Ensure it's a POST request
+    if (req.method !== 'POST') {
+        // Respond immediately for security and efficiency
+        return res.status(405).json({ error: 'Method Not Allowed. Must be POST.' });
+    }
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+    try {
+        // 2. Safely cast the request body to the expected interface
+        const { userPrompt, systemInstruction } = req.body as RequestBody;
 
-## Submitting your solution
+        // Type checking: ensure userPrompt is a valid string
+        if (typeof userPrompt !== 'string' || userPrompt.trim() === '') {
+            return res.status(400).json({ error: "Missing or invalid 'userPrompt' in request body." });
+        }
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+        // 3. Call the Gemini API
+        const result = await ai.models.generateContent({
+            model: model,
+            contents: [{ parts: [{ text: userPrompt }] }],
+            config: {
+                systemInstruction: {
+                    parts: [{ text: systemInstruction || "You are a helpful assistant." }] // Use a fallback system instruction
+                }
+            }
+        });
+        
+        const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text || 
+                             "Failed to generate advice.";
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+        // 4. Send the successful response back to the React client
+        // TypeScript now validates that the response matches ResponseData (text is required here)
+        res.status(200).json({ text: generatedText });
+    
+    } catch (error) {
+        console.error('Gemini API Error:', error);
+        // Ensure the error response also matches ResponseData (error message is required here)
+        res.status(500).json({ 
+            error: 'An internal error occurred during AI advice generation.' 
+        });
+    }
+}
+```
 
-## Sharing your solution
+## Future Improvements
 
-There are multiple places you can share your solution:
+- Enable weather alerts/notifications
+- Improve loading and error states
+- Add more detailed hourly forecast graphs
+- Optimize for performance and SEO
 
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+## Useful Resources
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
+- [React documentation](https://react.dev/)
+- [Vite documentation](https://vite.dev/guide/)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Open-meteo API](https://open-meteo.com/en/docs)
+- [TanStack query](https://tanstack.com/)
+- [Headless-ui](https://headlessui.com/react/menu)
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+## Author
 
-## Got feedback for us?
+- Name: Chamu Mutezva
+- Frontend Mentor: [@ChamuMutezva](https://www.frontendmentor.io/profile/ChamuMutezva)
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
+## Acknowledgments
 
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
+Thanks to Frontend Mentor and the open-source community for resources and inspiration.
