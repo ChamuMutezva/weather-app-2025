@@ -27,7 +27,7 @@ function Header({
                 <Menu>
                     <MenuButton
                         className="inline-flex items-center gap-2 rounded-md bg-secondary text-primary
-                     px-3 py-3 text-preset-8 shadow-inner shadow-white/10 
+                     px-3 py-3 text-preset-7 shadow-inner shadow-white/10 
                      focus:not-data-focus:outline-none data-focus:outline-2 data-focus:outline-white data-focus:-outline-offset-2
                      data-hover:bg-gray-700 data-open:bg-gray-700 
                      transition duration-150 ease-in-out 
