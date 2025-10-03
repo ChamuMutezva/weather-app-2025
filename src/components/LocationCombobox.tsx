@@ -15,6 +15,7 @@ import { type LocationData } from "../types/types";
 interface LocationComboboxProps {
     onLocationSelect: (location: LocationData | null) => void;
     onQueryChange: (query: string) => void;
+    onSubmit: (event: React.FormEvent) => void;
     selectedLocation: LocationData | null;
     locations: LocationData[];
     isLoading: boolean;
@@ -85,6 +86,7 @@ const renderOptions = (
 function LocationCombobox({
     onLocationSelect,
     onQueryChange,
+    onSubmit,
     selectedLocation,
     locations,
     isLoading,
@@ -92,45 +94,62 @@ function LocationCombobox({
     isPendingCoords,
 }: Readonly<LocationComboboxProps>) {
     return (
-        <div className="relative w-full max-w-xl place-self-center">
-            <Field>
-                <Label className="sr-only">Search for country</Label>
-                <Combobox value={selectedLocation} onChange={onLocationSelect}>
-                    <div className="relative">
-                        <ComboboxInput
-                            className={clsx(
-                                "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-secondary py-3.75 pr-3 pl-10 text-sm/6 text-white",
-                                "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
-                            )}
-                            displayValue={(location: LocationData | null) =>
-                                location?.name || ""
-                            }
-                            onChange={(event) =>
-                                onQueryChange(event.target.value)
-                            }
-                            placeholder="Search for a location..."
-                        />
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-2">
-                            {isLoading && isPendingCoords ? (
-                                <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
-                            ) : (
-                                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
-                            )}
-                        </div>
-                    </div>
-
-                    <Transition
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+        <div className="relative w-full max-w-[45rem] place-self-center">
+            <form onSubmit={onSubmit} className="w-full flex justify-center items-stretch flex-col gap-4 sm:flex-row sm:items-start">
+                <Field className={"flex-1"}>
+                    <Label className="sr-only">Search for country</Label>
+                    <Combobox
+                        value={selectedLocation}
+                        onChange={onLocationSelect}
                     >
-                        <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-secondary py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {renderOptions(isLoading, error, locations)}
-                        </ComboboxOptions>
-                    </Transition>
-                </Combobox>
-            </Field>
+                        <div className="relative">
+                            <ComboboxInput
+                                className={clsx(
+                                    "text-preset-5-m w-full rounded-[var(--radius-12)] border-none bg-secondary py-3.75 pr-3 pl-10 text-sm/6 text-white",
+                                    "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
+                                )}
+                                displayValue={(location: LocationData | null) =>
+                                    location?.name || ""
+                                }
+                                onChange={(event) =>
+                                    onQueryChange(event.target.value)
+                                }
+                                placeholder="Search for a location..."
+                            />
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-2">
+                                {isLoading && isPendingCoords ? (
+                                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
+                                ) : (
+                                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                                )}
+                            </div>
+                        </div>
+                        <Transition
+                            as={Fragment}
+                            leave="transition ease-in duration-100"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <ComboboxOptions className="mt-1 max-h-60 overflow-auto rounded-md bg-secondary py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                {renderOptions(isLoading, error, locations)}
+                            </ComboboxOptions>
+                        </Transition>
+                    </Combobox>
+                </Field>
+
+                <button
+                    type="submit"
+                    disabled={!selectedLocation}
+                    className={clsx(
+                        "px-4 py-3.75 rounded-[var(--radius-12)] text-preset-5-m font-medium transition-colors",
+                        selectedLocation
+                            ? "bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                    )}
+                >
+                    Search
+                </button>
+            </form>
         </div>
     );
 }
