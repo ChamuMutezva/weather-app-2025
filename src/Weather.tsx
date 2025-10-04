@@ -7,6 +7,8 @@ import WeatherToday from "./components/WeatherToday";
 import DailyForecast from "./components/DailyForecast";
 import SevenDayHourlyForecast from "./components/SevenDayHourlyForecast";
 import SevenDayHourlyForecastDisplay from "./components/SevenDayHourlyForecastDisplay";
+import LoadingSkeleton from "./components/LoadingSkeleton";
+import AIAdvisorSkeleton from "./components/AIAdvisorSkeleton";
 import {
     useLocationData,
     useWeatherData,
@@ -139,7 +141,7 @@ function Weather() {
         }
     }, [dataCoords, selectedLocation]);
 
-     // Also handle the case where we get location from localStorage (cached)
+    // Also handle the case where we get location from localStorage (cached)
     useEffect(() => {
         // If we have a selectedLocation but no weather fetch triggered yet, and it's initial load
         if (selectedLocation && isInitialLoad) {
@@ -337,7 +339,14 @@ function Weather() {
         }
     }, [convertedWeatherData, selectedDay, handleDaySelect]);
 
-      const showWeatherData = (shouldFetchWeather || isInitialLoad) && selectedLocation && convertedWeatherData;
+    const showWeatherData =
+        (shouldFetchWeather || isInitialLoad) &&
+        selectedLocation &&
+        convertedWeatherData;
+    const showLoadingSkeleton =
+        (shouldFetchWeather || isInitialLoad) &&
+        isPendingWeather &&
+        selectedLocation;
 
     return (
         <div className="w-full">
@@ -389,16 +398,7 @@ function Weather() {
                     />
 
                     {/* Weather data loading and error states */}
-                    {( shouldFetchWeather || isInitialLoad ) &&
-                        isPendingWeather &&
-                        selectedLocation && (
-                            <div
-                                className="text-center text-preset-6 text-foreground/80"
-                                aria-live="polite"
-                            >
-                                <p>Loading weather data...</p>
-                            </div>
-                        )}
+                    {showLoadingSkeleton && <LoadingSkeleton />}
 
                     {(shouldFetchWeather || isInitialLoad) && errorWeather && (
                         <div
@@ -411,77 +411,78 @@ function Weather() {
                             </p>
                         </div>
                     )}
-                    {showWeatherData  && (
-                            <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-x-8">
-                                <div className="left-content col-span-2">
-                                    <div className="weather-info-container flex flex-col gap-6 mb-6 lg:mb-10 lg:gap-10">
-                                        <DisplayLocation
-                                            selectedLocation={selectedLocation}
-                                            temp={
-                                                convertedWeatherData?.hourly
-                                                    .temperature_2m ?? []
-                                            }
-                                            selectedUnits={selectedUnits}
-                                        />
+                    {showWeatherData && (
+                        <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-x-8">
+                            <div className="left-content col-span-2">
+                                <div className="weather-info-container flex flex-col gap-6 mb-6 lg:mb-10 lg:gap-10">
+                                    <DisplayLocation
+                                        selectedLocation={selectedLocation}
+                                        temp={
+                                            convertedWeatherData?.hourly
+                                                .temperature_2m ?? []
+                                        }
+                                        selectedUnits={selectedUnits}
+                                    />
 
-                                        <WeatherToday
-                                            hourlyTemperature={
-                                                convertedWeatherData?.current
-                                                    .apparent_temperature ?? ""
-                                            }
-                                            hourlyHumidity={
-                                                convertedWeatherData?.current
-                                                    .relative_humidity_2m ?? ""
-                                            }
-                                            hourlyWindSpeed={
-                                                convertedWeatherData?.current
-                                                    .wind_speed_10m ?? ""
-                                            }
-                                            hourlyPrecipitation={
-                                                convertedWeatherData?.current
-                                                    .rain ?? ""
-                                            }
-                                            time={
-                                                convertedWeatherData.current
-                                                    .time
-                                            }
-                                            selectedUnits={selectedUnits}
-                                        />
-                                    </div>
-
-                                    <DailyForecast
-                                        weatherData={convertedWeatherData}
+                                    <WeatherToday
+                                        hourlyTemperature={
+                                            convertedWeatherData?.current
+                                                .apparent_temperature ?? ""
+                                        }
+                                        hourlyHumidity={
+                                            convertedWeatherData?.current
+                                                .relative_humidity_2m ?? ""
+                                        }
+                                        hourlyWindSpeed={
+                                            convertedWeatherData?.current
+                                                .wind_speed_10m ?? ""
+                                        }
+                                        hourlyPrecipitation={
+                                            convertedWeatherData?.current
+                                                .rain ?? ""
+                                        }
+                                        time={convertedWeatherData.current.time}
                                         selectedUnits={selectedUnits}
                                     />
                                 </div>
 
-                                <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] pb-5 px-4  h-[40rem] lg:contain-size lg:h-full overflow-y-scroll">
-                                    <SevenDayHourlyForecast
-                                        weatherData={convertedWeatherData}
-                                        onDaySelect={handleDaySelect}
-                                        selectedDay={selectedDay}
-                                    />
-
-                                    {filteredHourlyData && (
-                                        <div className="">
-                                            <SevenDayHourlyForecastDisplay
-                                                selectedDay={selectedDay}
-                                                dayData={filteredHourlyData}
-                                                selectedUnits={selectedUnits}
-                                            />
-                                        </div>
-                                    )}
-                                </div>
+                                <DailyForecast
+                                    weatherData={convertedWeatherData}
+                                    selectedUnits={selectedUnits}
+                                />
                             </div>
-                        )}
-                </div>
-                {showWeatherData && (
-                        <AIWeatherAdvisor
-                            weatherData={convertedWeatherData}
-                            selectedUnits={selectedUnits}
-                            selectedLocation={selectedLocation}
-                        />
+
+                            <div className="hourly-forecast-container bg-secondary rounded-[var(--radius-20)] pb-5 px-4  h-[40rem] lg:contain-size lg:h-full overflow-y-scroll">
+                                <SevenDayHourlyForecast
+                                    weatherData={convertedWeatherData}
+                                    onDaySelect={handleDaySelect}
+                                    selectedDay={selectedDay}
+                                />
+
+                                {filteredHourlyData && (
+                                    <div className="">
+                                        <SevenDayHourlyForecastDisplay
+                                            selectedDay={selectedDay}
+                                            dayData={filteredHourlyData}
+                                            selectedUnits={selectedUnits}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     )}
+                </div>
+
+                {/* Show AI Advisor skeleton while loading */}
+                {showLoadingSkeleton && <AIAdvisorSkeleton />}
+
+                {showWeatherData && (
+                    <AIWeatherAdvisor
+                        weatherData={convertedWeatherData}
+                        selectedUnits={selectedUnits}
+                        selectedLocation={selectedLocation}
+                    />
+                )}
             </main>
         </div>
     );
