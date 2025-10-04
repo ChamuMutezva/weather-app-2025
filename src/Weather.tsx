@@ -37,9 +37,9 @@ function Weather() {
         selectedUnits,
     } = state;
 
-    // Add state to control when to fetch weather data
-    const [shouldFetchWeather, setShouldFetchWeather] = useState(false);
-    // Add state to track if this is the initial load
+    // State to control when to fetch weather data
+    const [shouldFetchWeather, setShouldFetchWeather] = useState(false);    
+    // State to track if this is the initial load
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
     // State for the user's current coordinates
@@ -229,7 +229,7 @@ function Weather() {
     // Use useMemo to convert the weather data based on the selected units
     const convertedWeatherData = useMemo(() => {
         if (!weatherData) return null;
-        console.log("weatherData:", weatherData);
+
         const convertedHourly = {
             ...weatherData.hourly,
             temperature_2m: weatherData.hourly.temperature_2m.map((temp) =>
@@ -262,7 +262,7 @@ function Weather() {
                         : temp
             ),
         };
-
+        console.log(`current weather:`, weatherData.current)
         const convertedCurrent = {
             ...weatherData.current,
             apparent_temperature:
@@ -418,8 +418,7 @@ function Weather() {
                                     <DisplayLocation
                                         selectedLocation={selectedLocation}
                                         temp={
-                                            convertedWeatherData?.hourly
-                                                .temperature_2m ?? []
+                                            weatherData?.current.temperature_2m ?? 0
                                         }
                                         selectedUnits={selectedUnits}
                                     />

@@ -1,7 +1,7 @@
 import { type LocationData, type SelectedUnits } from "../types/types";
 interface DisplayLocationProps {
     selectedLocation: LocationData | null;
-    temp: number[];
+    temp: number;
     selectedUnits: SelectedUnits;
 }
 
@@ -23,6 +23,7 @@ function DisplayLocation({
     }
 
     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
+    console.log(temp)
 
     return (
         <div
@@ -48,7 +49,7 @@ function DisplayLocation({
                     className="w-30 h-30"
                 />
                 <p className="text-preset-1 text-foreground">
-                    {`${Math.round(temp[0])}`}
+                    {`${Math.round(temp)}`}
                     <span>{tempUnit}</span>
                 </p>
             </div>
