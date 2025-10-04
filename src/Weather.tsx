@@ -38,7 +38,7 @@ function Weather() {
     } = state;
 
     // State to control when to fetch weather data
-    const [shouldFetchWeather, setShouldFetchWeather] = useState(false);    
+    const [shouldFetchWeather, setShouldFetchWeather] = useState(false);
     // State to track if this is the initial load
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
@@ -262,7 +262,7 @@ function Weather() {
                         : temp
             ),
         };
-        console.log(`current weather:`, weatherData.current)
+        console.log(`current weather:`, weatherData.current);
         const convertedCurrent = {
             ...weatherData.current,
             apparent_temperature:
@@ -271,6 +271,12 @@ function Weather() {
                           weatherData.current.apparent_temperature
                       )
                     : weatherData.current.apparent_temperature,
+            temperature_2m:
+                selectedUnits.temperature === "fahrenheit"
+                    ? convertCelsiusToFehrenheit(
+                          weatherData.current.temperature_2m
+                      )
+                    : weatherData.current.temperature_2m,
             relative_humidity_2m: weatherData.current.relative_humidity_2m,
             rain:
                 selectedUnits.precipitation === "inches"
@@ -418,7 +424,8 @@ function Weather() {
                                     <DisplayLocation
                                         selectedLocation={selectedLocation}
                                         temp={
-                                            weatherData?.current.temperature_2m ?? 0
+                                            convertedWeatherData?.current
+                                                .temperature_2m ?? 0
                                         }
                                         selectedUnits={selectedUnits}
                                     />

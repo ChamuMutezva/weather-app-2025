@@ -109,7 +109,7 @@ function LocationCombobox({
                                     "focus:not-data-focus:outline-none data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25"
                                 )}
                                 displayValue={(location: LocationData | null) =>
-                                    location?.name || ""
+                                   location && `${location.name} ${location.country}` || ""
                                 }
                                 onChange={(event) =>
                                     onQueryChange(event.target.value)
