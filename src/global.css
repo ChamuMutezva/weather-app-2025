@@ -168,25 +168,26 @@
     --radius-full: 999px;
 
     /* Main Background & Text */
-    --background: hsl(var(--neutral-0));
-    --foreground: hsl(var(--neutral-900));
+    --background: hsl(0 0% 98%);
+    --foreground: hsl(0 0% 12%);
 
     /* Primary UI Elements (e.g., header, main containers) */
-    --primary: hsl(var(--blue-500));
-    --primary-foreground: hsl(var(--neutral-300)); /* hsl(var(--neutral-0)); */
+    --primary: hsl(var(--blue-600));
+    --primary-foreground: hsl(0 0% 100%); /* hsl(var(--neutral-0)); */
 
     /* Secondary UI Elements (e.g., cards, sections, hourly scroll) */
-    --secondary: hsl(var(--neutral-300)); /* hsl(var(--neutral-200)); */
-    --secondary-foreground: hsl(var(--neutral-800));
+    --secondary: hsl(0 0% 94%); /* hsl(var(--neutral-200)); */
+    --secondary-foreground: hsl(0 0% 15%);
 
-    --card: hsl(var(--neutral-100)); /*  hsl(var(--neutral-0));*/
+    --card: hsl(0 0% 100%); /*  hsl(var(--neutral-0));*/
+    --card-foreground: hsl(0 0% 12%);
 
     /* Accent/Interactive Colors */
-    --accent: hsl(var(--neutral-500)); /* hsl(var(--blue-500));*/
-    --popover: hsl(var(--neutral-200)); /* hsl(var(--neutral-0));*/
-    --muted: hsl(var(--neutral-200));
-    --muted-foreground: hsl(var(--neutral-600));
-    --border: hsl(var(--neutral-200));
+    --accent: hsl(var(--blue-600)); /* hsl(var(--blue-500));*/
+    --popover: hsl(0 0% 100%); /* hsl(var(--neutral-0));*/
+    --muted: hsl(0 0% 96%);
+    --muted-foreground: hsl(0 0% 40%);
+    --border: hsl(0 0% 85%);
     --linear: linear-gradient(
         135deg,
         hsl(var(--blue-500)) 0%,
@@ -211,6 +212,8 @@
     --primary-foreground: hsl(var(--blue-500));
 
     --card: hsl(var(--neutral-700));
+    --card-foreground: hsl(0 0% 90%);
+
     --accent: hsl(var(--neutral-200));
 
     --popover: hsl(var(--neutral-700));

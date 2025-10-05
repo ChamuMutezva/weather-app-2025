@@ -26,48 +26,43 @@ function SevenDayHourlyForecastDisplay({
     // const precipitationUnit = selectedUnits.precipitation === "mm" ? "mm" : "inches";
 
     return (
-        <div className="">
-            <div className="p-2">
-                <h3 className="text-foreground">
-                    {new Date(selectedDay).toLocaleDateString("en-US", {
-                        weekday: "long",
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                    })}
-                </h3>
-                <ul
-                    aria-live="polite"
-                    aria-atomic="true"
-                    className="flex flex-col gap-2 mt-4"
-                >
-                    {dayData?.time.map((time, index) => (
-                        <li
-                            key={time}
-                            className="flex justify-between items-center bg-popover rounded-[var(--radius-8)] "
-                        >
-                            <div className="flex items-center justify-start gap-4">
-                                {getWeatherIcon(dayData.weather_code[index])}
-                                <p className="text-foreground text-preset-5-m p-4">
-                                    {new Date(time).toLocaleTimeString(
-                                        "en-US",
-                                        {
-                                            hour: "2-digit",
-                                            // minute: "2-digit",
-                                        }
-                                    )}
-                                </p>
-                            </div>
+        <div className="p-2">
+            <h3 className="text-foreground">
+                {new Date(selectedDay).toLocaleDateString("en-US", {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                })}
+            </h3>
+            <ul
+                aria-live="polite"
+                aria-atomic="true"
+                className="flex flex-col gap-2 mt-4"
+            >
+                {dayData?.time.map((time, index) => (
+                    <li
+                        key={time}
+                        className="flex justify-between items-center bg-popover rounded-[var(--radius-8)] "
+                    >
+                        <div className="flex items-center justify-start gap-4">
+                            {getWeatherIcon(dayData.weather_code[index])}
+                            <p className="text-foreground text-preset-5-m p-4">
+                                {new Date(time).toLocaleTimeString("en-US", {
+                                    hour: "2-digit",
+                                    // minute: "2-digit",
+                                })}
+                            </p>
+                        </div>
 
-                            <p className="text-foreground text-preset-7 p-4">
-                                {`${Math.round(
-                                    dayData.temperature_2m[index]
-                                )} ${tempUnit}`}
-                            </p>                           
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                        <p className="text-foreground text-preset-7 p-4">
+                            {`${Math.round(
+                                dayData.temperature_2m[index]
+                            )} ${tempUnit}`}
+                        </p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

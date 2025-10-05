@@ -6,6 +6,7 @@ export function getWeatherIcon(code: number) {
                 alt=""
                 width={60}
                 height={60}
+                className="theme-aware-image"
             />
         ); // Clear sky
     if (code >= 1 && code <= 3)
@@ -15,6 +16,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Mainly clear to overcast
     if (code === 45 || code === 48)
@@ -24,6 +26,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Fog
     if (code >= 51 && code <= 55)
@@ -33,6 +36,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Drizzle
     if (code >= 61 && code <= 65)
@@ -42,6 +46,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Rain
     if (code >= 80 && code <= 82)
@@ -51,6 +56,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Rain showers
     if (code >= 71 && code <= 75)
@@ -60,6 +66,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Snow fall
     if (code === 85 || code === 86)
@@ -69,6 +76,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Snow showers
     if (code === 95)
@@ -78,6 +86,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Thunderstorm
     if (code === 96 || code === 99)
@@ -87,6 +96,7 @@ export function getWeatherIcon(code: number) {
                 width={60}
                 height={60}
                 alt=""
+                className="theme-aware-image"
             />
         ); // Thunderstorm with hail
     return "❓"; // Unknown code
