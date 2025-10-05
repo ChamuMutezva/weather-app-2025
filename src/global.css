@@ -194,11 +194,20 @@
         hsl(var(--blue-700)) 100%
     );
 
+    --bg-today-small: url("/assets/images/bg-today-small-light.svg");
+    --bg-today-large: url("/assets/images/bg-today-large-light.svg");
+
     @layer components {
         .bg-custom-gradient {
             background: var(--linear);
         }
     }
+}
+
+.weather-info {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: var(--bg-today-small);
 }
 
 .dark {
@@ -225,6 +234,9 @@
         hsl(var(--blue-500)) 0%,
         hsl(var(--blue-700)) 100%
     );
+
+    --bg-today-small: url("/assets/images/bg-today-small.svg");
+    --bg-today-large: url("/assets/images/bg-today-large.svg");
 }
 
 a {
@@ -347,6 +359,10 @@ img {
     .text-preset-1 {
         font-size: 6rem;
     }
+    .weather-info {
+        background-image: var(--bg-today-large);
+    }
+    
 }
 
 @media (min-width: 80rem) {

@@ -59,7 +59,7 @@ function Header({
                           data-closed:scale-95 data-closed:opacity-0 z-10"
                     >
                         {/* ========================================= */}
-                        {/* 1. DARK MODE TOGGLE (New Feature)         */}
+                        {/* 1. DARK MODE TOGGLE                       */}
                         {/* ========================================= */}
                         <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-secondary-foreground font-bold">
                             Theme
