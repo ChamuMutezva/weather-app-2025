@@ -29,7 +29,7 @@ const renderLocationOption = (location: LocationData) => (
         value={location}
         className={({ active }) =>
             `relative cursor-default select-none py-2 pl-10 pr-4 m-2 rounded-[var(--radius-8)] ${
-                active ? "bg-card text-white" : "text-white"
+                active ? "bg-card text-foreground" : "text-foreground"
             }`
         }
     >
@@ -55,7 +55,7 @@ const renderLocationOption = (location: LocationData) => (
 );
 
 const LoadingMessage = () => (
-    <div className="relative cursor-default select-none px-4 py-2 text-white">
+    <div className="relative cursor-default select-none px-4 py-2 text-foreground">
         <p>Searching...</p>
     </div>
 );
@@ -67,7 +67,7 @@ const ErrorMessage = ({ error }: { error: Error }) => (
 );
 
 const EmptyMessage = () => (
-    <div className="relative cursor-default select-none px-4 py-2 text-white">
+    <div className="relative cursor-default select-none px-4 py-2 text-foreground">
         <p>No locations found. Try a different search.</p>
     </div>
 );

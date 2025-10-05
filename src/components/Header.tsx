@@ -32,7 +32,7 @@ function Header({
                 <img
                     src="/assets/images/logo.svg"
                     alt=""
-                    className="h-8 w-auto"
+                    className="h-8 w-auto dark:invert-0 invert"
                 />
             </a>
 
