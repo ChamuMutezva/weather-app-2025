@@ -103,7 +103,7 @@ function AIWeatherAdvisor({ weatherData, selectedUnits, selectedLocation }: Read
                 <button
                     onClick={fetchWeatherAdvice}
                     disabled={isLoading || !weatherData}
-                    className="w-full px-4 py-3 bg-primary hover:bg-primary-foreground/80 text-white font-bold rounded-lg transition duration-150 shadow-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 bg-primary hover:bg-primary-foreground hover:text-primary text-primary-foreground font-bold rounded-lg transition duration-150 shadow-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {isLoading ? (
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>

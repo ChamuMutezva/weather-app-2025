@@ -23,7 +23,7 @@ function DisplayLocation({
     }
 
     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
-    console.log(temp)
+    console.log(temp);
 
     return (
         <div
@@ -34,11 +34,13 @@ function DisplayLocation({
          p-4 min-h-71.5 w-full flex flex-col justify-center items-center md:flex-row md:justify-between gap-4`}
         >
             <div className="flex flex-col items-center md:items-start gap-2">
-                <h2 className="text-preset-4 text-foreground text-center md:text-left">{`${selectedLocation.name}, ${selectedLocation.admin1}`}</h2>
-                <p className="text-preset-5 text-foreground text-center md:text-left">{selectedLocation.country}</p>
+                <h2 className="text-preset-4 text-white text-center md:text-left">{`${selectedLocation.name}, ${selectedLocation.admin1}`}</h2>
+                <p className="text-preset-5 text-white text-center md:text-left">
+                    {selectedLocation.country}
+                </p>
                 <time
                     dateTime={new Date().toISOString()}
-                    className="text-preset-6 text-foreground opacity-80"
+                    className="text-preset-6 text-white opacity-80"
                 >
                     {formatDate(new Date())}
                 </time>
@@ -49,7 +51,7 @@ function DisplayLocation({
                     alt=""
                     className="w-30 h-30"
                 />
-                <p className="text-preset-1 text-foreground">
+                <p className="text-preset-1 text-white">
                     {`${Math.round(temp)}`}
                     <span>{tempUnit}</span>
                 </p>

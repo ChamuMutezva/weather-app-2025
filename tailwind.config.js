@@ -9,6 +9,11 @@ export default {
                 card: "var(--card)",
                 accent: "var(--accent)",
                 popover: "var(--popover)",
+                border: "var(--border)",
+                muted: {
+                    DEFAULT: "var(--muted)",
+                    foreground: "var(--muted-foreground)",
+                },                
                 primary: {
                     DEFAULT: "var(--primary)",
                     foreground: "var(--primary-foreground)",

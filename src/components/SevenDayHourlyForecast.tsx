@@ -63,10 +63,10 @@ function SevenDayHourlyForecast({
 
             <Menu>
                 <MenuButton
-                    className="inline-flex items-center gap-2 rounded-md bg-secondary 
+                    className="inline-flex items-center gap-2 rounded-md bg-popover
                      px-3 py-1.5 text-preset-7 text-foreground shadow-inner shadow-white/10 
                      focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
-                      data-hover:bg-gray-700 data-open:bg-gray-700"
+                      data-hover:bg-popover data-open:bg-popover"
                 >
                     {new Date(selectedDay).toLocaleDateString("en-US", {
                         weekday: "long",
@@ -76,14 +76,14 @@ function SevenDayHourlyForecast({
                 <MenuItems
                     transition
                     anchor="bottom end"
-                    className="w-64 mt-2 origin-top-right rounded-xl border border-gray-700 bg-gray-800 p-1 text-sm
+                    className="w-64 mt-2 origin-top-right rounded-xl border border-border bg-secondary p-1 text-sm
                          text-gray-300 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none
                           data-closed:scale-95 data-closed:opacity-0"
                 >
                     {days.map((day, index) => (
                         <MenuItem key={index}>
                             <button
-                                className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-focus:bg-white/10"
+                                className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-focus:bg-popover text-secondary-foreground"
                                 onClick={() => {
                                     // Get the actual date string from daily data
                                     const selectedDate =

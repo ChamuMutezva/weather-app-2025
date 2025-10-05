@@ -44,7 +44,7 @@ function SevenDayHourlyForecastDisplay({
                     {dayData?.time.map((time, index) => (
                         <li
                             key={time}
-                            className="flex justify-between items-center bg-card rounded-[var(--radius-8)] "
+                            className="flex justify-between items-center bg-popover rounded-[var(--radius-8)] "
                         >
                             <div className="flex items-center justify-start gap-4">
                                 {getWeatherIcon(dayData.weather_code[index])}
@@ -63,18 +63,7 @@ function SevenDayHourlyForecastDisplay({
                                 {`${Math.round(
                                     dayData.temperature_2m[index]
                                 )} ${tempUnit}`}
-                            </p>
-                            {/*
-                            <p>{`${Math.round(
-                                dayData.relative_humidity_2m[index]
-                            )}%`}</p>
-                            <p>{`${Math.round(
-                                dayData.wind_speed_10m[index]
-                            )} km/h`}</p>
-                            <p>{`${Math.round(
-                                dayData.precipitation[index]
-                            )} mm`}</p>
-                             */}
+                            </p>                           
                         </li>
                     ))}
                 </ul>

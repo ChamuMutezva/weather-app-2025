@@ -23,8 +23,8 @@ function Header({
         category: keyof SelectedUnits,
         unit: SelectedUnits[keyof SelectedUnits]
     ) => void;
-    isDarkMode: boolean; // Readonly prop
-    toggleDarkMode: () => void; // Readonly prop
+    isDarkMode: boolean;
+    toggleDarkMode: () => void;
 }>) {
     return (
         <header className="flex justify-between items-center ">
@@ -54,19 +54,19 @@ function Header({
                     <MenuItems
                         transition
                         anchor="bottom end"
-                        className="w-60 mt-2 origin-top-right rounded-xl border border-gray-700 bg-secondary p-1 text-sm
+                        className="w-60 mt-2 origin-top-right rounded-xl border border-card bg-secondary p-1 text-sm
                          text-gray-300 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none
                           data-closed:scale-95 data-closed:opacity-0"
                     >
                         {/* ========================================= */}
                         {/* 1. DARK MODE TOGGLE (New Feature)         */}
                         {/* ========================================= */}
-                        <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-primary font-bold">
+                        <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-secondary-foreground font-bold">
                             Theme
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-gray-700"
+                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover"
                                 onClick={toggleDarkMode}
                             >
                                 <span className="flex items-center gap-2">
@@ -75,24 +75,28 @@ function Header({
                                     ) : (
                                         <SunIcon className="size-5 fill-foreground" />
                                     )}
-                                    {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                                    {isDarkMode
+                                        ? "Switch to Light Mode"
+                                        : "Switch to Dark Mode"}
                                 </span>
                             </button>
                         </MenuItem>
 
-                         {/* Separator */}
-                        <div className="my-2 h-px bg-gray-700" />
-                        
-                                                {/* ========================================= */}
-                        {/* 2. UNITS SECTION (Refactored)             */}
+                        {/* Separator */}
+                        <div className="my-2 h-px bg-primary" />
+
                         {/* ========================================= */}
-                        <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-primary font-bold">
+                        {/* 2. UNITS SECTION                          */}
+                        {/* ========================================= */}
+                        <div className="px-3 pt-1.5 pb-0.5 text-preset-6 text-secondary-foreground font-bold">
                             Units
                         </div>
+                        <div className="my-2 h-px bg-primary" />
+
                         {/* Switch to Imperial/Metric Toggle */}
                         <MenuItem>
                             <button
-                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-gray-700"
+                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover"
                                 onClick={() => handleUnitToggle(!enabled)}
                             >
                                 {enabled
@@ -102,12 +106,12 @@ function Header({
                         </MenuItem>
 
                         {/* Temperature Section */}
-                        <div className="px-3 py-1.5 text-preset-8 text-primary">
+                        <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
                             Temperature
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "temperature",
@@ -125,7 +129,7 @@ function Header({
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "temperature",
@@ -143,15 +147,15 @@ function Header({
                         </MenuItem>
 
                         {/* Separator */}
-                        <div className="my-1 h-px bg-gray-700" />
+                        <div className="my-1 h-px bg-primary" />
 
                         {/* Wind Speed Section */}
-                        <div className="px-3 py-1.5 text-preset-8 text-primary">
+                        <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground">
                             Wind Speed
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
                                 onClick={() =>
                                     handleSelectUnitCategory("wind", "kmh")
                                 }
@@ -166,7 +170,7 @@ function Header({
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
                                 onClick={() =>
                                     handleSelectUnitCategory("wind", "mph")
                                 }
@@ -181,15 +185,15 @@ function Header({
                         </MenuItem>
 
                         {/* Separator */}
-                        <div className="my-1 h-px bg-gray-700" />
+                        <div className="my-1 h-px bg-primary" />
 
                         {/* Precipitation Section */}
-                        <div className="px-3 py-1.5 text-preset-8 text-primary">
+                        <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
                             Precipitation
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "precipitation",
@@ -207,7 +211,7 @@ function Header({
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-gray-700"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "precipitation",

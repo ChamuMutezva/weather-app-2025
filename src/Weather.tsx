@@ -481,7 +481,7 @@ function Weather() {
                                         hourlyPrecipitation={
                                             convertedWeatherData?.current
                                                 .rain ?? ""
-                                        }                                       
+                                        }
                                         selectedUnits={selectedUnits}
                                     />
                                 </div>
@@ -500,13 +500,11 @@ function Weather() {
                                 />
 
                                 {filteredHourlyData && (
-                                    <div className="">
-                                        <SevenDayHourlyForecastDisplay
-                                            selectedDay={selectedDay}
-                                            dayData={filteredHourlyData}
-                                            selectedUnits={selectedUnits}
-                                        />
-                                    </div>
+                                    <SevenDayHourlyForecastDisplay
+                                        selectedDay={selectedDay}
+                                        dayData={filteredHourlyData}
+                                        selectedUnits={selectedUnits}
+                                    />
                                 )}
                             </div>
                         </div>

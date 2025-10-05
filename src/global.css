@@ -12,6 +12,10 @@
     --color-primary-foreground: var(--primary-foreground);
     --color-secondary-foreground: var(--secondary-foreground);
     --color-popover: var(--popover);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+
     /* Add other mappings you need */
 }
 
@@ -163,23 +167,26 @@
     --radius-24: 24px;
     --radius-full: 999px;
 
-     /* Main Background & Text */
+    /* Main Background & Text */
     --background: hsl(var(--neutral-0));
     --foreground: hsl(var(--neutral-900));
 
-     /* Primary UI Elements (e.g., header, main containers) */    
+    /* Primary UI Elements (e.g., header, main containers) */
     --primary: hsl(var(--blue-500));
-    --primary-foreground: hsl(var(--neutral-300));
+    --primary-foreground: hsl(var(--neutral-300)); /* hsl(var(--neutral-0)); */
 
     /* Secondary UI Elements (e.g., cards, sections, hourly scroll) */
-     --secondary: hsl(var(--neutral-300));
-    --secondary-foreground: hsl(var(--neutral-200));
+    --secondary: hsl(var(--neutral-300)); /* hsl(var(--neutral-200)); */
+    --secondary-foreground: hsl(var(--neutral-800));
 
-    --card: hsl(var(--neutral-100));
+    --card: hsl(var(--neutral-100)); /*  hsl(var(--neutral-0));*/
 
-     /* Accent/Interactive Colors */
-    --accent: hsl(var(--neutral-500));
-    --popover: hsl(var(--neutral-200));
+    /* Accent/Interactive Colors */
+    --accent: hsl(var(--neutral-500)); /* hsl(var(--blue-500));*/
+    --popover: hsl(var(--neutral-200)); /* hsl(var(--neutral-0));*/
+    --muted: hsl(var(--neutral-200));
+    --muted-foreground: hsl(var(--neutral-600));
+    --border: hsl(var(--neutral-200));
     --linear: linear-gradient(
         135deg,
         hsl(var(--blue-500)) 0%,
@@ -195,18 +202,21 @@
 
 .dark {
     --background: hsl(var(--neutral-900));
-     --foreground: hsl(var(--neutral-0));
+    --foreground: hsl(var(--neutral-0));
 
     --secondary: hsl(var(--neutral-800));
-     --secondary-foreground: hsl(var(--neutral-300));
-   
+    --secondary-foreground: hsl(var(--neutral-300));
+
     --primary: hsl(var(--neutral-300));
     --primary-foreground: hsl(var(--blue-500));
-   
+
     --card: hsl(var(--neutral-700));
     --accent: hsl(var(--neutral-200));
 
     --popover: hsl(var(--neutral-700));
+    --muted: hsl(var(--neutral-200));
+    --muted-foreground: hsl(var(--neutral-600));
+    --border: hsl(var(--neutral-600));
     --linear: linear-gradient(
         135deg,
         hsl(var(--blue-500)) 0%,
