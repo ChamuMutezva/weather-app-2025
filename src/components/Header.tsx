@@ -36,7 +36,7 @@ function Header({
                 />
             </a>
 
-            <div className="text-right">
+            <div className="text-right ">
                 <Menu>
                     <MenuButton
                         className="inline-flex items-center gap-2 rounded-md bg-secondary text-foreground
@@ -56,7 +56,7 @@ function Header({
                         anchor="bottom end"
                         className="w-60 mt-2 origin-top-right rounded-xl border border-card bg-secondary p-1 text-sm
                          text-gray-300 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none
-                          data-closed:scale-95 data-closed:opacity-0"
+                          data-closed:scale-95 data-closed:opacity-0 z-10"
                     >
                         {/* ========================================= */}
                         {/* 1. DARK MODE TOGGLE (New Feature)         */}
@@ -83,7 +83,7 @@ function Header({
                         </MenuItem>
 
                         {/* Separator */}
-                        <div className="my-2 h-px bg-primary" />
+                        <div className="my-2 h-px bg-border" />
 
                         {/* ========================================= */}
                         {/* 2. UNITS SECTION                          */}
@@ -91,7 +91,7 @@ function Header({
                         <div className="px-3 pt-1.5 pb-0.5 text-preset-6 text-secondary-foreground font-bold">
                             Units
                         </div>
-                        <div className="my-2 h-px bg-primary" />
+                        <div className="my-2 h-px bg-border" />
 
                         {/* Switch to Imperial/Metric Toggle */}
                         <MenuItem>
@@ -147,7 +147,7 @@ function Header({
                         </MenuItem>
 
                         {/* Separator */}
-                        <div className="my-1 h-px bg-primary" />
+                        <div className="my-1 h-px bg-border" />
 
                         {/* Wind Speed Section */}
                         <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground">
@@ -185,7 +185,7 @@ function Header({
                         </MenuItem>
 
                         {/* Separator */}
-                        <div className="my-1 h-px bg-primary" />
+                        <div className="my-1 h-px bg-border" />
 
                         {/* Precipitation Section */}
                         <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
