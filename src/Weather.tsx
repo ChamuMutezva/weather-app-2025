@@ -27,6 +27,7 @@ const LOCATION_STORAGE_KEY = "cachedLocationData";
 
 function Weather() {
     const [state, dispatch] = useReducer(weatherReducer, initialWeatherState);
+    const THEME_STORAGE_KEY = "weatherAppTheme";
 
     const {
         selectedLocation,
@@ -36,6 +37,38 @@ function Weather() {
         enabled,
         selectedUnits,
     } = state;
+
+    // ===============================================
+    // DARK MODE STATE & LOGIC
+    // ===============================================
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Initialize state from localStorage or default to system preference
+        const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+        if (savedTheme) {
+            return savedTheme === "dark";
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    });
+
+    const toggleDarkMode = useCallback(() => {
+        setIsDarkMode((prevMode) => {
+            const newMode = !prevMode;
+            localStorage.setItem(THEME_STORAGE_KEY, newMode ? "dark" : "light");
+            return newMode;
+        });
+    }, []);
+
+    // Effect to apply the 'dark' class to the HTML element
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    }, [isDarkMode]);
+    // ===============================================
+    // END DARK MODE STATE & LOGIC
+    // ===============================================
 
     // State to control when to fetch weather data
     const [shouldFetchWeather, setShouldFetchWeather] = useState(false);
@@ -361,6 +394,8 @@ function Weather() {
                 selectedUnits={selectedUnits}
                 handleUnitToggle={handleUnitToggle}
                 handleSelectUnitCategory={handleSelectUnitCategory}
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
             />
             <main className="pt-10 lg:pt-16">
                 <h1 className="text-preset-2 text-foreground text-center">
@@ -446,8 +481,7 @@ function Weather() {
                                         hourlyPrecipitation={
                                             convertedWeatherData?.current
                                                 .rain ?? ""
-                                        }
-                                        time={convertedWeatherData.current.time}
+                                        }                                       
                                         selectedUnits={selectedUnits}
                                     />
                                 </div>

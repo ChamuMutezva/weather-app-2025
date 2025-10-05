@@ -1,5 +1,11 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import {
+    CheckIcon,
+    ChevronDownIcon,
+    SunIcon,
+    MoonIcon,
+    Cog6ToothIcon,
+} from "@heroicons/react/16/solid";
 import { type SelectedUnits } from "../types/types";
 
 function Header({
@@ -7,11 +13,18 @@ function Header({
     handleUnitToggle,
     selectedUnits,
     handleSelectUnitCategory,
+    isDarkMode, // New prop for current theme state
+    toggleDarkMode, // New function to toggle theme
 }: Readonly<{
     enabled: boolean;
     handleUnitToggle: (isImperialEnabled: boolean) => void;
     selectedUnits: { temperature: string; wind: string; precipitation: string };
-    handleSelectUnitCategory: (category: keyof SelectedUnits, unit: SelectedUnits[keyof SelectedUnits]) => void;
+    handleSelectUnitCategory: (
+        category: keyof SelectedUnits,
+        unit: SelectedUnits[keyof SelectedUnits]
+    ) => void;
+    isDarkMode: boolean; // Readonly prop
+    toggleDarkMode: () => void; // Readonly prop
 }>) {
     return (
         <header className="flex justify-between items-center ">
@@ -26,25 +39,56 @@ function Header({
             <div className="text-right">
                 <Menu>
                     <MenuButton
-                        className="inline-flex items-center gap-2 rounded-md bg-secondary text-primary
-                     px-3 py-3 text-preset-7 shadow-inner shadow-white/10 
-                     focus:not-data-focus:outline-none data-focus:outline-2 data-focus:outline-white data-focus:-outline-offset-2
-                     data-hover:bg-gray-700 data-open:bg-gray-700 
-                     transition duration-150 ease-in-out 
+                        className="inline-flex items-center gap-2 rounded-md bg-secondary text-foreground
+                     px-3 py-3 text-preset-7 shadow-inner shadow-white/10 focus:not-data-focus:outline-none 
+                     data-focus:outline-2 data-focus:outline-white data-focus:-outline-offset-2
+                     data-hover:bg-popover data-open:bg-popover transition duration-150 ease-in-out 
                       "
                     >
-                        <img src="/assets/images/icon-units.svg" alt="" />
-                        <span>Units</span>
-                        <ChevronDownIcon className="size-4 fill-white" />
+                        {/* <img src="/assets/images/icon-units.svg" alt="" /> */}
+                        <Cog6ToothIcon className="size-5 fill-foreground" />
+                        <span>Settings</span>
+                        <ChevronDownIcon className="size-4 fill-foreground" />
                     </MenuButton>
 
                     <MenuItems
                         transition
                         anchor="bottom end"
-                        className="w-53.5 mt-2 origin-top-right rounded-xl border border-gray-700 bg-gray-800 p-1 text-sm
+                        className="w-60 mt-2 origin-top-right rounded-xl border border-gray-700 bg-secondary p-1 text-sm
                          text-gray-300 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none
                           data-closed:scale-95 data-closed:opacity-0"
                     >
+                        {/* ========================================= */}
+                        {/* 1. DARK MODE TOGGLE (New Feature)         */}
+                        {/* ========================================= */}
+                        <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-primary font-bold">
+                            Theme
+                        </div>
+                        <MenuItem>
+                            <button
+                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-gray-700"
+                                onClick={toggleDarkMode}
+                            >
+                                <span className="flex items-center gap-2">
+                                    {isDarkMode ? (
+                                        <MoonIcon className="size-5 fill-foreground" />
+                                    ) : (
+                                        <SunIcon className="size-5 fill-foreground" />
+                                    )}
+                                    {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                                </span>
+                            </button>
+                        </MenuItem>
+
+                         {/* Separator */}
+                        <div className="my-2 h-px bg-gray-700" />
+                        
+                                                {/* ========================================= */}
+                        {/* 2. UNITS SECTION (Refactored)             */}
+                        {/* ========================================= */}
+                        <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-primary font-bold">
+                            Units
+                        </div>
                         {/* Switch to Imperial/Metric Toggle */}
                         <MenuItem>
                             <button
@@ -71,9 +115,11 @@ function Header({
                                     )
                                 }
                             >
-                                <span className="text-preset-7 text-foreground">Celsius (°C)</span>
+                                <span className="text-preset-7 text-foreground">
+                                    Celsius (°C)
+                                </span>
                                 {selectedUnits.temperature === "celsius" && (
-                                    <CheckIcon className="size-4 fill-white" />
+                                    <CheckIcon className="size-4 fill-foreground" />
                                 )}
                             </button>
                         </MenuItem>
@@ -87,9 +133,11 @@ function Header({
                                     )
                                 }
                             >
-                                <span className="text-preset-7 text-foreground">Fahrenheit (°F)</span>
+                                <span className="text-preset-7 text-foreground">
+                                    Fahrenheit (°F)
+                                </span>
                                 {selectedUnits.temperature === "fahrenheit" && (
-                                    <CheckIcon className="size-4 fill-white" />
+                                    <CheckIcon className="size-4 fill-foreground" />
                                 )}
                             </button>
                         </MenuItem>
@@ -108,9 +156,11 @@ function Header({
                                     handleSelectUnitCategory("wind", "kmh")
                                 }
                             >
-                                <span className="text-preset-7 text-foreground">km/h</span>
+                                <span className="text-preset-7 text-foreground">
+                                    km/h
+                                </span>
                                 {selectedUnits.wind === "kmh" && (
-                                    <CheckIcon className="size-4 fill-white" />
+                                    <CheckIcon className="size-4 fill-foreground" />
                                 )}
                             </button>
                         </MenuItem>
@@ -121,9 +171,11 @@ function Header({
                                     handleSelectUnitCategory("wind", "mph")
                                 }
                             >
-                                <span className="text-preset-7 text-foreground">mph</span>
+                                <span className="text-preset-7 text-foreground">
+                                    mph
+                                </span>
                                 {selectedUnits.wind === "mph" && (
-                                    <CheckIcon className="size-4 fill-white" />
+                                    <CheckIcon className="size-4 fill-foreground" />
                                 )}
                             </button>
                         </MenuItem>
@@ -145,9 +197,11 @@ function Header({
                                     )
                                 }
                             >
-                                <span className="text-preset-7 text-foreground">Millimeters (mm)</span>
+                                <span className="text-preset-7 text-foreground">
+                                    Millimeters (mm)
+                                </span>
                                 {selectedUnits.precipitation === "mm" && (
-                                    <CheckIcon className="size-4 fill-white" />
+                                    <CheckIcon className="size-4 fill-foreground" />
                                 )}
                             </button>
                         </MenuItem>
@@ -161,9 +215,11 @@ function Header({
                                     )
                                 }
                             >
-                                <span className="text-preset-7 text-foreground">Inches (in)</span>
+                                <span className="text-preset-7 text-foreground">
+                                    Inches (in)
+                                </span>
                                 {selectedUnits.precipitation === "inches" && (
-                                    <CheckIcon className="size-4 fill-white" />
+                                    <CheckIcon className="size-4 fill-foreground" />
                                 )}
                             </button>
                         </MenuItem>

@@ -11,6 +11,7 @@
     --color-linear: var(--linear);
     --color-primary-foreground: var(--primary-foreground);
     --color-secondary-foreground: var(--secondary-foreground);
+    --color-popover: var(--popover);
     /* Add other mappings you need */
 }
 
@@ -162,14 +163,23 @@
     --radius-24: 24px;
     --radius-full: 999px;
 
-    --background: hsl(var(--neutral-900));
-    --secondary: hsl(var(--neutral-800));
-    --foreground: hsl(var(--neutral-0));
-    --primary: hsl(var(--neutral-300));
-    --primary-foreground: hsl(var(--blue-500));
-    --secondary-foreground: hsl(var(--neutral-600));
-    --card: hsl(var(--neutral-700));
-    --accent: hsl(var(--neutral-200));
+     /* Main Background & Text */
+    --background: hsl(var(--neutral-0));
+    --foreground: hsl(var(--neutral-900));
+
+     /* Primary UI Elements (e.g., header, main containers) */    
+    --primary: hsl(var(--blue-500));
+    --primary-foreground: hsl(var(--neutral-300));
+
+    /* Secondary UI Elements (e.g., cards, sections, hourly scroll) */
+     --secondary: hsl(var(--neutral-300));
+    --secondary-foreground: hsl(var(--neutral-200));
+
+    --card: hsl(var(--neutral-100));
+
+     /* Accent/Interactive Colors */
+    --accent: hsl(var(--neutral-500));
+    --popover: hsl(var(--neutral-200));
     --linear: linear-gradient(
         135deg,
         hsl(var(--blue-500)) 0%,
@@ -184,10 +194,24 @@
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --secondary: oklch(0.269 0 0);
+    --background: hsl(var(--neutral-900));
+     --foreground: hsl(var(--neutral-0));
+
+    --secondary: hsl(var(--neutral-800));
+     --secondary-foreground: hsl(var(--neutral-300));
+   
+    --primary: hsl(var(--neutral-300));
+    --primary-foreground: hsl(var(--blue-500));
+   
+    --card: hsl(var(--neutral-700));
+    --accent: hsl(var(--neutral-200));
+
+    --popover: hsl(var(--neutral-700));
+    --linear: linear-gradient(
+        135deg,
+        hsl(var(--blue-500)) 0%,
+        hsl(var(--blue-700)) 100%
+    );
 }
 
 a {

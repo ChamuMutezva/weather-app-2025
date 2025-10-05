@@ -8,6 +8,7 @@ export default {
                 linear: "var(--linear-blue)",
                 card: "var(--card)",
                 accent: "var(--accent)",
+                popover: "var(--popover)",
                 primary: {
                     DEFAULT: "var(--primary)",
                     foreground: "var(--primary-foreground)",

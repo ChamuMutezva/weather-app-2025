@@ -63,7 +63,7 @@ function SevenDayHourlyForecast({
 
             <Menu>
                 <MenuButton
-                    className="inline-flex items-center gap-2 rounded-md bg-secondary-foreground 
+                    className="inline-flex items-center gap-2 rounded-md bg-secondary 
                      px-3 py-1.5 text-preset-7 text-foreground shadow-inner shadow-white/10 
                      focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
                       data-hover:bg-gray-700 data-open:bg-gray-700"
@@ -71,7 +71,7 @@ function SevenDayHourlyForecast({
                     {new Date(selectedDay).toLocaleDateString("en-US", {
                         weekday: "long",
                     }) || "Select Day"}
-                    <ChevronDownIcon className="size-4 fill-white" />
+                    <ChevronDownIcon className="size-4 fill-foreground" />
                 </MenuButton>
                 <MenuItems
                     transition
