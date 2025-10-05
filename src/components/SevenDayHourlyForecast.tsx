@@ -26,8 +26,7 @@ function SevenDayHourlyForecast({
     onDaySelect,
     selectedDay,
 }: Readonly<DailyForecastProps>) {
-    console.log(weatherData.hourly);
-    console.log("Selected day:", new Date(selectedDay).toDateString());
+  
     const getUniqueDays = () => {
         const days: string[] = [];
         const seenDays = new Set();

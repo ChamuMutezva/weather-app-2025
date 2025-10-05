@@ -295,7 +295,7 @@ function Weather() {
                         : temp
             ),
         };
-        console.log(`current weather:`, weatherData.current);
+
         const convertedCurrent = {
             ...weatherData.current,
             apparent_temperature:

@@ -22,8 +22,7 @@ function DisplayLocation({
         return null;
     }
 
-    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
-    console.log(temp);
+    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";    
 
     return (
         <div

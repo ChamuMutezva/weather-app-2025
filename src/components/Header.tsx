@@ -111,7 +111,13 @@ function Header({
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
+                                type="button"
+                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                    ${
+                                        selectedUnits.temperature === "celsius"
+                                            ? "bg-background"
+                                            : ""
+                                    }`}
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "temperature",
@@ -129,7 +135,14 @@ function Header({
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
+                                type="button"
+                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                    ${
+                                        selectedUnits.temperature ===
+                                        "fahrenheit"
+                                            ? "bg-background"
+                                            : ""
+                                    } `}
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "temperature",
@@ -155,7 +168,13 @@ function Header({
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
+                                type="button"
+                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                     ${
+                                         selectedUnits.wind === "kmh"
+                                             ? "bg-background"
+                                             : ""
+                                     }`}
                                 onClick={() =>
                                     handleSelectUnitCategory("wind", "kmh")
                                 }
@@ -170,7 +189,13 @@ function Header({
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
+                                type="button"
+                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                     ${
+                                         selectedUnits.wind === "mph"
+                                             ? "bg-background"
+                                             : ""
+                                     }`}
                                 onClick={() =>
                                     handleSelectUnitCategory("wind", "mph")
                                 }
@@ -193,7 +218,13 @@ function Header({
                         </div>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
+                                type="button"
+                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                     ${
+                                         selectedUnits.precipitation === "mm"
+                                             ? "bg-background"
+                                             : ""
+                                     }`}
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "precipitation",
@@ -211,7 +242,13 @@ function Header({
                         </MenuItem>
                         <MenuItem>
                             <button
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover"
+                                type="button"
+                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                     ${
+                                         selectedUnits.precipitation === "inches"
+                                             ? "bg-background"
+                                             : ""
+                                     }`}
                                 onClick={() =>
                                     handleSelectUnitCategory(
                                         "precipitation",

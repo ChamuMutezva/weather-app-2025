@@ -18,8 +18,7 @@ function SevenDayHourlyForecastDisplay({
     selectedDay,
     dayData,
     selectedUnits,
-}: Readonly<SevenDayHourlyForecastDisplayProps>) {
-    console.log(dayData);
+}: Readonly<SevenDayHourlyForecastDisplayProps>) {    
 
     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
     //const windUnit = selectedUnits.wind === "kmh" ? "km/h" : "mph";
