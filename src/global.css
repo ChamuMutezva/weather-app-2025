@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
+/* Define all custom colors */
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -15,10 +16,145 @@
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
     --color-border: var(--border);
-
     /* Add other mappings you need */
 }
 
+/* ================================================= */
+/* 1. LIGHT MODE (Default Colors) */
+/* These are the fallback/default values */
+/* ================================================= */
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --neutral-900: 243 96% 9%;
+    --neutral-800: 243 27% 20%;
+    --neutral-700: 243 23% 24%;
+    --neutral-600: 243 23% 30%;
+    --neutral-300: 240 6% 70%;
+    --neutral-200: 250 6% 84%;
+    --neutral-0: 0 0% 100%;
+    --orange-500: 28 100% 52%;
+    --blue-500: 233 67% 56%;
+    --blue-700: 248 70% 36%;
+
+    --spacing-0: 0;
+    --spacing-025: 2px;
+    --spacing-050: 4px;
+    --spacing-075: 6px;
+    --spacing-100: 8px;
+    --spacing-125: 10px;
+    --spacing-150: 12px;
+    --spacing-200: 16px;
+    --spacing-250: 20px;
+    --spacing-300: 24px;
+    --spacing-400: 32px;
+    --spacing-500: 40px;
+    --spacing-600: 48px;
+    --spacing-800: 64px;
+    --spacing-1000: 80px;
+    --spacing-1200: 96px;
+    --spacing-1400: 112px;
+    --spacing-1600: 128px;
+    --spacing-1800: 140px;
+
+    --radius-0: 0;
+    --radius-4: 4px;
+    --radius-6: 6px;
+    --radius-8: 8px;
+    --radius-10: 10px;
+    --radius-12: 12px;
+    --radius-16: 16px;
+    --radius-20: 20px;
+    --radius-24: 24px;
+    --radius-full: 999px;
+
+    /* Main Background & Text */
+    --background: hsl(0 0% 98%);
+    --foreground: hsl(0 0% 12%);
+
+    /* Primary UI Elements (e.g., header, main containers) */
+    --primary: hsl(var(--blue-600));
+    --primary-foreground: hsl(0 0% 100%); /* hsl(var(--neutral-0)); */
+
+    /* Secondary UI Elements (e.g., cards, sections, hourly scroll) */
+    --secondary: hsl(0 0% 94%); /* hsl(var(--neutral-200)); */
+    --secondary-foreground: hsl(0 0% 15%);
+
+    --card: hsl(0 0% 100%); /*  hsl(var(--neutral-0));*/
+    --card-foreground: hsl(0 0% 12%);
+
+    /* Accent/Interactive Colors */
+    --accent: hsl(var(--blue-600)); /* hsl(var(--blue-500));*/
+    --popover: hsl(0 0% 100%); /* hsl(var(--neutral-0));*/
+    --muted: hsl(0 0% 96%);
+    --muted-foreground: hsl(0 0% 40%);
+    --border: hsl(0 0% 85%);
+    /* Low opacity version for animation glow */
+    --accent-low-opacity: rgba(44, 154, 255, 0.4);
+    --linear: linear-gradient(
+        135deg,
+        hsl(var(--blue-500)) 0%,
+        hsl(var(--blue-700)) 100%
+    );
+
+    --bg-today-small: url("/assets/images/bg-today-small-light.svg");
+    --bg-today-large: url("/assets/images/bg-today-large-light.svg");
+
+    @layer components {
+        .bg-custom-gradient {
+            background: var(--linear);
+        }
+    }
+}
+
+/* ================================================= */
+/* 2. DARK MODE (Overwritten Colors) */
+/* These values apply only when the <html> tag has the 'dark' class */
+/* ================================================= */
+.dark {
+    --background: hsl(var(--neutral-900));
+    --foreground: hsl(var(--neutral-0));
+
+    --secondary: hsl(var(--neutral-800));
+    --secondary-foreground: hsl(var(--neutral-300));
+
+    --primary: hsl(var(--neutral-300));
+    --primary-foreground: hsl(var(--blue-500));
+
+    --card: hsl(var(--neutral-700));
+    --card-foreground: hsl(0 0% 90%);
+
+    --accent: hsl(var(--neutral-200));
+
+    --popover: hsl(var(--neutral-700));
+    --muted: hsl(var(--neutral-200));
+    --muted-foreground: hsl(var(--neutral-600));
+    --border: hsl(var(--neutral-600));
+    /*  Adjusted low opacity for better visibility on dark background */
+    --accent-low-opacity: rgba(44, 154, 255, 0.2);
+    --linear: linear-gradient(
+        135deg,
+        hsl(var(--blue-500)) 0%,
+        hsl(var(--blue-700)) 100%
+    );
+
+    --bg-today-small: url("/assets/images/bg-today-small.svg");
+    --bg-today-large: url("/assets/images/bg-today-large.svg");
+}
+
+/* ================================================= */
+/* Typography Presets                                */
+/* ================================================= */
 @font-face {
     font-family: "Bricolage Grotesque";
     src: url("/assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
@@ -112,131 +248,10 @@
     font-display: swap;
 }
 
-:root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    --neutral-900: 243 96% 9%;
-    --neutral-800: 243 27% 20%;
-    --neutral-700: 243 23% 24%;
-    --neutral-600: 243 23% 30%;
-    --neutral-300: 240 6% 70%;
-    --neutral-200: 250 6% 84%;
-    --neutral-0: 0 0% 100%;
-    --orange-500: 28 100% 52%;
-    --blue-500: 233 67% 56%;
-    --blue-700: 248 70% 36%;
-
-    --spacing-0: 0;
-    --spacing-025: 2px;
-    --spacing-050: 4px;
-    --spacing-075: 6px;
-    --spacing-100: 8px;
-    --spacing-125: 10px;
-    --spacing-150: 12px;
-    --spacing-200: 16px;
-    --spacing-250: 20px;
-    --spacing-300: 24px;
-    --spacing-400: 32px;
-    --spacing-500: 40px;
-    --spacing-600: 48px;
-    --spacing-800: 64px;
-    --spacing-1000: 80px;
-    --spacing-1200: 96px;
-    --spacing-1400: 112px;
-    --spacing-1600: 128px;
-    --spacing-1800: 140px;
-
-    --radius-0: 0;
-    --radius-4: 4px;
-    --radius-6: 6px;
-    --radius-8: 8px;
-    --radius-10: 10px;
-    --radius-12: 12px;
-    --radius-16: 16px;
-    --radius-20: 20px;
-    --radius-24: 24px;
-    --radius-full: 999px;
-
-    /* Main Background & Text */
-    --background: hsl(0 0% 98%);
-    --foreground: hsl(0 0% 12%);
-
-    /* Primary UI Elements (e.g., header, main containers) */
-    --primary: hsl(var(--blue-600));
-    --primary-foreground: hsl(0 0% 100%); /* hsl(var(--neutral-0)); */
-
-    /* Secondary UI Elements (e.g., cards, sections, hourly scroll) */
-    --secondary: hsl(0 0% 94%); /* hsl(var(--neutral-200)); */
-    --secondary-foreground: hsl(0 0% 15%);
-
-    --card: hsl(0 0% 100%); /*  hsl(var(--neutral-0));*/
-    --card-foreground: hsl(0 0% 12%);
-
-    /* Accent/Interactive Colors */
-    --accent: hsl(var(--blue-600)); /* hsl(var(--blue-500));*/
-    --popover: hsl(0 0% 100%); /* hsl(var(--neutral-0));*/
-    --muted: hsl(0 0% 96%);
-    --muted-foreground: hsl(0 0% 40%);
-    --border: hsl(0 0% 85%);
-    --linear: linear-gradient(
-        135deg,
-        hsl(var(--blue-500)) 0%,
-        hsl(var(--blue-700)) 100%
-    );
-
-    --bg-today-small: url("/assets/images/bg-today-small-light.svg");
-    --bg-today-large: url("/assets/images/bg-today-large-light.svg");
-
-    @layer components {
-        .bg-custom-gradient {
-            background: var(--linear);
-        }
-    }
-}
-
 .weather-info {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: var(--bg-today-small);
-}
-
-.dark {
-    --background: hsl(var(--neutral-900));
-    --foreground: hsl(var(--neutral-0));
-
-    --secondary: hsl(var(--neutral-800));
-    --secondary-foreground: hsl(var(--neutral-300));
-
-    --primary: hsl(var(--neutral-300));
-    --primary-foreground: hsl(var(--blue-500));
-
-    --card: hsl(var(--neutral-700));
-    --card-foreground: hsl(0 0% 90%);
-
-    --accent: hsl(var(--neutral-200));
-
-    --popover: hsl(var(--neutral-700));
-    --muted: hsl(var(--neutral-200));
-    --muted-foreground: hsl(var(--neutral-600));
-    --border: hsl(var(--neutral-600));
-    --linear: linear-gradient(
-        135deg,
-        hsl(var(--blue-500)) 0%,
-        hsl(var(--blue-700)) 100%
-    );
-
-    --bg-today-small: url("/assets/images/bg-today-small.svg");
-    --bg-today-large: url("/assets/images/bg-today-large.svg");
 }
 
 a {
@@ -246,6 +261,12 @@ a {
 }
 a:hover {
     color: #535bf2;
+}
+
+html {
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease;
+    background-color: var(--background); /* Set background based on variable */
 }
 
 body {
@@ -355,6 +376,12 @@ img {
     letter-spacing: 0;
 }
 
+/* Accessibility and Focus Rings */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
 @media (min-width: 48rem) {
     .text-preset-1 {
         font-size: 6rem;
@@ -362,7 +389,6 @@ img {
     .weather-info {
         background-image: var(--bg-today-large);
     }
-    
 }
 
 @media (min-width: 80rem) {
@@ -377,3 +403,45 @@ img {
         background-color: #ffffff;
     }
 }
+
+/* Custom shadow for cards in dark mode */
+.dark .shadow-card-dark {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom shadow for cards in light mode */
+:not(.dark) .shadow-card-light {
+    box-shadow: 0 10px 15px -3px rgba(28, 28, 36, 0.05), 0 4px 6px -4px rgba(28, 28, 36, 0.05);
+}
+
+/* ================================================= */
+/* Custom Animations & Accessibility */
+/* ================================================= */
+
+/* 1. Only apply animations if the user has NOT requested reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+    
+    /* Keyframe for a soft, subtle pulse glow */
+    @keyframes subtle-pulse {
+        0%, 100% {
+            box-shadow: 0 0 0 0px var(--accent-low-opacity);
+        }
+        50% {
+            box-shadow: 0 0 0 8px var(--accent-low-opacity);
+        }
+    }
+
+    /* 2. Utility class for continuous animation (Original request) */
+    .animate-accent-pulse {
+        animation: subtle-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* 3. NEW: Utility class for hover-only animation (Your request) */
+    .animate-pulse-on-hover:hover {
+        /* Apply the animation once when hovered, then stop */
+        animation: subtle-pulse 0.5s ease-in-out forwards; 
+        /* The 'forwards' property ensures the final state (50%) is held */
+    }
+
+}
+

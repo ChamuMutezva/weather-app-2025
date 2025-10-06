@@ -26,7 +26,7 @@ function DailyForecast({
                     return (
                         <li
                             key={date}
-                            className="bg-secondary rounded-[var(--radius-12)] p-2 flex flex-col items-center gap-4"
+                            className="bg-secondary rounded-[var(--radius-12)] p-2 flex flex-col items-center gap-4 shadow-card-dark shadow-card-light"
                         >
                             <p className="text-foreground text-preset-6">
                                 {new Date(date).toLocaleDateString("en-US", {
