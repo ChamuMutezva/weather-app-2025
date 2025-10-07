@@ -13,8 +13,8 @@ function Header({
     handleUnitToggle,
     selectedUnits,
     handleSelectUnitCategory,
-    isDarkMode, // New prop for current theme state
-    toggleDarkMode, // New function to toggle theme
+    isDarkMode,
+    toggleDarkMode,
 }: Readonly<{
     enabled: boolean;
     handleUnitToggle: (isImperialEnabled: boolean) => void;
@@ -32,7 +32,7 @@ function Header({
                 <img
                     src="/assets/images/logo.svg"
                     alt=""
-                    className="h-8 w-auto dark:invert-0 invert"
+                    className="h-8 w-auto dark:invert-0 invert saturate-10 dark:saturate-100 brightness-75"
                 />
             </a>
 
@@ -61,226 +61,226 @@ function Header({
                         {/* ========================================= */}
                         {/* 1. DARK MODE TOGGLE                       */}
                         {/* ========================================= */}
-                       <div className="mb-2">
-                        <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-secondary-foreground font-bold flex items-center gap-2">
-                            <div className="p-1 rounded bg-primary/20">
-                                {isDarkMode ? (
-                                    <MoonIcon className="size-3.5 fill-foreground" />
-                                ) : (
-                                    <SunIcon className="size-3.5 fill-foreground" />
-                                )}
-                            </div>
-                            Theme
-                        </div>
-                         <div className="mx-3 mb-2 h-px bg-border/60" />
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200"
-                                onClick={toggleDarkMode}
-                            >
-                                <span className="flex items-center gap-2">
+                        <div className="mb-2">
+                            <div className="px-3 pt-1.5 pb-0.5 text-preset-8 text-secondary-foreground font-bold flex items-center gap-2">
+                                <div className="p-1 rounded bg-primary/20">
                                     {isDarkMode ? (
-                                        <MoonIcon className="size-5 fill-foreground" />
+                                        <MoonIcon className="size-3.5 fill-foreground" />
                                     ) : (
-                                        <SunIcon className="size-5 fill-foreground" />
+                                        <SunIcon className="size-3.5 fill-foreground" />
                                     )}
-                                    {isDarkMode
-                                        ? "Switch to Light Mode"
-                                        : "Switch to Dark Mode"}
-                                </span>
-                            </button>
-                        </MenuItem>
+                                </div>
+                                Theme
+                            </div>
+                            <div className="mx-3 mb-2 h-px bg-border/60" />
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200"
+                                    onClick={toggleDarkMode}
+                                >
+                                    <span className="flex items-center gap-2">
+                                        {isDarkMode ? (
+                                            <MoonIcon className="size-5 fill-foreground" />
+                                        ) : (
+                                            <SunIcon className="size-5 fill-foreground" />
+                                        )}
+                                        {isDarkMode
+                                            ? "Switch to Light Mode"
+                                            : "Switch to Dark Mode"}
+                                    </span>
+                                </button>
+                            </MenuItem>
                         </div>
 
-                        {/* Separator
-                        <div className="my-2 h-px bg-border" />
-                         */}
                         {/* ========================================= */}
                         {/* 2. UNITS SECTION                          */}
                         {/* ========================================= */}
                         <div className="mt-3 mb-1">
-                        <div className="px-3 pt-1.5 pb-0.5 text-preset-6 text-secondary-foreground font-bold flex items-center gap-2">
-                            <div className="p-1 rounded bg-primary/20">
+                            <div className="px-3 pt-1.5 pb-0.5 text-preset-6 text-secondary-foreground font-bold flex items-center gap-2">
+                                <div className="p-1 rounded bg-primary/20">
                                     <Cog6ToothIcon className="size-3.5 fill-foreground" />
                                 </div>
-                            Units
-                        </div>
-                        <div className="mx-3 mb-2 h-px bg-border/60" />
+                                Units
+                            </div>
+                            <div className="mx-3 mb-2 h-px bg-border/60" />
 
-                        {/* Switch to Imperial/Metric Toggle */}
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200 mb-2"
-                                onClick={() => handleUnitToggle(!enabled)}
-                            >
-                                {enabled
-                                    ? "Switch to Metric"
-                                    : "Switch to Imperial"}
-                            </button>
-                        </MenuItem>
+                            {/* Switch to Imperial/Metric Toggle */}
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200 mb-2"
+                                    onClick={() => handleUnitToggle(!enabled)}
+                                >
+                                    {enabled
+                                        ? "Switch to Metric"
+                                        : "Switch to Imperial"}
+                                </button>
+                            </MenuItem>
 
-                        {/* Temperature Section */}
-                        <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
-                            Temperature
-                        </div>
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                            {/* Temperature Section */}
+                            <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
+                                Temperature
+                            </div>
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
                                     ${
                                         selectedUnits.temperature === "celsius"
                                             ? "bg-background ring-1 ring-primary/30"
                                             : ""
                                     }`}
-                                onClick={() =>
-                                    handleSelectUnitCategory(
-                                        "temperature",
-                                        "celsius"
-                                    )
-                                }
-                            >
-                                <span className="text-preset-7 text-foreground">
-                                    Celsius (°C)
-                                </span>
-                                {selectedUnits.temperature === "celsius" && (
-                                    <CheckIcon className="size-4 fill-foreground" />
-                                )}
-                            </button>
-                        </MenuItem>
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    onClick={() =>
+                                        handleSelectUnitCategory(
+                                            "temperature",
+                                            "celsius"
+                                        )
+                                    }
+                                >
+                                    <span className="text-preset-7 text-foreground">
+                                        Celsius (°C)
+                                    </span>
+                                    {selectedUnits.temperature ===
+                                        "celsius" && (
+                                        <CheckIcon className="size-4 fill-foreground" />
+                                    )}
+                                </button>
+                            </MenuItem>
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
                                     ${
                                         selectedUnits.temperature ===
                                         "fahrenheit"
                                             ? "bg-background ring-1 ring-primary/30"
                                             : ""
                                     } `}
-                                onClick={() =>
-                                    handleSelectUnitCategory(
-                                        "temperature",
-                                        "fahrenheit"
-                                    )
-                                }
-                            >
-                                <span className="text-preset-7 text-foreground">
-                                    Fahrenheit (°F)
-                                </span>
-                                {selectedUnits.temperature === "fahrenheit" && (
-                                    <CheckIcon className="size-4 fill-foreground" />
-                                )}
-                            </button>
-                        </MenuItem>
+                                    onClick={() =>
+                                        handleSelectUnitCategory(
+                                            "temperature",
+                                            "fahrenheit"
+                                        )
+                                    }
+                                >
+                                    <span className="text-preset-7 text-foreground">
+                                        Fahrenheit (°F)
+                                    </span>
+                                    {selectedUnits.temperature ===
+                                        "fahrenheit" && (
+                                        <CheckIcon className="size-4 fill-foreground" />
+                                    )}
+                                </button>
+                            </MenuItem>
 
-                        {/* Separator */}
-                        <div className="my-1 h-px bg-border/40" />
+                            {/* Separator */}
+                            <div className="my-1 h-px bg-border/40" />
 
-                        {/* Wind Speed Section */}
-                        <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground">
-                            Wind Speed
-                        </div>
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                            {/* Wind Speed Section */}
+                            <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground">
+                                Wind Speed
+                            </div>
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
                                      ${
                                          selectedUnits.wind === "kmh"
                                              ? "bg-background ring-1 ring-primary/30"
                                              : ""
                                      }`}
-                                onClick={() =>
-                                    handleSelectUnitCategory("wind", "kmh")
-                                }
-                            >
-                                <span className="text-preset-7 text-foreground">
-                                    km/h
-                                </span>
-                                {selectedUnits.wind === "kmh" && (
-                                    <CheckIcon className="size-4 fill-foreground" />
-                                )}
-                            </button>
-                        </MenuItem>
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    onClick={() =>
+                                        handleSelectUnitCategory("wind", "kmh")
+                                    }
+                                >
+                                    <span className="text-preset-7 text-foreground">
+                                        km/h
+                                    </span>
+                                    {selectedUnits.wind === "kmh" && (
+                                        <CheckIcon className="size-4 fill-foreground" />
+                                    )}
+                                </button>
+                            </MenuItem>
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
                                      ${
                                          selectedUnits.wind === "mph"
                                              ? "bg-background ring-1 ring-primary/30"
                                              : ""
                                      }`}
-                                onClick={() =>
-                                    handleSelectUnitCategory("wind", "mph")
-                                }
-                            >
-                                <span className="text-preset-7 text-foreground">
-                                    mph
-                                </span>
-                                {selectedUnits.wind === "mph" && (
-                                    <CheckIcon className="size-4 fill-foreground" />
-                                )}
-                            </button>
-                        </MenuItem>
+                                    onClick={() =>
+                                        handleSelectUnitCategory("wind", "mph")
+                                    }
+                                >
+                                    <span className="text-preset-7 text-foreground">
+                                        mph
+                                    </span>
+                                    {selectedUnits.wind === "mph" && (
+                                        <CheckIcon className="size-4 fill-foreground" />
+                                    )}
+                                </button>
+                            </MenuItem>
 
-                        {/* Separator */}
-                        <div className="my-1 h-px bg-border/40" />
+                            {/* Separator */}
+                            <div className="my-1 h-px bg-border/40" />
 
-                        {/* Precipitation Section */}
-                        <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
-                            Precipitation
-                        </div>
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                            {/* Precipitation Section */}
+                            <div className="px-3 py-1.5 text-preset-8 text-secondary-foreground ">
+                                Precipitation
+                            </div>
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
                                      ${
                                          selectedUnits.precipitation === "mm"
                                              ? "bg-background ring-1 ring-primary/30"
                                              : ""
                                      }`}
-                                onClick={() =>
-                                    handleSelectUnitCategory(
-                                        "precipitation",
-                                        "mm"
-                                    )
-                                }
-                            >
-                                <span className="text-preset-7 text-foreground">
-                                    Millimeters (mm)
-                                </span>
-                                {selectedUnits.precipitation === "mm" && (
-                                    <CheckIcon className="size-4 fill-foreground" />
-                                )}
-                            </button>
-                        </MenuItem>
-                        <MenuItem>
-                            <button
-                                type="button"
-                                className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    onClick={() =>
+                                        handleSelectUnitCategory(
+                                            "precipitation",
+                                            "mm"
+                                        )
+                                    }
+                                >
+                                    <span className="text-preset-7 text-foreground">
+                                        Millimeters (mm)
+                                    </span>
+                                    {selectedUnits.precipitation === "mm" && (
+                                        <CheckIcon className="size-4 fill-foreground" />
+                                    )}
+                                </button>
+                            </MenuItem>
+                            <MenuItem>
+                                <button
+                                    type="button"
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
                                      ${
                                          selectedUnits.precipitation ===
                                          "inches"
                                              ? "bg-background ring-1 ring-primary/30"
                                              : ""
                                      }`}
-                                onClick={() =>
-                                    handleSelectUnitCategory(
-                                        "precipitation",
-                                        "inches"
-                                    )
-                                }
-                            >
-                                <span className="text-preset-7 text-foreground">
-                                    Inches (in)
-                                </span>
-                                {selectedUnits.precipitation === "inches" && (
-                                    <CheckIcon className="size-4 fill-foreground" />
-                                )}
-                            </button>
-                        </MenuItem>
+                                    onClick={() =>
+                                        handleSelectUnitCategory(
+                                            "precipitation",
+                                            "inches"
+                                        )
+                                    }
+                                >
+                                    <span className="text-preset-7 text-foreground">
+                                        Inches (in)
+                                    </span>
+                                    {selectedUnits.precipitation ===
+                                        "inches" && (
+                                        <CheckIcon className="size-4 fill-foreground" />
+                                    )}
+                                </button>
+                            </MenuItem>
                         </div>
                     </MenuItems>
                 </Menu>
