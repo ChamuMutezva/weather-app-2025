@@ -42,8 +42,8 @@ function Header({
                         className="inline-flex items-center gap-2 rounded-md bg-secondary text-foreground
                      px-3 py-3 text-preset-7 shadow-inner shadow-white/10 focus:not-data-focus:outline-none 
                      data-focus:outline-2 data-focus:outline-white data-focus:-outline-offset-2
-                     data-hover:bg-popover data-open:bg-popover transition duration-150 ease-in-out 
-                      "
+                     data-hover:bg-popover data-open:bg-popover transition motion-reduce:transition-none 
+                     duration-150 motion-reduce:duration-0 ease-in-out motion-reduce:ease-linear"
                     >
                         {/* <img src="/assets/images/icon-units.svg" alt="" /> */}
                         <Cog6ToothIcon className="size-5 fill-foreground" />
@@ -56,7 +56,8 @@ function Header({
                         anchor="bottom end"
                         className="w-60 mt-2 origin-top-right rounded-xl border border-card bg-secondary p-1 text-sm
                          text-gray-300 transition duration-300 ease-out [--anchor-gap:--spacing(1)] focus:outline-none
-                          data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 z-10"
+                          data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 motion-reduce:data-enter:duration-0
+                           data-leave:duration-200 motion-reduce:data-leave:duration-0 z-10"
                     >
                         {/* ========================================= */}
                         {/* 1. DARK MODE TOGGLE                       */}
@@ -76,7 +77,8 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200"
+                                    className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground
+                                     font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all motion-reduce:transition-none duration-200"
                                     onClick={toggleDarkMode}
                                 >
                                     <span className="flex items-center gap-2">
@@ -109,7 +111,9 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200 mb-2"
+                                    className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 
+                                    text-foreground font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 
+                                    transition-all motion-reduce:transition-none duration-200 motion-reduce:duration-0 mb-2"
                                     onClick={() => handleUnitToggle(!enabled)}
                                 >
                                     {enabled
@@ -125,7 +129,9 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                          data-focus:ring-2 data-focus:ring-primary/50 transition-all motion-reduce:transition-none 
+                                          duration-200 motion-reduce:duration-0
                                     ${
                                         selectedUnits.temperature === "celsius"
                                             ? "bg-background ring-1 ring-primary/30"
@@ -150,7 +156,8 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover
+                                         data-focus:ring-2 data-focus:ring-primary/50 transition-all motion-reduce:transition-none duration-200 motion-reduce:duration-0
                                     ${
                                         selectedUnits.temperature ===
                                         "fahrenheit"
@@ -184,7 +191,8 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover  data-focus:ring-2 
+                                        data-focus:ring-primary/50 transition-all motion-reduce:transition-none duration-200 motion-reduce:duration-0
                                      ${
                                          selectedUnits.wind === "kmh"
                                              ? "bg-background ring-1 ring-primary/30"
@@ -205,7 +213,9 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover 
+                                        data-focus:ring-2 data-focus:ring-primary/50 transition-all motion-reduce:transition-none
+                                         duration-200 motion-reduce:duration-0
                                      ${
                                          selectedUnits.wind === "mph"
                                              ? "bg-background ring-1 ring-primary/30"
@@ -234,7 +244,9 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover 
+                                        data-focus:ring-2 data-focus:ring-primary/50 transition-all motion-reduce:transition-none 
+                                        duration-200 motion-reduce:duration-0
                                      ${
                                          selectedUnits.precipitation === "mm"
                                              ? "bg-background ring-1 ring-primary/30"
@@ -258,7 +270,9 @@ function Header({
                             <MenuItem>
                                 <button
                                     type="button"
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all duration-200
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-1.5 
+                                        data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50
+                                         transition-all motion-reduce:transition-none duration-200 motion-reduce:duration-0
                                      ${
                                          selectedUnits.precipitation ===
                                          "inches"
