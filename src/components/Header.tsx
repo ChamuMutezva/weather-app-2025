@@ -7,14 +7,13 @@ import {
     Cog6ToothIcon,
 } from "@heroicons/react/16/solid";
 import { type SelectedUnits } from "../types/types";
+import { useTheme } from "../hooks/useTheme";
 
 function Header({
     enabled,
     handleUnitToggle,
     selectedUnits,
     handleSelectUnitCategory,
-    isDarkMode,
-    toggleDarkMode,
 }: Readonly<{
     enabled: boolean;
     handleUnitToggle: (isImperialEnabled: boolean) => void;
@@ -23,9 +22,21 @@ function Header({
         category: keyof SelectedUnits,
         unit: SelectedUnits[keyof SelectedUnits]
     ) => void;
-    isDarkMode: boolean;
-    toggleDarkMode: () => void;
 }>) {
+    const { isDarkMode, toggleDarkMode } = useTheme();
+
+     // Helper function to render units (using JSX safe symbols)
+    const renderUnitText = (unit: 'celsius' | 'fahrenheit') => {
+        if (unit === 'celsius') {
+            // Using the degree symbol Unicode entity to avoid LaTeX parsing errors in this context
+            return `Celsius (°C)`;
+        }
+        if (unit === 'fahrenheit') {
+            return `Fahrenheit (°F)`;
+        }
+        return '';
+    };
+
     return (
         <header className="flex justify-between items-center ">
             <a href="/" aria-label="home page">
@@ -80,6 +91,11 @@ function Header({
                                     className="group flex w-full text-preset-7 items-center justify-between rounded-lg px-3 py-2 text-foreground
                                      font-semibold data-focus:bg-popover data-focus:ring-2 data-focus:ring-primary/50 transition-all motion-reduce:transition-none duration-200"
                                     onClick={toggleDarkMode}
+                                    aria-label={
+                                        isDarkMode
+                                            ? "Switch to light mode"
+                                            : "Switch to dark mode"
+                                    }
                                 >
                                     <span className="flex items-center gap-2">
                                         {isDarkMode ? (
@@ -145,7 +161,7 @@ function Header({
                                     }
                                 >
                                     <span className="text-preset-7 text-foreground">
-                                        Celsius (°C)
+                                        {renderUnitText("celsius")}
                                     </span>
                                     {selectedUnits.temperature ===
                                         "celsius" && (
@@ -172,7 +188,7 @@ function Header({
                                     }
                                 >
                                     <span className="text-preset-7 text-foreground">
-                                        Fahrenheit (°F)
+                                        {renderUnitText("fahrenheit")}
                                     </span>
                                     {selectedUnits.temperature ===
                                         "fahrenheit" && (
