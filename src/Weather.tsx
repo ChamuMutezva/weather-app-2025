@@ -1,4 +1,36 @@
-import { useReducer, useEffect, useCallback, useMemo, useState } from "react";
+/**
+ * Weather component is the main container for the weather application.
+ *
+ * This component manages the overall state and logic for fetching and displaying weather data,
+ * handling user location (via geolocation or search), unit conversions, and rendering the main UI.
+ *
+ * Features:
+ * - Detects user's current location using the Geolocation API and caches it in localStorage.
+ * - Allows users to search for locations using a combobox with debounced queries.
+ * - Fetches weather data for the selected location using custom React Query hooks.
+ * - Supports unit conversion between metric and imperial for temperature, wind speed, and precipitation.
+ * - Displays current weather, daily forecast, and hourly forecast for the selected day.
+ * - Integrates an AI weather advisor component for additional insights.
+ * - Handles loading and error states for geolocation, location search, and weather data fetching.
+ *
+ * State Management:
+ * - Uses useReducer for complex state (location, units, query, etc.).
+ * - Uses useState for controlling fetch triggers and geolocation logic.
+ * - Uses useMemo for efficient data transformation and filtering.
+ *
+ * UI Structure:
+ * - Header with unit toggles and settings.
+ * - Location search and selection.
+ * - Weather data display (current, daily, hourly).
+ * - AI weather advisor section.
+ * - Loading skeletons and error messages for improved UX.
+ *
+ * Dependencies:
+ * - Custom hooks: useLocationData, useWeatherData, useLocationByCoords.
+ * - Utility functions for unit conversion and coordinate comparison.
+ * - Multiple presentational components for displaying weather and location data.
+ */
+import { useReducer, useEffect, useCallback, useMemo } from "react";
 import LocationCombobox from "./components/LocationCombobox";
 import { type LocationData, type SelectedUnits } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
@@ -27,7 +59,7 @@ const LOCATION_STORAGE_KEY = "cachedLocationData";
 
 function Weather() {
     const [state, dispatch] = useReducer(weatherReducer, initialWeatherState);
-   
+
     const {
         selectedLocation,
         selectedDay,
@@ -35,22 +67,11 @@ function Weather() {
         debouncedQuery,
         enabled,
         selectedUnits,
-    } = state;   
-
-    // State to control when to fetch weather data
-    const [shouldFetchWeather, setShouldFetchWeather] = useState(false);
-    // State to track if this is the initial load
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-    // State for the user's current coordinates
-    const [coords, setCoords] = useState<{
-        latitude: number;
-        longitude: number;
-    } | null>(null);
-
-    // State to control when to call reverse geocoding
-    const [shouldCallReverseGeocoding, setShouldCallReverseGeocoding] =
-        useState(false);
+        shouldFetchWeather,
+        shouldCallReverseGeocoding,
+        coords,
+        isInitialLoad,
+    } = state;
 
     // Get location based on coords
     const {
@@ -69,7 +90,7 @@ function Weather() {
                         longitude: position.coords.longitude,
                     };
 
-                    setCoords(newCoords);
+                    dispatch({ type: "SET_COORDS", payload: newCoords });
 
                     // Check localStorage for existing location data
                     const cachedLocation =
@@ -92,7 +113,11 @@ function Weather() {
                                     type: "SET_LOCATION",
                                     payload: parsedCachedLocation.location,
                                 });
-                                setShouldCallReverseGeocoding(false);
+                                //  setShouldCallReverseGeocoding(false);
+                                dispatch({
+                                    type: "SET_REVERSE_GEO_CODING",
+                                    payload: false,
+                                });
                                 return;
                             }
                         } catch (error) {
@@ -104,16 +129,25 @@ function Weather() {
                     }
 
                     // If no cached data or coordinates changed significantly, call reverse geocoding
-                    setShouldCallReverseGeocoding(true);
+                    dispatch({
+                        type: "SET_REVERSE_GEO_CODING",
+                        payload: true,
+                    });
                 },
                 (error) => {
                     console.error("Geolocation error:", error);
-                    setShouldCallReverseGeocoding(false);
+                    dispatch({
+                        type: "SET_REVERSE_GEO_CODING",
+                        payload: false,
+                    });
                 }
             );
         } else {
             console.log("Geolocation not supported");
-            setShouldCallReverseGeocoding(false);
+            dispatch({
+                type: "SET_REVERSE_GEO_CODING",
+                payload: false,
+            });
         }
     }, []);
 
@@ -137,7 +171,7 @@ function Weather() {
         if (dataCoords && !selectedLocation) {
             dispatch({ type: "SET_LOCATION", payload: dataCoords });
             // Auto-load weather for current location
-            setShouldFetchWeather(true);
+            dispatch({ type: "SET_FETCH_WEATHER", payload: true });
         }
     }, [dataCoords, selectedLocation]);
 
@@ -145,7 +179,7 @@ function Weather() {
     useEffect(() => {
         // If we have a selectedLocation but no weather fetch triggered yet, and it's initial load
         if (selectedLocation && isInitialLoad) {
-            setShouldFetchWeather(true);
+            dispatch({ type: "SET_FETCH_WEATHER", payload: true });
         }
     }, [selectedLocation, isInitialLoad]);
 
@@ -180,9 +214,9 @@ function Weather() {
         (location: LocationData | null) => {
             dispatch({ type: "SET_LOCATION", payload: location });
             // Reset the fetch trigger when location changes
-            setShouldFetchWeather(false);
+            dispatch({ type: "SET_FETCH_WEATHER", payload: true });
             // Mark that initial load is complete
-            setIsInitialLoad(false);
+            dispatch({ type: "SET_IS_INITIAL_LOAD", payload: false });
         },
         []
     );
@@ -191,9 +225,9 @@ function Weather() {
         (event: React.FormEvent) => {
             event.preventDefault(); // Prevent default form submission
             if (selectedLocation) {
-                setShouldFetchWeather(true);
+                dispatch({ type: "SET_FETCH_WEATHER", payload: true });
                 // Mark that initial load is complete
-                setIsInitialLoad(false);
+                dispatch({ type: "SET_IS_INITIAL_LOAD", payload: false });
             }
         },
         [selectedLocation]
@@ -360,7 +394,7 @@ function Weather() {
                 enabled={enabled}
                 selectedUnits={selectedUnits}
                 handleUnitToggle={handleUnitToggle}
-                handleSelectUnitCategory={handleSelectUnitCategory}             
+                handleSelectUnitCategory={handleSelectUnitCategory}
             />
             <main className="pt-10 lg:pt-16">
                 <h1 className="text-preset-2 text-foreground text-center">

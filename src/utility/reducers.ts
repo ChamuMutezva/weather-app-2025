@@ -11,6 +11,10 @@ export const initialWeatherState = {
         wind: "kmh" as "kmh" | "mph",
         precipitation: "mm" as "mm" | "inches",
     },
+    shouldFetchWeather: false,
+    shouldCallReverseGeocoding: false,
+    isInitialLoad: true,
+    coords: null,
 };
 
 export const weatherReducer = (
@@ -64,6 +68,26 @@ export const weatherReducer = (
                     ...state.selectedUnits,
                     [action.payload.category]: action.payload.unit,
                 },
+            };
+        case "SET_FETCH_WEATHER":
+            return {
+                ...state,
+                shouldFetchWeather: action.payload,
+            };
+        case "SET_IS_INITIAL_LOAD":
+            return {
+                ...state,
+                isInitialLoad: action.payload,
+            };
+        case "SET_COORDS":
+            return {
+                ...state,
+                coords: action.payload,
+            };
+        case "SET_REVERSE_GEO_CODING":
+            return {
+                ...state,
+                shouldCallReverseGeocoding: action.payload,
             };
         default:
             return state;

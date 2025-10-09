@@ -88,6 +88,13 @@ export interface WeatherState {
     debouncedQuery: string;
     enabled: boolean;
     selectedUnits: SelectedUnits;
+    shouldFetchWeather: boolean;
+    shouldCallReverseGeocoding: boolean;
+    isInitialLoad: boolean; // State to track if this is the initial load
+    coords: {
+        latitude: number;
+        longitude: number;
+    } | null;
 }
 
 export type WeatherAction =
@@ -96,6 +103,13 @@ export type WeatherAction =
     | { type: "SET_QUERY"; payload: string }
     | { type: "SET_DEBOUNCED_QUERY"; payload: string }
     | { type: "SET_UNITS_TOGGLE"; payload: boolean }
+    | { type: "SET_FETCH_WEATHER"; payload: boolean }
+    | { type: "SET_REVERSE_GEO_CODING"; payload: boolean }
+    | { type: "SET_IS_INITIAL_LOAD"; payload: boolean }
+    | {
+          type: "SET_COORDS";
+          payload: { latitude: number; longitude: number } | null;
+      }
     | {
           type: "SET_UNIT_CATEGORY";
           payload: {
