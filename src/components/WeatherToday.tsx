@@ -1,3 +1,4 @@
+import { Moon, Sun } from "lucide-react";
 import { type SelectedUnits } from "../types/types";
 import WeatherTodaySecondary from "./WeatherTodaySecondary";
 
@@ -7,19 +8,24 @@ type WeatherTodayProps = {
     hourlyWindSpeed: number;
     hourlyPrecipitation: number;
     selectedUnits: SelectedUnits;
+    period: number;
+    cloudCover: number;
 };
 
 function WeatherToday({
     hourlyTemperature,
     hourlyHumidity,
     hourlyWindSpeed,
-    hourlyPrecipitation,    
+    hourlyPrecipitation,
     selectedUnits,
+    period,
+    cloudCover,
 }: Readonly<WeatherTodayProps>) {
     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
     const windUnit = selectedUnits.wind === "kmh" ? "km/h" : "mph";
     const precipitationUnit =
         selectedUnits.precipitation === "mm" ? "mm" : "inches";
+    console.log(cloudCover);
 
     return (
         <div
@@ -70,7 +76,28 @@ function WeatherToday({
                     </abbr>
                 </p>
             </div>
-           
+            <div className="bg-secondary rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
+                <h2 className="text-foreground text-preset-6">Time Period</h2>
+                {period === 1 ? (
+                    <Sun
+                        className="text-yellow-500"
+                        size={48}
+                        aria-label="Day"
+                    />
+                ) : (
+                    <Moon
+                        className="text-blue-400"
+                        size={48}
+                        aria-label="Night"
+                    />
+                )}
+            </div>
+            <div className="bg-secondary rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
+                <h2 className="text-foreground text-preset-6">
+                    Cloud coverage
+                </h2>
+                <p className="text-foreground text-preset-3">{cloudCover}%</p>
+            </div>
         </div>
     );
 }

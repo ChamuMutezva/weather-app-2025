@@ -207,6 +207,8 @@ function Weather() {
     const showErrorFindingLocation =
         !query && (errorCoords || errorGeolocation);
 
+    console.log("weather-data", weatherData)
+
     return (
         <div className="w-full">
             <Header
@@ -299,6 +301,8 @@ function Weather() {
                                                 .rain ?? ""
                                         }
                                         selectedUnits={selectedUnits}
+                                        period={convertedWeatherData?.current.is_day ?? null}
+                                        cloudCover={convertedWeatherData?.current.cloud_cover ?? 0}
                                     />
                                 </div>
 

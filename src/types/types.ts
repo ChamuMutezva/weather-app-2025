@@ -22,7 +22,7 @@ export interface WeatherData {
     current: {
         apparent_temperature: number;
         interval: number;
-        is_day: boolean;
+        is_day: number;
         rain: number;
         relative_humidity_2m: number;
         temperature_2m: number;

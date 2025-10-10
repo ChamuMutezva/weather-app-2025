@@ -44,6 +44,7 @@ export const useWeatherData = (selectedLocation: LocationData | null) => {
                     "is_day",
                     "weather_code",
                     "wind_direction_10m",
+                    "cloud_cover",
                 ],
                 daily: [
                     "temperature_2m_max",

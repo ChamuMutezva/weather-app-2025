@@ -1,3 +1,20 @@
+/**
+ * DisplayLocation component renders weather information for a selected location.
+ *
+ * @remarks
+ * This component displays the name, administrative region, country, and current date
+ * for the selected location, along with the temperature in the selected units (Celsius or Fahrenheit).
+ * It also shows a weather icon (currently hardcoded as sunny).
+ * If no location is selected, the component renders nothing.
+ *
+ * @param props - The props for the DisplayLocation component.
+ * @param props.selectedLocation - The location data to display, or null if none is selected.
+ * @param props.temp - The temperature value to display.
+ * @param props.selectedUnits - The selected units for temperature display.
+ *
+ * @returns The rendered weather information for the selected location, or null if no location is selected.
+ */
+
 import { type LocationData, type SelectedUnits } from "../types/types";
 interface DisplayLocationProps {
     selectedLocation: LocationData | null;
