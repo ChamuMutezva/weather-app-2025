@@ -30,7 +30,8 @@
  * - Utility functions for unit conversion and coordinate comparison.
  * - Multiple presentational components for displaying weather and location data.
  */
-import { useReducer, useEffect, useCallback, useMemo } from "react";
+import { useReducer, useEffect, useCallback } from "react";
+import type React from "react";
 import LocationCombobox from "./components/LocationCombobox";
 import { type LocationData, type SelectedUnits } from "./types/types";
 import DisplayLocation from "./components/DisplayLocation";
@@ -47,15 +48,10 @@ import {
     useLocationByCoords,
 } from "./hooks/react-query";
 import { weatherReducer, initialWeatherState } from "./utility/reducers";
-import {
-    convertKmhToMph,
-    convertCelsiusToFehrenheit,
-    convertMmToInches,
-} from "./utility/convertToImperial";
-import { areCoordsSimilar } from "./utility/checkSimilarCoords";
-import AIWeatherAdvisor from "./components/AIWeatherAdvisor";
+import { useGeolocation, cacheLocationData } from "./hooks/use-geolocation";
 
-const LOCATION_STORAGE_KEY = "cachedLocationData";
+import AIWeatherAdvisor from "./components/AIWeatherAdvisor";
+import { useWeatherDataConversion } from "./hooks/use-weather-data-conversion";
 
 function Weather() {
     const [state, dispatch] = useReducer(weatherReducer, initialWeatherState);
@@ -73,6 +69,9 @@ function Weather() {
         isInitialLoad,
     } = state;
 
+    const { isPending: isPendingGeolocation, error: errorGeolocation } =
+        useGeolocation({ dispatch });
+
     // Get location based on coords
     const {
         isPending: isPendingCoords,
@@ -80,89 +79,10 @@ function Weather() {
         data: dataCoords,
     } = useLocationByCoords(shouldCallReverseGeocoding ? coords : null);
 
-    // Get user's current location on page load
-    useEffect(() => {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const newCoords = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                    };
-
-                    dispatch({ type: "SET_COORDS", payload: newCoords });
-
-                    // Check localStorage for existing location data
-                    const cachedLocation =
-                        localStorage.getItem(LOCATION_STORAGE_KEY);
-
-                    if (cachedLocation) {
-                        try {
-                            const parsedCachedLocation =
-                                JSON.parse(cachedLocation);
-
-                            // Check if we have cached coordinates and if they're similar
-                            if (
-                                parsedCachedLocation.cachedCoords &&
-                                areCoordsSimilar(
-                                    newCoords,
-                                    parsedCachedLocation.cachedCoords
-                                )
-                            ) {
-                                dispatch({
-                                    type: "SET_LOCATION",
-                                    payload: parsedCachedLocation.location,
-                                });
-                                //  setShouldCallReverseGeocoding(false);
-                                dispatch({
-                                    type: "SET_REVERSE_GEO_CODING",
-                                    payload: false,
-                                });
-                                return;
-                            }
-                        } catch (error) {
-                            console.error(
-                                "Error parsing cached location:",
-                                error
-                            );
-                        }
-                    }
-
-                    // If no cached data or coordinates changed significantly, call reverse geocoding
-                    dispatch({
-                        type: "SET_REVERSE_GEO_CODING",
-                        payload: true,
-                    });
-                },
-                (error) => {
-                    console.error("Geolocation error:", error);
-                    dispatch({
-                        type: "SET_REVERSE_GEO_CODING",
-                        payload: false,
-                    });
-                }
-            );
-        } else {
-            console.log("Geolocation not supported");
-            dispatch({
-                type: "SET_REVERSE_GEO_CODING",
-                payload: false,
-            });
-        }
-    }, []);
-
     // Save location data to localStorage when we get new data from reverse geocoding
     useEffect(() => {
         if (dataCoords && coords) {
-            const locationDataToCache = {
-                location: dataCoords,
-                cachedCoords: coords,
-                timestamp: new Date().toISOString(),
-            };
-            localStorage.setItem(
-                LOCATION_STORAGE_KEY,
-                JSON.stringify(locationDataToCache)
-            );
+            cacheLocationData(dataCoords, coords);
         }
     }, [dataCoords, coords]);
 
@@ -209,6 +129,11 @@ function Weather() {
             ? selectedLocation
             : null
     );
+
+    const filteredLocations = dataLocation?.results || [];
+
+    const { convertedWeatherData, filteredHourlyData } =
+        useWeatherDataConversion(weatherData, selectedUnits, selectedDay);
 
     const handleLocationSelect = useCallback(
         (location: LocationData | null) => {
@@ -258,118 +183,6 @@ function Weather() {
         dispatch({ type: "SET_UNITS_TOGGLE", payload: isImperialEnabled });
     }, []);
 
-    const filteredLocations = dataLocation?.results || [];
-
-    // Use useMemo to convert the weather data based on the selected units
-    const convertedWeatherData = useMemo(() => {
-        if (!weatherData) return null;
-
-        const convertedHourly = {
-            ...weatherData.hourly,
-            temperature_2m: weatherData.hourly.temperature_2m.map((temp) =>
-                selectedUnits.temperature === "fahrenheit"
-                    ? convertCelsiusToFehrenheit(temp)
-                    : temp
-            ),
-            wind_speed_10m: weatherData.hourly.wind_speed_10m.map((speed) =>
-                selectedUnits.wind === "mph" ? convertKmhToMph(speed) : speed
-            ),
-            precipitation: weatherData.hourly.precipitation.map((precip) =>
-                selectedUnits.precipitation === "inches"
-                    ? convertMmToInches(precip)
-                    : precip
-            ),
-        };
-
-        const convertedDaily = {
-            ...weatherData.daily,
-            temperature_2m_max: weatherData.daily.temperature_2m_max.map(
-                (temp) =>
-                    selectedUnits.temperature === "fahrenheit"
-                        ? convertCelsiusToFehrenheit(temp)
-                        : temp
-            ),
-            temperature_2m_min: weatherData.daily.temperature_2m_min.map(
-                (temp) =>
-                    selectedUnits.temperature === "fahrenheit"
-                        ? convertCelsiusToFehrenheit(temp)
-                        : temp
-            ),
-        };
-
-        const convertedCurrent = {
-            ...weatherData.current,
-            apparent_temperature:
-                selectedUnits.temperature === "fahrenheit"
-                    ? convertCelsiusToFehrenheit(
-                          weatherData.current.apparent_temperature
-                      )
-                    : weatherData.current.apparent_temperature,
-            temperature_2m:
-                selectedUnits.temperature === "fahrenheit"
-                    ? convertCelsiusToFehrenheit(
-                          weatherData.current.temperature_2m
-                      )
-                    : weatherData.current.temperature_2m,
-            relative_humidity_2m: weatherData.current.relative_humidity_2m,
-            rain:
-                selectedUnits.precipitation === "inches"
-                    ? convertMmToInches(weatherData.current.rain)
-                    : weatherData.current.rain,
-            wind_speed_10m:
-                selectedUnits.wind === "mph"
-                    ? convertKmhToMph(weatherData.current.wind_speed_10m)
-                    : weatherData.current.wind_speed_10m,
-            time: weatherData.current.time,
-            cloud_cover: weatherData.current.cloud_cover,
-
-            /* interval: number;
-        is_day: boolean;
-        rain: number;      
-        
-        time: string;
-        weather_code: number;
-        wind_direction_10m: number;
-        wind_speed_10m: number;*/
-        };
-
-        return {
-            ...weatherData,
-            hourly: convertedHourly,
-            daily: convertedDaily,
-            current: convertedCurrent,
-        };
-    }, [weatherData, selectedUnits]);
-
-    // Use useMemo to filter the hourly data. This is now derived state, not component state.
-    // The calculation will only run when weatherData or selectedDay changes.
-    const filteredHourlyData = useMemo(() => {
-        if (!convertedWeatherData || !selectedDay) return null;
-
-        const indices = convertedWeatherData.hourly.time
-            .map((time, index) => (time.includes(selectedDay) ? index : -1))
-            .filter((index) => index !== -1);
-
-        return {
-            time: indices.map((i) => convertedWeatherData.hourly.time[i]),
-            temperature_2m: indices.map(
-                (i) => convertedWeatherData.hourly.temperature_2m[i]
-            ),
-            relative_humidity_2m: indices.map(
-                (i) => convertedWeatherData.hourly.relative_humidity_2m[i]
-            ),
-            wind_speed_10m: indices.map(
-                (i) => convertedWeatherData.hourly.wind_speed_10m[i]
-            ),
-            precipitation: indices.map(
-                (i) => convertedWeatherData.hourly.precipitation[i]
-            ),
-            weather_code: indices.map(
-                (i) => convertedWeatherData.hourly.weather_code[i]
-            ),
-        };
-    }, [convertedWeatherData, selectedDay]);
-
     // New useEffect to automatically select the current day when weather data loads.
     useEffect(() => {
         if (convertedWeatherData && !selectedDay) {
@@ -387,6 +200,12 @@ function Weather() {
         (shouldFetchWeather || isInitialLoad) &&
         isPendingWeather &&
         selectedLocation;
+    const showPendingFindingLocation =
+        !query &&
+        (isPendingCoords || isPendingGeolocation) &&
+        shouldCallReverseGeocoding;
+    const showErrorFindingLocation =
+        !query && (errorCoords || errorGeolocation);
 
     return (
         <div className="w-full">
@@ -402,17 +221,15 @@ function Weather() {
                 </h1>
                 <div className="main-content grid grid-cols-1 pt-16 gap-y-12 mb-10">
                     {/* Add loading and error states for geolocation */}
-                    {!query &&
-                        isPendingCoords &&
-                        shouldCallReverseGeocoding && (
-                            <div
-                                className="text-center text-preset-6 text-foreground/80"
-                                aria-live="polite"
-                            >
-                                <p>Finding your current location...</p>
-                            </div>
-                        )}
-                    {!query && errorCoords && (
+                    {showPendingFindingLocation && (
+                        <div
+                            className="text-center text-preset-6 text-foreground/80"
+                            aria-live="polite"
+                        >
+                            <p>Finding your current location...</p>
+                        </div>
+                    )}
+                    {showErrorFindingLocation && (
                         <div
                             className="text-center text-preset-6 text-red-500"
                             aria-live="assertive"
