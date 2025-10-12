@@ -52,6 +52,8 @@ import { useGeolocation, cacheLocationData } from "./hooks/use-geolocation";
 
 import AIWeatherAdvisor from "./components/AIWeatherAdvisor";
 import { useWeatherDataConversion } from "./hooks/use-weather-data-conversion";
+import Loading from "./components/Loading";
+import ErrorState from "./components/ErrorState";
 
 function Weather() {
     const [state, dispatch] = useReducer(weatherReducer, initialWeatherState);
@@ -207,7 +209,7 @@ function Weather() {
     const showErrorFindingLocation =
         !query && (errorCoords || errorGeolocation);
 
-    console.log("weather-data", weatherData)
+    console.log("weather-data", weatherData);
 
     return (
         <div className="w-full">
@@ -224,23 +226,13 @@ function Weather() {
                 <div className="main-content grid grid-cols-1 pt-16 gap-y-12 mb-10">
                     {/* Add loading and error states for geolocation */}
                     {showPendingFindingLocation && (
-                        <div
-                            className="text-center text-preset-6 text-foreground/80"
-                            aria-live="polite"
-                        >
-                            <p>Finding your current location...</p>
-                        </div>
+                        <Loading msg="Finding your current location..." />
                     )}
                     {showErrorFindingLocation && (
-                        <div
-                            className="text-center text-preset-6 text-red-500"
-                            aria-live="assertive"
-                        >
-                            <p>
-                                Error finding your location. Please use the
-                                search bar.
-                            </p>
-                        </div>
+                        <ErrorState
+                            msg="Error finding your location. Please use the
+                                search bar."
+                        />
                     )}
 
                     <LocationCombobox
@@ -260,15 +252,9 @@ function Weather() {
                     {showLoadingSkeleton && <LoadingSkeleton />}
 
                     {(shouldFetchWeather || isInitialLoad) && errorWeather && (
-                        <div
-                            className="text-center text-preset-6 text-red-500"
-                            aria-live="assertive"
-                        >
-                            <p>
-                                Error loading weather data:{" "}
-                                {errorWeather.message}
-                            </p>
-                        </div>
+                        <ErrorState
+                            msg={`Error loading weather data: ${errorWeather.message} `}
+                        />
                     )}
                     {showWeatherData && (
                         <div className="content-container grid grid-cols-1 lg:grid-cols-3 gap-y-8 lg:gap-x-8">
@@ -284,25 +270,10 @@ function Weather() {
                                     />
 
                                     <WeatherToday
-                                        hourlyTemperature={
+                                        currentData={
                                             convertedWeatherData?.current
-                                                .apparent_temperature ?? ""
-                                        }
-                                        hourlyHumidity={
-                                            convertedWeatherData?.current
-                                                .relative_humidity_2m ?? ""
-                                        }
-                                        hourlyWindSpeed={
-                                            convertedWeatherData?.current
-                                                .wind_speed_10m ?? ""
-                                        }
-                                        hourlyPrecipitation={
-                                            convertedWeatherData?.current
-                                                .rain ?? ""
                                         }
                                         selectedUnits={selectedUnits}
-                                        period={convertedWeatherData?.current.is_day ?? null}
-                                        cloudCover={convertedWeatherData?.current.cloud_cover ?? 0}
                                     />
                                 </div>
 

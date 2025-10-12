@@ -1,21 +1,11 @@
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { type WeatherData } from "../types/types";
 
 interface DailyForecastProps {
     weatherData: {
-        daily: {
-            weather_code: number[];
-            time: string[];
-            temperature_2m_max: number[];
-            temperature_2m_min: number[];
-        };
-        hourly: {
-            time: string[];
-            temperature_2m: number[];
-            relative_humidity_2m: number[];
-            wind_speed_10m: number[];
-            precipitation: number[];
-        };
+        daily: WeatherData["daily"];
+        hourly: WeatherData["hourly"];
     };
     onDaySelect: (day: string) => void;
     selectedDay: string;
@@ -26,7 +16,6 @@ function SevenDayHourlyForecast({
     onDaySelect,
     selectedDay,
 }: Readonly<DailyForecastProps>) {
-  
     const getUniqueDays = () => {
         const days: string[] = [];
         const seenDays = new Set();

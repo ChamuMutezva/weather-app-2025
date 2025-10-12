@@ -1,13 +1,8 @@
 import { getWeatherIcon } from "../utility/getWeatherIcon";
-import { type SelectedUnits } from "../types/types";
+import { type SelectedUnits, type WeatherData } from "../types/types";
 interface DailyForecastProps {
     weatherData: {
-        daily: {
-            weather_code: number[];
-            time: string[];
-            temperature_2m_max: number[];
-            temperature_2m_min: number[];
-        };
+        daily: WeatherData["daily"]
     };
     selectedUnits: SelectedUnits;
 }

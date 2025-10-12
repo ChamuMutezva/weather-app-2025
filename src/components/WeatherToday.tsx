@@ -1,31 +1,34 @@
 import { Moon, Sun } from "lucide-react";
-import { type SelectedUnits } from "../types/types";
+import { type SelectedUnits, type WeatherData } from "../types/types";
 import WeatherTodaySecondary from "./WeatherTodaySecondary";
 
 type WeatherTodayProps = {
-    hourlyTemperature: number;
-    hourlyHumidity: number;
-    hourlyWindSpeed: number;
-    hourlyPrecipitation: number;
+    currentData: WeatherData["current"] | null | undefined;
     selectedUnits: SelectedUnits;
-    period: number;
-    cloudCover: number;
 };
 
 function WeatherToday({
-    hourlyTemperature,
-    hourlyHumidity,
-    hourlyWindSpeed,
-    hourlyPrecipitation,
+    currentData,
     selectedUnits,
-    period,
-    cloudCover,
 }: Readonly<WeatherTodayProps>) {
     const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
     const windUnit = selectedUnits.wind === "kmh" ? "km/h" : "mph";
     const precipitationUnit =
         selectedUnits.precipitation === "mm" ? "mm" : "inches";
-    console.log(cloudCover);
+
+    // Early return if no data
+    if (!currentData) {
+        return <div>Loading weather data...</div>;
+    }
+    
+    const {
+        apparent_temperature,
+        relative_humidity_2m,
+        wind_speed_10m,
+        rain,
+        is_day,
+        cloud_cover,
+    } = currentData;
 
     return (
         <div
@@ -35,19 +38,19 @@ function WeatherToday({
         >
             <WeatherTodaySecondary
                 title={"Feels like"}
-                value={`${Math.round(hourlyTemperature)}`}
+                value={`${Math.round(apparent_temperature)}`}
                 tempUnit={tempUnit}
             />
             <WeatherTodaySecondary
                 title={"Humidity"}
-                value={`${Math.round(hourlyHumidity)}`}
+                value={`${Math.round(relative_humidity_2m)}`}
                 tempUnit={"%"}
             />
 
             <div className="bg-secondary rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Wind</h2>
                 <p className="text-foreground text-preset-3">
-                    {Math.round(hourlyWindSpeed)}
+                    {Math.round(wind_speed_10m)}
                     <abbr
                         className="no-underline"
                         title={
@@ -63,7 +66,7 @@ function WeatherToday({
             <div className="bg-secondary rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Precipitation</h2>
                 <p className="text-foreground text-preset-3">
-                    {Math.round(hourlyPrecipitation)}
+                    {Math.round(rain)}
                     <abbr
                         className="no-underline"
                         title={
@@ -78,7 +81,7 @@ function WeatherToday({
             </div>
             <div className="bg-secondary rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Time Period</h2>
-                {period === 1 ? (
+                {is_day === 1 ? (
                     <Sun
                         className="text-yellow-500"
                         size={48}
@@ -96,7 +99,7 @@ function WeatherToday({
                 <h2 className="text-foreground text-preset-6">
                     Cloud coverage
                 </h2>
-                <p className="text-foreground text-preset-3">{cloudCover}%</p>
+                <p className="text-foreground text-preset-3">{cloud_cover}%</p>
             </div>
         </div>
     );

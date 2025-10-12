@@ -31,9 +31,6 @@ function AIWeatherAdvisor({ weatherData, selectedUnits, selectedLocation }: Read
         const windUnit = units.wind === 'kmh' ? 'km/h' : 'mph';
         const precipUnit = units.precipitation === 'mm' ? 'mm' : 'in';
 
-        // NOTE: In a production app, ensure all values use the `convertedWeatherData` values 
-        // to correctly reflect the selected units. This is a text representation for the AI.
-
         return `
             Location:  ${selectedLocation?.name ?? "Unknown"}, ${selectedLocation?.country ?? ""}
             Current Time: ${new Date().toLocaleTimeString()}
