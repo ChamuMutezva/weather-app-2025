@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react";
+import { MoonIcon, SunIcon } from "@heroicons/react/20/solid";
 import { type SelectedUnits, type WeatherData } from "../types/types";
 import WeatherTodaySecondary from "./WeatherTodaySecondary";
 
@@ -20,7 +20,7 @@ function WeatherToday({
     if (!currentData) {
         return <div>Loading weather data...</div>;
     }
-    
+
     const {
         apparent_temperature,
         relative_humidity_2m,
@@ -82,15 +82,13 @@ function WeatherToday({
             <div className="bg-secondary rounded-[var(--radius-12)] min-h-30 p-4 flex flex-col justify-baseline items-center gap-4">
                 <h2 className="text-foreground text-preset-6">Time Period</h2>
                 {is_day === 1 ? (
-                    <Sun
-                        className="text-yellow-500"
-                        size={48}
+                    <SunIcon
+                        className="text-yellow-500 h-8 w-8"
                         aria-label="Day"
                     />
                 ) : (
-                    <Moon
-                        className="text-blue-400"
-                        size={48}
+                    <MoonIcon
+                        className="text-blue-400 h-8 w-8"
                         aria-label="Night"
                     />
                 )}

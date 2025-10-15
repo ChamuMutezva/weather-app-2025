@@ -15,6 +15,7 @@
  * @returns The rendered weather information for the selected location, or null if no location is selected.
  */
 
+// import { useState, useEffect } from "react";
 import { type LocationData, type SelectedUnits } from "../types/types";
 interface DisplayLocationProps {
     selectedLocation: LocationData | null;
@@ -27,6 +28,23 @@ function DisplayLocation({
     temp,
     selectedUnits,
 }: Readonly<DisplayLocationProps>) {
+  //  const [currentTime, setCurrentTime] = useState<string>("");
+   
+    // Use useEffect to handle client-side time rendering to avoid hydration mismatch
+    /*
+    useEffect(() => {
+             
+       // Set initial time
+        setCurrentTime(new Date().toLocaleString());
+
+        // Update time every second
+        const timer = setInterval(() => {
+            setCurrentTime(new Date().toLocaleString());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+*/
     const formatDate = (date: Date) => {
         return date.toLocaleDateString("en-US", {
             weekday: "long",
@@ -39,7 +57,7 @@ function DisplayLocation({
         return null;
     }
 
-    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";    
+    const tempUnit = selectedUnits.temperature === "celsius" ? "°C" : "°F";
 
     return (
         <div

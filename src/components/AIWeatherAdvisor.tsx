@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getGeminiAdvice } from '../api/geminiService';
 import { type WeatherData, type SelectedUnits, type LocationData } from '../types/types'; 
-import { Sparkles } from 'lucide-react'; 
+import { SparklesIcon} from "@heroicons/react/20/solid";
 
 interface AIWeatherAdvisorProps {
     weatherData: WeatherData | null;
@@ -80,7 +80,7 @@ function AIWeatherAdvisor({ weatherData, selectedUnits, selectedLocation }: Read
     return (
         <div className="bg-card p-6 rounded-[var(--radius-20)] shadow-xl border border-border">
             <h2 className="text-preset-5 font-bold mb-4 flex items-center gap-2 text-primary">
-                <Sparkles className="size-6 text-accent" /> AI Weather Advisor
+                <SparklesIcon className="size-6 text-accent" /> AI Weather Advisor
             </h2>
             
             <div className="space-y-4">
@@ -106,7 +106,7 @@ function AIWeatherAdvisor({ weatherData, selectedUnits, selectedLocation }: Read
                     {isLoading ? (
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                     ) : (
-                        <Sparkles className="size-5 mr-2" />
+                        <SparklesIcon className="size-5 mr-2" />
                     )}
                     {isLoading ? 'Generating Advice...' : 'Get Personalized Advice'}
                 </button>
